@@ -3,10 +3,17 @@
     author: "Dario Righelli"
     date: "`r Sys.Date()`"
     output: rmarkdown::html_document
-    
 ---
 
 ```{r global_options, include=FALSE}
-knitr::opts_chunk$set(eval=TRUE, echo=TRUE, warning=FALSE, message=FALSE, include=FALSE, cache=TRUE)
+knitr::opts_chunk$set(eval=TRUE, echo=TRUE, warning=FALSE, message=FALSE, include=TRUE, cache=TRUE)
 ```
-# First Level Title
+
+```{r eval=TRUE, echo=TRUE, warning=FALSE, message=FALSE, include=TRUE, cache=TRUE}
+
+source("/media/dario/dati/iSync/works/coding/easyreporting/R/cachingFunctions.R")
+
+source("/media/dario/dati/iSync/works/coding/easyreporting/R/cachingFunctions.R")
+
+```
+

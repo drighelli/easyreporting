@@ -39,9 +39,7 @@ initReportFilename=function(filenamepath=NULL, mainTitle=NULL,
     title: \"", mainTitle, "\"
     author: \"", author, "\"
     date: \"`r Sys.Date()`\"
-    output: rmarkdown::", documentType, "_document
-    \n---\n"
-    )
+    output: rmarkdown::", documentType, "_document\n---\n")
 
     base::write(header, file = filenamepath,
                 append = TRUE, sep = "\n")
@@ -66,35 +64,33 @@ mkdSetGlobalOpts <- function(optionList)
                     ", message=", optionList$showMessages,
                     ", include=", optionList$includeFlag,
                     ", cache=", optionList$cacheFlag,
-                    ")\n```")
-    base::write(options, file = private$filenamePath,
-                append = TRUE, sep = "\n")
+                    ")\n```\n")
+
+    base::write(options, file=private$filenamePath,
+                append=TRUE, sep="\n")
 
 }
 
-#' Title
+#' mkdTitle
 #'
 #' @param title
 #' @param level
-#' @param file.name
 #'
 #' @return
 #' @export
 #'
 #' @examples
-mkdTitle <- function(title, level=1, file.name=NULL)
+mkdTitle <- function(title, level=1)
 {
     if(!is.character(title)) stop("You can enter only string values for title!")
     if(level > 6) stop("You can use at last level!")
-
-    file.name <-  if(is.null(file.name)) self$getReportFilename() else file.name
 
     message <- paste0(
         strrep("#", times=level),
         " ",
         title
     )
-    base::write(message, file=file.name,
+    base::write(message, file=self$getReportFilename(),
                 ncolumns=if(is.character(message)) 1 else 5,
                 append=TRUE,
                 sep="\n")
@@ -103,18 +99,14 @@ mkdTitle <- function(title, level=1, file.name=NULL)
 #' mkdGeneralMsg
 #'
 #' @param message the message to append to the report
-#' @param file.name optional, if not NULL the global class attribute
-#' name will be used
 #'
 #' @return
 #' @export
 #'
 #' @examples
-mkdGeneralMsg <- function(message, file.name=NULL)
+mkdGeneralMsg <- function(message)
 {
-    file.name <-  if(is.null(file.name)) self$getReportFilename() else file.name
-
-    base::write(x=paste0("\n", message), file=file.name,
+    base::write(x=paste0("\n", message), file=self$getReportFilename(),
                 ncolumns=if(is.character(message)) 1 else 5,
                 append=TRUE,
                 sep="\n")
@@ -140,7 +132,7 @@ setOptionsList <- function(cacheFlag=TRUE,
                         echoFlag=TRUE,
                         warningFlag=FALSE,
                         showMessages=FALSE,
-                        includeFlag=FALSE
+                        includeFlag=TRUE
                         )
 {
     private$optionsList <- list(
@@ -183,7 +175,7 @@ maketOptionsList <- function(cacheFlag=TRUE,
                            echoFlag=TRUE,
                            warningFlag=FALSE,
                            showMessages=FALSE,
-                           includeFlag=FALSE)
+                           includeFlag=TRUE)
 {
     return( list(
         cacheFlag=cacheFlag,
@@ -202,5 +194,130 @@ getReportFilename <- function()
 
 compile <- function()
 {
-    rmarkdown::render(self$getReportFilename)
+    rmarkdown::render(self$getReportFilename())
 }
+
+
+#' Title
+#'
+#' @param variable.name
+#' @param variable.object.name
+#'
+#' @return
+#' @export
+#'
+#' @examples
+mkdVariableAssignment <- function(variable.name, variable.object.name)
+{
+    self.message <- paste0(variable.name, " <- \`", variable.object,"\`")
+    # print(self.message)
+    base::write(self.message,
+                file=self$getReportFilename(),
+                ncolumns=if(is.character(self.message)) 1 else 5,
+                append=TRUE,
+                sep = "\n")
+}
+
+
+#' Title
+#'
+#' @param optionsList
+#' @param source.files.list
+#'
+#' @return
+#' @export
+#'
+#' @examples
+mkdCodeChunkSt <- function(optionsList=self$getOptionsList(),
+                        source.files.list=NULL)
+{
+    self.message <- paste0("```{r eval=", optionsList$evalFlag,
+                            ", echo=", optionsList$echoFlag,
+                            ", warning=", optionsList$warningFlag,
+                            ", message=", optionsList$showMessages,
+                            ", include=", optionsList$includeFlag,
+                            ", cache=", optionsList$cacheFlag,
+                            "}\n")
+    base::write(self.message,
+                file=self$getReportFilename(),
+                ncolumns=if(is.character(self.message)) 1 else 5,
+                append=TRUE,
+                sep="\n")
+
+    if(!is.null(source.files.list))
+    {
+        files <- list(source.files.list)
+        self.message <- ""
+        for(i in 1:length(files))
+        {
+            self.message <- paste0(self.message,
+                                   "source(\"",
+                                   file.path(getwd(), files[[i]]),
+                                   "\")\n")
+        }
+        base::write(self.message,
+                    file=self$getReportFilename(),
+                    ncolumns=if(is.character(self.message)) 1 else 5,
+                    append=TRUE,
+                    sep="\n")
+    }
+    message("Please remember to close the Code Chunk!
+            Just invoke mkdCodeChunkEnd() once you complete your function calling :)")
+}
+
+#' mkdSourceFiles
+#'
+#' @param ...
+#'
+#' @return
+#' @export
+#'
+#' @examples
+mkdSourceFiles <- function(...)
+{
+    files <- list(...)
+    self.message <- ""
+    for(i in 1:length(files))
+    {
+        self.message <- paste0(self.message,
+                            "source(\"",
+                            file.path(getwd(), files[[i]]),
+                            "\")\n")
+    }
+    base::write(self.message,
+                file=self$getReportFilename(),
+                ncolumns=if(is.character(self.message)) 1 else 5,
+                append=TRUE,
+                sep="\n")
+}
+
+
+#' mkdCodeChunkEnd
+#'
+#' @param self$getReportFilename()
+#'
+#' @return
+#' @export
+#'
+#' @examples
+mkdCodeChunkEnd <- function()
+{
+    self.message <- paste0("```\n")
+    base::write(self.message,
+            file=self$getReportFilename(),
+            ncolumns=if(is.character(self.message)) 1 else 5,
+            append=TRUE,
+            sep="\n")
+}
+
+
+
+mkdCodeChunkComplete <- function(message, optionsList=self$getOptionsList(),
+                                source.files.list=NULL)
+{
+    self$mkdCodeChunkStart(optionsList=optionsList,
+                    source.files.list=source.files.list)
+    self$mkdGeneralMessage(message)
+    self$mkdRCodeChunkEnd()
+}
+

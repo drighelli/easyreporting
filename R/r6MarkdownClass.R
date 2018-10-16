@@ -27,12 +27,16 @@ r6markdown <- R6::R6Class("r6markdown",
                                         mainTitle=title, author=author,
                                         optionsList=private$optionsList)
        },
-       setOptionList=setOptionsList,
-       getOptionList=getOptionsList,
+       setOptionsList=setOptionsList,
+       getOptionsList=getOptionsList,
        mkdGeneralMsg=mkdGeneralMsg,
        mkdTitle=mkdTitle,
        compile=compile,
-       getReportFilename=getReportFilename
+       getReportFilename=getReportFilename,
+       mkdVariableAssignment=mkdVariableAssignment,
+       mkdCodeChunkSt=mkdCodeChunkSt,
+       mkdCodeChunkEnd=mkdCodeChunkEnd,
+       mkdSourceFiles=mkdSourceFiles
    ),
    private=list(
         ## methods
@@ -47,7 +51,7 @@ r6markdown <- R6::R6Class("r6markdown",
             echoFlag=TRUE,
             warningFlag=FALSE,
             showMessages=FALSE,
-            includeFlag=FALSE
+            includeFlag=TRUE
         )
     )
 )
