@@ -9,11 +9,13 @@
 knitr::opts_chunk$set(eval=TRUE, echo=TRUE, warning=FALSE, message=FALSE, include=TRUE, cache=TRUE)
 ```
 
+# First Level Title
+
+Here I'm writing a simple paragraph useful to describe my code chunk
 ```{r eval=TRUE, echo=TRUE, warning=FALSE, message=FALSE, include=TRUE, cache=TRUE}
 
-source("/media/dario/dati/iSync/works/coding/easyreporting/R/cachingFunctions.R")
-
-source("/media/dario/dati/iSync/works/coding/easyreporting/R/cachingFunctions.R")
+variable <- `variable`
+print(variable)
 
 ```
 

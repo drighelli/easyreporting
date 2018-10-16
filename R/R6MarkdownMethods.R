@@ -106,7 +106,7 @@ mkdTitle <- function(title, level=1)
 #' @examples
 mkdGeneralMsg <- function(message)
 {
-    base::write(x=paste0("\n", message), file=self$getReportFilename(),
+    base::write(x=paste0("\n", message, "\n"), file=self$getReportFilename(),
                 ncolumns=if(is.character(message)) 1 else 5,
                 append=TRUE,
                 sep="\n")
@@ -202,14 +202,17 @@ compile <- function()
 #'
 #' @param variable.name
 #' @param variable.object.name
+#' @param show
 #'
 #' @return
 #' @export
 #'
 #' @examples
-mkdVariableAssignment <- function(variable.name, variable.object.name)
+mkdVariableAssignment <- function(variable.name, variable.object.name,
+                                show=FALSE)
 {
-    self.message <- paste0(variable.name, " <- \`", variable.object,"\`")
+    self.message <- paste0(variable.name, " <- \`", variable.object.name,"\`\n")
+    if(show) self.message <- paste0(self.message, "print(", variable.name,")\n")
     # print(self.message)
     base::write(self.message,
                 file=self$getReportFilename(),
@@ -262,7 +265,7 @@ mkdCodeChunkSt <- function(optionsList=self$getOptionsList(),
                     sep="\n")
     }
     message("Please remember to close the Code Chunk!
-            Just invoke mkdCodeChunkEnd() once you complete your function calling :)")
+Just invoke mkdCodeChunkEnd() once you complete your function calling :)")
 }
 
 #' mkdSourceFiles
@@ -312,12 +315,22 @@ mkdCodeChunkEnd <- function()
 
 
 
+#' Title
+#'
+#' @param message
+#' @param optionsList
+#' @param source.files.list
+#'
+#' @return
+#' @export
+#'
+#' @examples
 mkdCodeChunkComplete <- function(message, optionsList=self$getOptionsList(),
                                 source.files.list=NULL)
 {
-    self$mkdCodeChunkStart(optionsList=optionsList,
+    self$mkdCodeChunkSt(optionsList=optionsList,
                     source.files.list=source.files.list)
-    self$mkdGeneralMessage(message)
-    self$mkdRCodeChunkEnd()
+    self$mkdGeneralMsg(message)
+    self$mkdCodeChunkEnd()
 }
 

@@ -13,7 +13,7 @@ rd$mkdGeneralMsg("Here I'm writing a simple paragraph useful to describe my code
 rd$mkdCodeChunkSt()
 ## adding a variable assignement
 variable <- 1
-rd$mkdVariableAssignment("variable", "variable")
+rd$mkdVariableAssignment("variable", "variable", show=TRUE)
 rd$mkdCodeChunkEnd()
 
 ## or i can create my own options for the chunk
@@ -28,6 +28,10 @@ rd$mkdCodeChunkSt(optionsList=optList, source.files.list=
 rd$mkdCodeChunkEnd()
 
 
+rd$mkdCodeChunkComplete(message="a <- 1\nb <- 2\nc <- a+b\n print(c)")
+
+
+## otherwhise i can make a direct call with all the code chunk and the code as message
 
 
 rd$compile()

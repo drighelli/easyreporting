@@ -36,7 +36,8 @@ r6markdown <- R6::R6Class("r6markdown",
        mkdVariableAssignment=mkdVariableAssignment,
        mkdCodeChunkSt=mkdCodeChunkSt,
        mkdCodeChunkEnd=mkdCodeChunkEnd,
-       mkdSourceFiles=mkdSourceFiles
+       mkdSourceFiles=mkdSourceFiles,
+       mkdCodeChunkComplete=mkdCodeChunkComplete
    ),
    private=list(
         ## methods
