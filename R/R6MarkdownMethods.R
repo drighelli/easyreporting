@@ -41,19 +41,22 @@ initReportFilename=function(filenamepath=NULL, mainTitle=NULL,
     date: \"`r Sys.Date()`\"
     output: rmarkdown::", documentType, "_document\n---\n")
 
-    base::write(header, file = filenamepath,
-                append = TRUE, sep = "\n")
+    base::write(header, file=filenamepath,
+                append=TRUE, sep="\n")
     private$markdownSetGlobalOpts(optionList=optionsList)
 }
 
-#' markdownSetGlobalOpts
+#' mkdSetGlobalOpts
+#' @description internal function for appending to the report the initial
+#' options setup
 #'
-#' @param optionsList
+#' @param optionsList a list of options
 #'
-#' @return
-#' @export
+#' @return none
+#' @internal
 #'
-#' @examples
+#' @importFrom base write
+#'
 mkdSetGlobalOpts <- function(optionList)
 {
     options <- paste0("```{r global_options, include=FALSE}\n",
@@ -73,13 +76,22 @@ mkdSetGlobalOpts <- function(optionList)
 
 #' mkdTitle
 #'
-#' @param title
-#' @param level
+#' @description Inserts an rmarkdown title inside the report.
 #'
-#' @return
+#' @param title a string within the title.
+#' @param level a numeric from 1 to 6 (default is 1).
+#'
+#' @return none
 #' @export
 #'
+#' @importFrom base write
 #' @examples
+#' rd <- easyreporting$new(filenamepath="./project_report",
+#'                         title="example_report", author=c("It's me"))
+#'
+#' rd$mkdTitle("First Level Title")
+#' rd$mkdTitle("Second Level Title", level=2)
+#'
 mkdTitle <- function(title, level=1)
 {
     if(!is.character(title)) stop("You can enter only string values for title!")
@@ -97,13 +109,18 @@ mkdTitle <- function(title, level=1)
 }
 
 #' mkdGeneralMsg
+#' @description It appends a general message to the report.
+#' Useful for adding natural language comments.
 #'
 #' @param message the message to append to the report
 #'
-#' @return
+#' @return none
 #' @export
 #'
 #' @examples
+#' rd <- easyreporting$new(filenamepath="./project_report",
+#'                         title="example_report", author=c("It's me"))
+#' rd$mkdGeneralMsg("Writing a paragraph to describe my code chunk")
 mkdGeneralMsg <- function(message)
 {
     base::write(x=paste0("\n", message, "\n"), file=self$getReportFilename(),
@@ -115,18 +132,31 @@ mkdGeneralMsg <- function(message)
 
 
 #' setOptionsList
+#' @description set an optionList to the rmarkdown R6 class
 #'
-#' @param cacheFlag
-#' @param evalFlag
-#' @param echoFlag
-#' @param warningFlag
-#' @param showMessages
-#' @param includeFlag
+#' @param cacheFlag boolean for caching chunk data (default TRUE)
+#' @param evalFlag boolean for evaluating the code chunk in the compiled version
+#' (default TRUE)
+#' @param echoFlag boolean for showing the code chunk (default TRUE)
+#' @param warningFlag boolean for showing the chunk warnings (default FALSE)
+#' @param showMessages boolean for showing the chunk warnings in compiled
+#' version (default FALSE)
+#' @param includeFlag boolean for including the code chunk in the compiled
+#' version (default TRUE)
 #'
-#' @return
+#' @return none
 #' @export
 #'
 #' @examples
+#' rd <- easyreporting$new(filenamepath="./project_report",
+#'                         title="example_report", author=c("It's me"))
+#'
+#' ## setting default option
+#' rd$setOptionsList()
+#'
+#' ## modifying only some options
+#' rd$setOptionsList(warningFlag=TRUE, showMessages=TRUE, includeFlag=TRUE)
+#'
 setOptionsList <- function(cacheFlag=TRUE,
                         evalFlag=TRUE,
                         echoFlag=TRUE,
@@ -146,11 +176,16 @@ setOptionsList <- function(cacheFlag=TRUE,
 }
 
 #' getOptionsList
+#' @description returns the optionsList from the easyreporting class
 #'
-#' @return
+#' @return a list of options
 #' @export
 #'
 #' @examples
+#' rd <- easyreporting$new(filenamepath="./project_report",
+#'                         title="example_report", author=c("It's me"))
+#' optList <- rd$getOptionsList()
+#'
 getOptionsList <- function()
 {
     return(private$optionsList)
@@ -158,19 +193,26 @@ getOptionsList <- function()
 
 
 #' maketOptionsList
+#' @description makes an list of rmarkdown options
 #'
-#' @param cacheFlag
-#' @param evalFlag
-#' @param echoFlag
-#' @param warningFlag
-#' @param showMessages
-#' @param includeFlag
+#' @param cacheFlag boolean for caching chunk data (default TRUE)
+#' @param evalFlag boolean for evaluating the code chunk in the compiled version
+#' (default TRUE)
+#' @param echoFlag boolean for showing the code chunk (default TRUE)
+#' @param warningFlag boolean for showing the chunk warnings (default FALSE)
+#' @param showMessages boolean for showing the chunk warnings in compiled
+#' version (default FALSE)
+#' @param includeFlag boolean for including the code chunk in the compiled
+#' version (default TRUE)
 #'
-#' @return
+#' @return list of rmarkdown options
 #' @export
 #'
 #' @examples
-maketOptionsList <- function(cacheFlag=TRUE,
+#' rd <- easyreporting$new(filenamepath="./project_report",
+#'                         title="example_report", author=c("It's me"))
+#' optList <- rd$makeOptionsList()
+makeOptionsList <- function(cacheFlag=TRUE,
                            evalFlag=TRUE,
                            echoFlag=TRUE,
                            warningFlag=FALSE,
@@ -325,12 +367,39 @@ mkdCodeChunkEnd <- function()
 #' @export
 #'
 #' @examples
-mkdCodeChunkComplete <- function(message, optionsList=self$getOptionsList(),
+mkdCodeChunkComplete <- function(message,
+                                optionsList=self$getOptionsList(),
                                 source.files.list=NULL)
 {
     self$mkdCodeChunkSt(optionsList=optionsList,
-                    source.files.list=source.files.list)
+                        source.files.list=source.files.list)
     self$mkdGeneralMsg(message)
     self$mkdCodeChunkEnd()
 }
+
+
+#' mkdCodeChunkCommented
+#'
+#' @param comment
+#' @param message
+#' @param optionsList
+#' @param source.files.list
+#'
+#' @return
+#' @export
+#'
+#' @examples
+mkdCodeChunkCommented <- function(commentMsg=NULL, message,
+                                 optionsList=self$getOptionsList(),
+                                 source.files.list=NULL)
+{
+    if(!is.null(commentMsg))
+    {
+        self$mkdGeneralMsg(commentMsg)
+    }
+    self$mkdCodeChunkComplete(message=message, optionsList=optionsList,
+                        source.files.list=source.files.list)
+}
+
+
 
