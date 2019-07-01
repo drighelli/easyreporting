@@ -6,25 +6,26 @@
 #     warningFlag=FALSE,
 #     showMessages=FALSE,
 #     includeFlag=FALSE
-# )
-
-#' Title
+# )#' easyreporting
+#' @description An R6 class for managing rmarkdown report.
+#' Each instance describes an rmarkdown file.
+#' @param filenamepath the path with the name of the rmarkdown.
+#' @param title the title fo the report.
+#' @param author the author of the report.
 #'
-#' @param filenamepath
-#' @param title
-#' @param author
-#'
-#' @return
+#' @return an easyreporting R6 class instance
 #' @export
 #'
 #' @examples
-
-r6markdown <- R6::R6Class("r6markdown",
+#' rd <- easyreporting$new(filenamepath="./project_report",
+#'                         title="example_report", author=c("It's me"))
+easyreporting <- R6::R6Class("easyreporting",
    public=list(
        initialize=function(filenamepath, title=NULL, author=NULL)
        {
             private$initReportFilename(filenamepath=filenamepath,
-                                        mainTitle=title, author=author,
+                                        mainTitle=title,
+                                        author=author,
                                         optionsList=private$optionsList)
        },
        setOptionsList=setOptionsList,
@@ -37,7 +38,8 @@ r6markdown <- R6::R6Class("r6markdown",
        mkdCodeChunkSt=mkdCodeChunkSt,
        mkdCodeChunkEnd=mkdCodeChunkEnd,
        mkdSourceFiles=mkdSourceFiles,
-       mkdCodeChunkComplete=mkdCodeChunkComplete
+       mkdCodeChunkComplete=mkdCodeChunkComplete,
+       mkdCodeChunkCommented=mkdCodeChunkCommented
    ),
    private=list(
         ## methods
