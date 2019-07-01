@@ -1,12 +1,5 @@
 
-# optionsList <- list(
-#     cacheFlag=TRUE,
-#     evalFlag=TRUE,
-#     echoFlag=TRUE,
-#     warningFlag=FALSE,
-#     showMessages=FALSE,
-#     includeFlag=FALSE
-# )#' easyreporting
+#' easyreporting
 #' @description An R6 class for managing rmarkdown report.
 #' Each instance describes an rmarkdown file.
 #' @param filenamepath the path with the name of the rmarkdown.

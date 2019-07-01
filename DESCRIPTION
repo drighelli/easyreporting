@@ -1,11 +1,15 @@
 Package: easyreporting
 Type: Package
-Title: What the Package Does (Title Case)
-Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Title: Helps creating report for improving Reproducible computational Research.
+Version: 0.99.0
+Author@R: person("Dario", "Righelli", email=dario.righelli@gmail.com, 
+ role=c("cre", aut")). 
+Description: An R6 class for facilitating the automation of creation of 
+    rmarkdown files inside other packages/software.
+License: Artistic-2.0
 Encoding: UTF-8
+biocViews: software, filemanipulation
 LazyData: true
+Depends:
+    rmarkdown
+RoxygenNote: 6.1.1

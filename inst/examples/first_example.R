@@ -2,7 +2,7 @@
 # library(easyreporting)
 devtools::load_all()
 ## creating report file with default options on global document
-rd <- r6markdown$new(filenamepath="./project_report", title="example_report",
+rd <- easyreporting$new(filenamepath="./project_report", title="example_report",
                         author=c("Dario Righelli"))
 
 rd$mkdTitle("First Level Title")
@@ -16,8 +16,9 @@ variable <- 1
 rd$mkdVariableAssignment("variable", "variable", show=TRUE)
 rd$mkdCodeChunkEnd()
 
+rd$mkdTitle("Second Level Title", level=2)
 ## or i can create my own options for the chunk
-optList <- maketOptionsList(includeFlag=TRUE)
+optList <- makeOptionsList(includeFlag=TRUE)
 rd$mkdCodeChunkSt(optionsList=optList)
 rd$mkdCodeChunkEnd()
 
@@ -31,8 +32,14 @@ rd$mkdCodeChunkEnd()
 rd$mkdCodeChunkComplete(message="a <- 1\nb <- 2\nc <- a+b\n print(c)")
 
 
-## otherwhise i can make a direct call with all the code chunk and the code as message
+## otherwhise I can make a direct call with all the code chunk and the comment in one call
+optList <- makeOptionsList(includeFlag=TRUE, cacheFlag=TRUE)
 
+rd$mkdCodeChunkCommented(commentMsg="This is the comment of the following code chunk",
+                    message="a <- 1\nb <- 2\n(c <- a+b)\n",
+                    optionsList=optList,
+                    source.files.list=NULL)
 
+## finally I can directly compile my report
 rd$compile()
 

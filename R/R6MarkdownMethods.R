@@ -6,9 +6,9 @@
 #' @param author the name of the report author
 #' @param documentType type of report final document. (html is default)
 #'
-#' @internal
+#' @keywords internal
 #' @importFrom tools file_ext
-#' @importFrom base write
+#'
 #' @return none
 initReportFilename=function(filenamepath=NULL, mainTitle=NULL,
                             author=NULL, documentType="html",
@@ -53,9 +53,9 @@ initReportFilename=function(filenamepath=NULL, mainTitle=NULL,
 #' @param optionsList a list of options
 #'
 #' @return none
-#' @internal
+#' @keywords internal
 #'
-#' @importFrom base write
+#'
 #'
 mkdSetGlobalOpts <- function(optionList)
 {
@@ -84,7 +84,7 @@ mkdSetGlobalOpts <- function(optionList)
 #' @return none
 #' @export
 #'
-#' @importFrom base write
+#'
 #' @examples
 #' rd <- easyreporting$new(filenamepath="./project_report",
 #'                         title="example_report", author=c("It's me"))
@@ -140,7 +140,6 @@ mkdGeneralMsg <- function(message)
 #' @param echoFlag boolean for showing the code chunk (default TRUE)
 #' @param warningFlag boolean for showing the chunk warnings (default FALSE)
 #' @param showMessages boolean for showing the chunk warnings in compiled
-#' version (default FALSE)
 #' @param includeFlag boolean for including the code chunk in the compiled
 #' version (default TRUE)
 #'
@@ -229,27 +228,62 @@ makeOptionsList <- function(cacheFlag=TRUE,
     ))
 }
 
+#' getReportFilename
+#' @description returns the report filename with path
+#' @return a string of report file name with path
+#' @export
+#'
+#' @examples
+#' rd <- easyreporting$new(filenamepath="./project_report",
+#'                         title="example_report", author=c("It's me"))
+#' rep <- rd$getReportFilename()
 getReportFilename <- function()
 {
     return(private$filenamePath)
 }
 
+
+#' compile
+#' @description compiles the rmarkdown file
+#' @return none
+#' @export
+#' @importFrom rmarkdown render
+#' @examples
+#' rd <- easyreporting$new(filenamepath="./project_report",
+#'                         title="example_report", author=c("It's me"))
+#' rd$compile()
 compile <- function()
 {
     rmarkdown::render(self$getReportFilename())
 }
 
 
-#' Title
+#' mkdVariableAssignment
+#' @description it includes a variable assignment in the report.
+#' NB: a call to the "mkdCodeChunkSt" has to be done before using it.
 #'
-#' @param variable.name
-#' @param variable.object.name
-#' @param show
+#' @param variable.name a string indicating the name of the variabe to store in
+#' the report. (This can be changed here, but further uses of the variable needs
+#' to take into account the variable name change).
+#' @param variable.object.name the name of the already existing variable. (This
+#' cannot be canged.)
+#' @param show a boolean indicating if to show the message before writing it
+#' into the rmardown file.
 #'
-#' @return
+#' @return none
 #' @export
 #'
+#'
 #' @examples
+#' rd <- easyreporting$new(filenamepath="./project_report",
+#'                         title="example_report", author=c("It's me"))
+#' ## leaving the default options to the code chunk
+#' rd$mkdCodeChunkSt()
+#' ## adding a variable assignement
+#' variable <- 1
+#' rd$mkdVariableAssignment("variable", "variable", show=TRUE)
+#' rd$mkdCodeChunkEnd()
+#'
 mkdVariableAssignment <- function(variable.name, variable.object.name,
                                 show=FALSE)
 {
@@ -264,15 +298,31 @@ mkdVariableAssignment <- function(variable.name, variable.object.name,
 }
 
 
-#' Title
+#' mkdCodeChunkSt
+#' @description it creates a code chunk start. A list of options and files to
+#' source  for the chunk can optionally be passed to the function.
+#' @param optionsList a list of options
+#' @param source.files.list a list of files that can be sourced inside the code
+#' chunk.
 #'
-#' @param optionsList
-#' @param source.files.list
-#'
-#' @return
+#' @return none
 #' @export
 #'
+#'
 #' @examples
+#'  rd <- easyreporting$new(filenamepath="./project_report",
+#'                         title="example_report", author=c("It's me"))
+#' ## no options
+#' rd$mkdCodeChunkSt()
+#' ## just leaving empty
+#' rd$mkdCodeChunkEnd()
+#'
+#' ## setting options
+#' optList <- makeOptionsList(includeFlag=TRUE)
+#' rd$mkdCodeChunkSt(optionsList=optList)
+#' ## just leaving empty
+#' rd$mkdCodeChunkEnd()
+#'
 mkdCodeChunkSt <- function(optionsList=self$getOptionsList(),
                         source.files.list=NULL)
 {
@@ -311,13 +361,13 @@ Just invoke mkdCodeChunkEnd() once you complete your function calling :)")
 }
 
 #' mkdSourceFiles
+#' @description includes a list of source files inside the rmarkdown
 #'
-#' @param ...
+#' @param ... a list of files to source
 #'
-#' @return
-#' @export
+#' @return none
 #'
-#' @examples
+#' @keywords internal
 mkdSourceFiles <- function(...)
 {
     files <- list(...)
@@ -338,13 +388,19 @@ mkdSourceFiles <- function(...)
 
 
 #' mkdCodeChunkEnd
+#' @description it creates a code chunk end. Always use it after a
+#' mkdCodeChunkSt()
 #'
-#' @param self$getReportFilename()
+#' @return none
 #'
-#' @return
 #' @export
 #'
 #' @examples
+#'  rd <- easyreporting$new(filenamepath="./project_report",
+#'                         title="example_report", author=c("It's me"))
+#' rd$mkdCodeChunkSt()
+#' ## just leaving empty
+#' rd$mkdCodeChunkEnd()
 mkdCodeChunkEnd <- function()
 {
     self.message <- paste0("```\n")
@@ -357,16 +413,20 @@ mkdCodeChunkEnd <- function()
 
 
 
-#' Title
+#' mkdCodeChunkComplete
+#' @description it creates a complete code chunk.
+#' @param message a string containing a function call or the entire code chunk
+#' to trace.
+#' @param optionsList a list of options.
+#' @param source.files.list a list of files to source.
 #'
-#' @param message
-#' @param optionsList
-#' @param source.files.list
-#'
-#' @return
+#' @return none
 #' @export
 #'
 #' @examples
+#'  rd <- easyreporting$new(filenamepath="./project_report",
+#'                         title="example_report", author=c("It's me"))
+#' rd$mkdCodeChunkComplete(message="a <- 1\nb <- 2\nc <- a+b\n print(c)")
 mkdCodeChunkComplete <- function(message,
                                 optionsList=self$getOptionsList(),
                                 source.files.list=NULL)
@@ -377,19 +437,25 @@ mkdCodeChunkComplete <- function(message,
     self$mkdCodeChunkEnd()
 }
 
-
 #' mkdCodeChunkCommented
+#' @description it creates a complete code chunk, adding a natural language
+#' comment before of it.
+#' @param commentMsg a string with the natural language comment for the chunk.
+#' @param codeMsg a string within the code.
+#' @param optionsList a list of options (default is the class options).
+#' @param source.files.list a optional list of files to source inside the chunk.
 #'
-#' @param comment
-#' @param message
-#' @param optionsList
-#' @param source.files.list
-#'
-#' @return
+#' @return none
 #' @export
 #'
 #' @examples
-mkdCodeChunkCommented <- function(commentMsg=NULL, message,
+#' rd <- easyreporting$new(filenamepath="./project_report",
+#'                         title="example_report", author=c("It's me"))
+#' rd$mkdCodeChunkCommented(
+#'                 commentMsg="This is the comment of the following code chunk",
+#'                 codeMsg="a <- 1\nb <- 2\n(c <- a+b)\n", optionsList=optList,
+#'                 source.files.list=NULL)
+mkdCodeChunkCommented <- function(commentMsg=NULL, codeMsg,
                                  optionsList=self$getOptionsList(),
                                  source.files.list=NULL)
 {
@@ -397,7 +463,7 @@ mkdCodeChunkCommented <- function(commentMsg=NULL, message,
     {
         self$mkdGeneralMsg(commentMsg)
     }
-    self$mkdCodeChunkComplete(message=message, optionsList=optionsList,
+    self$mkdCodeChunkComplete(message=codeMsg, optionsList=optionsList,
                         source.files.list=source.files.list)
 }
 
