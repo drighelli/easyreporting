@@ -1,6 +1,6 @@
 
 # library(easyreporting)
-devtools::load_all()
+#devtools::load_all()
 ## creating report file with default options on global document
 rd <- easyreporting$new(filenamepath="./project_report", title="example_report",
                         author=c("Dario Righelli"))
@@ -24,8 +24,8 @@ rd$mkdCodeChunkEnd()
 
 ## moreover I can add a list of files to source in che code chunk
 rd$mkdCodeChunkSt(optionsList=optList, source.files.list=
-                      c("R/cachingFunctions.R",
-                      "R/cachingFunctions.R"))
+                      c("R/old/cachingFunctions.R",
+                      "R/old/cachingFunctions.R"))
 rd$mkdCodeChunkEnd()
 
 

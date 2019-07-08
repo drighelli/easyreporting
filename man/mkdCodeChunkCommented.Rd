@@ -26,6 +26,7 @@ comment before of it.
 \examples{
 rd <- easyreporting$new(filenamepath="./project_report",
                         title="example_report", author=c("It's me"))
+optList <- makeOptionsList(includeFlag=TRUE, cacheFlag=TRUE)
 rd$mkdCodeChunkCommented(
                 commentMsg="This is the comment of the following code chunk",
                 codeMsg="a <- 1\\nb <- 2\\n(c <- a+b)\\n", optionsList=optList,

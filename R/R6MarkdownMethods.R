@@ -55,8 +55,6 @@ initReportFilename=function(filenamepath=NULL, mainTitle=NULL,
 #' @return none
 #' @keywords internal
 #'
-#'
-#'
 mkdSetGlobalOpts <- function(optionList)
 {
     options <- paste0("```{r global_options, include=FALSE}\n",
@@ -208,9 +206,7 @@ getOptionsList <- function()
 #' @export
 #'
 #' @examples
-#' rd <- easyreporting$new(filenamepath="./project_report",
-#'                         title="example_report", author=c("It's me"))
-#' optList <- rd$makeOptionsList()
+#' optList <- makeOptionsList()
 makeOptionsList <- function(cacheFlag=TRUE,
                            evalFlag=TRUE,
                            echoFlag=TRUE,
@@ -451,6 +447,7 @@ mkdCodeChunkComplete <- function(message,
 #' @examples
 #' rd <- easyreporting$new(filenamepath="./project_report",
 #'                         title="example_report", author=c("It's me"))
+#' optList <- makeOptionsList(includeFlag=TRUE, cacheFlag=TRUE)
 #' rd$mkdCodeChunkCommented(
 #'                 commentMsg="This is the comment of the following code chunk",
 #'                 codeMsg="a <- 1\nb <- 2\n(c <- a+b)\n", optionsList=optList,

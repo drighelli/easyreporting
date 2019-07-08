@@ -30,7 +30,5 @@ list of rmarkdown options
 makes an list of rmarkdown options
 }
 \examples{
-rd <- easyreporting$new(filenamepath="./project_report",
-                        title="example_report", author=c("It's me"))
-optList <- rd$makeOptionsList()
+optList <- makeOptionsList()
 }

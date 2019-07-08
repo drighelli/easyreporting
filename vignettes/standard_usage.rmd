@@ -1,0 +1,77 @@
+---
+title: "easyreporting standard usage"
+author: "Dario Righelli"
+date: "`r Sys.Date()`"
+output: 
+  BiocStyle::html_document:
+    toc: true
+vignette: >
+  %\VignetteEncoding{UTF-8} 
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+# Requirements 
+
+For the usage you just need to load the **easyreporting** package, which will 
+load the **R6** and **rmarkdown** packages.
+
+```{r}
+library("easyreporting")
+```
+
+# easyreporting instance creation
+
+For simplicity we setup a project directory path starting from the working 
+directory for our report, but you can just enter any path.
+The **filenamepath** and the **title** parameters are mandatory, while the 
+**author(s)** paramenter is optional.
+
+Once created the **easyreporting** class instance, we can use it in our further
+code to make other operations.
+It stores some variables for us, in order to not be called again during next 
+opreations.
+For example the name and the path of the report, the type of report
+and the general rmarkdown options of the document.
+
+
+```{r}
+proj.path <- file.path(getwd(), "project_report")
+
+er <- easyreporting$new(filenamepath=proj.path, title="example_report",
+                        author=c("Dario Righelli"))
+```
+
+# Code Chunks
+
+*Easyreporting* enables to include rmarkdown titles from first (default) to 
+sixth **level**.
+The good norm, when writing reports, is always to add a title to a new code 
+chunk (CC) followed by a natural language text, which describes the CC.
+
+```{r}
+er$mkdTitle(title="First Level Title", level=1)
+
+er$mkdGeneralMsg("A simple paragraph useful to describe my code chunk...")
+```
+
+## Manually creating a code chunk
+
+The most mechanical way to create and populate a CC is to manually open the CC,
+to insert the code, and then to close it.
+Here we show how to insert a variable assignenent inside a CC.
+
+```{r}
+rd$mkdCodeChunkSt()
+variable <- 1
+rd$mkdVariableAssignment("variable", "variable", show=TRUE)
+rd$mkdCodeChunkEnd()
+```
