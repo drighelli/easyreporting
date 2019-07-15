@@ -16,6 +16,7 @@ Depends:
     R6,
     rmarkdown
 Suggests:
-    knitr
+    knitr,
+    readxl
 RoxygenNote: 6.1.1
 VignetteBuilder: knitr
