@@ -5,12 +5,12 @@
 \title{mkdCodeChunkSt}
 \usage{
 mkdCodeChunkSt(optionsList = self$getOptionsList(),
-  source.files.list = NULL)
+  sourceFilesList = NULL)
 }
 \arguments{
 \item{optionsList}{a list of options}
 
-\item{source.files.list}{a list of files that can be sourced inside the code
+\item{sourceFilesList}{a list of files that can be sourced inside the code
 chunk.}
 }
 \value{

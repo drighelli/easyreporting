@@ -5,7 +5,7 @@
 \title{mkdCodeChunkCommented}
 \usage{
 mkdCodeChunkCommented(commentMsg = NULL, codeMsg,
-  optionsList = self$getOptionsList(), source.files.list = NULL)
+  optionsList = self$getOptionsList(), sourceFilesList = NULL)
 }
 \arguments{
 \item{commentMsg}{a string with the natural language comment for the chunk.}
@@ -14,7 +14,7 @@ mkdCodeChunkCommented(commentMsg = NULL, codeMsg,
 
 \item{optionsList}{a list of options (default is the class options).}
 
-\item{source.files.list}{a optional list of files to source inside the chunk.}
+\item{sourceFilesList}{a optional list of files to source inside the chunk.}
 }
 \value{
 none
@@ -30,5 +30,5 @@ optList <- makeOptionsList(includeFlag=TRUE, cacheFlag=TRUE)
 rd$mkdCodeChunkCommented(
                 commentMsg="This is the comment of the following code chunk",
                 codeMsg="a <- 1\\nb <- 2\\n(c <- a+b)\\n", optionsList=optList,
-                source.files.list=NULL)
+                sourceFilesList=NULL)
 }

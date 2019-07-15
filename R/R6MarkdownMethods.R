@@ -298,7 +298,7 @@ mkdVariableAssignment <- function(variable.name, variable.object.name,
 #' @description it creates a code chunk start. A list of options and files to
 #' source  for the chunk can optionally be passed to the function.
 #' @param optionsList a list of options
-#' @param source.files.list a list of files that can be sourced inside the code
+#' @param sourceFilesList a list of files that can be sourced inside the code
 #' chunk.
 #'
 #' @return none
@@ -320,7 +320,7 @@ mkdVariableAssignment <- function(variable.name, variable.object.name,
 #' rd$mkdCodeChunkEnd()
 #'
 mkdCodeChunkSt <- function(optionsList=self$getOptionsList(),
-                        source.files.list=NULL)
+                           sourceFilesList=NULL)
 {
     self.message <- paste0("```{r eval=", optionsList$evalFlag,
                             ", echo=", optionsList$echoFlag,
@@ -335,9 +335,9 @@ mkdCodeChunkSt <- function(optionsList=self$getOptionsList(),
                 append=TRUE,
                 sep="\n")
 
-    if(!is.null(source.files.list))
+    if(!is.null(sourceFilesList))
     {
-        files <- list(source.files.list)
+        files <- list(sourceFilesList)
         self.message <- ""
         for(i in 1:length(files))
         {
@@ -414,7 +414,7 @@ mkdCodeChunkEnd <- function()
 #' @param message a string containing a function call or the entire code chunk
 #' to trace.
 #' @param optionsList a list of options.
-#' @param source.files.list a list of files to source.
+#' @param sourceFilesList a list of files to source.
 #'
 #' @return none
 #' @export
@@ -425,10 +425,10 @@ mkdCodeChunkEnd <- function()
 #' rd$mkdCodeChunkComplete(message="a <- 1\nb <- 2\nc <- a+b\n print(c)")
 mkdCodeChunkComplete <- function(message,
                                 optionsList=self$getOptionsList(),
-                                source.files.list=NULL)
+                                sourceFilesList=NULL)
 {
     self$mkdCodeChunkSt(optionsList=optionsList,
-                        source.files.list=source.files.list)
+                        sourceFilesList=sourceFilesList)
     self$mkdGeneralMsg(message)
     self$mkdCodeChunkEnd()
 }
@@ -439,7 +439,7 @@ mkdCodeChunkComplete <- function(message,
 #' @param commentMsg a string with the natural language comment for the chunk.
 #' @param codeMsg a string within the code.
 #' @param optionsList a list of options (default is the class options).
-#' @param source.files.list a optional list of files to source inside the chunk.
+#' @param sourceFilesList a optional list of files to source inside the chunk.
 #'
 #' @return none
 #' @export
@@ -451,17 +451,17 @@ mkdCodeChunkComplete <- function(message,
 #' rd$mkdCodeChunkCommented(
 #'                 commentMsg="This is the comment of the following code chunk",
 #'                 codeMsg="a <- 1\nb <- 2\n(c <- a+b)\n", optionsList=optList,
-#'                 source.files.list=NULL)
+#'                 sourceFilesList=NULL)
 mkdCodeChunkCommented <- function(commentMsg=NULL, codeMsg,
                                  optionsList=self$getOptionsList(),
-                                 source.files.list=NULL)
+                                 sourceFilesList=NULL)
 {
     if(!is.null(commentMsg))
     {
         self$mkdGeneralMsg(commentMsg)
     }
     self$mkdCodeChunkComplete(message=codeMsg, optionsList=optionsList,
-                        source.files.list=source.files.list)
+                              sourceFilesList=sourceFilesList)
 }
 
 

@@ -6,11 +6,13 @@ output:
   BiocStyle::html_document:
     toc: true
 vignette: >
+  %\VignetteEngine{knitr::knitr}
+  %\VignetteIndexEntry{easyreporting standard usage}
   %\VignetteEncoding{UTF-8} 
 editor_options: 
   chunk_output_type: console
 ---
-
+  
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
@@ -58,7 +60,7 @@ The good norm, when writing reports, is always to add a title to a new code
 chunk (CC) followed by a natural language text, which describes the CC.
 
 ```{r}
-er$mkdTitle(title="First Level Title", level=1)
+er$mkdTitle(title="Code Chunks", level=1)
 
 er$mkdGeneralMsg("A simple paragraph useful to describe my code chunk...")
 ```
@@ -70,8 +72,74 @@ to insert the code, and then to close it.
 Here we show how to insert a variable assignenent inside a CC.
 
 ```{r}
-rd$mkdCodeChunkSt()
+er$mkdTitle(title="Manual code chunk", level=2)
+
+er$mkdCodeChunkSt()
 variable <- 1
-rd$mkdVariableAssignment("variable", "variable", show=TRUE)
-rd$mkdCodeChunkEnd()
+er$mkdVariableAssignment("variable", "variable", show=TRUE)
+er$mkdCodeChunkEnd()
 ```
+
+## Code Chunks Options
+
+By using the standard function *makeOptionsList*, it is possible to create a 
+custom list of options (an *optionsList*),  as described from **rmarkdown**.
+In this way we are able to personalize even single code chunks, depending on 
+specific cases.
+
+Here we create an optionsList where the includeFlag is set to *TRUE* 
+(our default is *FALSE*).
+
+When opening the code chunk, it is possible to pass the new optionsList to the 
+easyreporting class *mkdCodeChunkSt* method.
+
+```{r}
+optList <- makeOptionsList(includeFlag=TRUE)
+er$mkdCodeChunkSt(optionsList=optList)
+er$mkdCodeChunkEnd()
+```
+
+## Adding personal files to source
+
+If you have one or more files with some functions that you want to use inside
+your code, it is possible to add them by using the *sourceFilesList* 
+parameter.
+
+```{r}
+## moreover I can add a list of files to source in che code chunk
+RFilesList <- list.files(system.file("code_example", package="easyreporting"))
+er$mkdCodeChunkSt(optionsList=optList, sourceFilesList=RFilesList)
+er$mkdGeneralMsg(message="v <- fakeFunction(10)")
+er$mkdCodeChunkEnd()
+```
+
+## Complete chunk creation
+
+It is also possible to create a complete chunk by using the 
+*mkdCodeChunkComplete* function.
+
+```{r}
+er$mkdCodeChunkComplete(message="v <- fakeFunction(11)")
+```
+
+Finally, it is possible to create a unique code chunk within all the 
+functionalities desribed before.
+
+```{r}
+optList <- makeOptionsList(includeFlag=TRUE, cacheFlag=TRUE)
+
+er$mkdCodeChunkCommented(commentMsg="This is the comment of the following code chunk",
+                    message="v <- fakeFunction(12)",
+                    optionsList=optList,
+                    sourceFilesList=NULL)
+```
+
+# Compiling
+
+```{r}
+
+```
+
+
+
+

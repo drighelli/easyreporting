@@ -5,7 +5,7 @@
 \title{mkdCodeChunkComplete}
 \usage{
 mkdCodeChunkComplete(message, optionsList = self$getOptionsList(),
-  source.files.list = NULL)
+  sourceFilesList = NULL)
 }
 \arguments{
 \item{message}{a string containing a function call or the entire code chunk
@@ -13,7 +13,7 @@ to trace.}
 
 \item{optionsList}{a list of options.}
 
-\item{source.files.list}{a list of files to source.}
+\item{sourceFilesList}{a list of files to source.}
 }
 \value{
 none
