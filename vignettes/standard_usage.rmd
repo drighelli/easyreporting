@@ -6,12 +6,15 @@ output:
   BiocStyle::html_document:
     toc: true
 vignette: >
-  %\VignetteEngine{knitr::knitr}
-  %\VignetteIndexEntry{easyreporting standard usage}
   %\VignetteEncoding{UTF-8} 
 editor_options: 
   chunk_output_type: console
 ---
+
+<!--
+%\VignetteEngine{knitr::rmarkdown}
+%\VignetteIndexEntry{easyreporting standard usage}
+-->
   
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
@@ -128,10 +131,11 @@ functionalities desribed before.
 ```{r}
 optList <- makeOptionsList(includeFlag=TRUE, cacheFlag=TRUE)
 
-er$mkdCodeChunkCommented(commentMsg="This is the comment of the following code chunk",
-                    message="v <- fakeFunction(12)",
-                    optionsList=optList,
-                    sourceFilesList=NULL)
+er$mkdCodeChunkCommented(
+                commentMsg="This is the comment of the following code chunk",
+                codeMsg="v <- fakeFunction(12)",
+                optionsList=optList,
+                sourceFilesList=NULL)
 ```
 
 # Compiling

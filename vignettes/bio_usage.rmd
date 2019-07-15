@@ -1,0 +1,28 @@
+---
+title: "Bio Pipeline Usage"
+author: "Dario Righelli"
+date: "7/15/2019"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+# Donloading Data
+
+```{r}
+
+countsFile <- system.file("example_data/GSE134118_Table_S3.xlsx", 
+                        package="easyreporting")
+
+geneCounts <- as.data.frame(readxl::read_xlsx(countsFile))
+rownames(geneCounts) <- geneCounts$`Feature ID`
+
+
+
+```
+

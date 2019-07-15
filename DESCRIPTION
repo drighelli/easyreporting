@@ -7,7 +7,7 @@ Author@R: person("Dario", "Righelli", email=dario.righelli@gmail.com,
 Author: Dario Righelli [aut, cre]
 Maintainer: Dario Righelli <dario.righelli@gmail.com>
 Description: An R6 class for facilitating the automation of creation of 
-    rmarkdown files inside other packages/software
+ rmarkdown files inside other packages/software
 License: Artistic-2.0
 Encoding: UTF-8
 biocViews: software, filemanipulation
@@ -15,5 +15,7 @@ LazyData: true
 Depends:
     R6,
     rmarkdown
+Suggests:
+    knitr
 RoxygenNote: 6.1.1
-VignetteBuilder: utils
+VignetteBuilder: knitr
