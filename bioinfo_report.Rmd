@@ -1,0 +1,21 @@
+---
+    title: "bioinfo_report"
+    author: "Dario Righelli"
+    date: "`r Sys.Date()`"
+    output: rmarkdown::html_document
+---
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(eval=TRUE, echo=TRUE, warning=FALSE, message=FALSE, include=TRUE, cache=TRUE)
+```
+
+```{r eval=TRUE, echo=TRUE, warning=FALSE, message=FALSE, include=TRUE, cache=TRUE}
+
+source("/home/dario/R/x86_64-pc-linux-gnu-library/3.6/easyreporting/code_example/importFunctions.R")
+
+
+geneCounts <- importData(system.file('example_data/GSE134118_Table_S3.xlsx', 
+                        package='easyreporting'))
+
+```
+

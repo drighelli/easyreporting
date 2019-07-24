@@ -300,6 +300,7 @@ mkdVariableAssignment <- function(variable.name, variable.object.name,
 #' @param optionsList a list of options
 #' @param sourceFilesList a list of files that can be sourced inside the code
 #' chunk.
+#' @param isComplete a flag determining if the chunk is already a complete chunk
 #'
 #' @return none
 #' @export
@@ -320,7 +321,7 @@ mkdVariableAssignment <- function(variable.name, variable.object.name,
 #' rd$mkdCodeChunkEnd()
 #'
 mkdCodeChunkSt <- function(optionsList=self$getOptionsList(),
-                           sourceFilesList=NULL)
+                           sourceFilesList=NULL, isComplete=FALSE)
 {
     self.message <- paste0("```{r eval=", optionsList$evalFlag,
                             ", echo=", optionsList$echoFlag,
@@ -343,7 +344,7 @@ mkdCodeChunkSt <- function(optionsList=self$getOptionsList(),
         {
             self.message <- paste0(self.message,
                                    "source(\"",
-                                   file.path(getwd(), files[[i]]),
+                                   files[[i]],
                                    "\")\n")
         }
         base::write(self.message,
@@ -352,8 +353,12 @@ mkdCodeChunkSt <- function(optionsList=self$getOptionsList(),
                     append=TRUE,
                     sep="\n")
     }
-    message("Please remember to close the Code Chunk!
-Just invoke mkdCodeChunkEnd() once you complete your function calling :)")
+    if(!isComplete)
+    {
+        message(paste0("Please remember to close the Code Chunk!\n",
+                "Just invoke mkdCodeChunkEnd() once you complete your",
+                " function calling :)"))
+    }
 }
 
 #' mkdSourceFiles
@@ -428,7 +433,8 @@ mkdCodeChunkComplete <- function(message,
                                 sourceFilesList=NULL)
 {
     self$mkdCodeChunkSt(optionsList=optionsList,
-                        sourceFilesList=sourceFilesList)
+                        sourceFilesList=sourceFilesList,
+                        isComplete=TRUE)
     self$mkdGeneralMsg(message)
     self$mkdCodeChunkEnd()
 }

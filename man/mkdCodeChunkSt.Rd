@@ -5,13 +5,15 @@
 \title{mkdCodeChunkSt}
 \usage{
 mkdCodeChunkSt(optionsList = self$getOptionsList(),
-  sourceFilesList = NULL)
+  sourceFilesList = NULL, isComplete = FALSE)
 }
 \arguments{
 \item{optionsList}{a list of options}
 
 \item{sourceFilesList}{a list of files that can be sourced inside the code
 chunk.}
+
+\item{isComplete}{a flag determining if the chunk is already a complete chunk}
 }
 \value{
 none

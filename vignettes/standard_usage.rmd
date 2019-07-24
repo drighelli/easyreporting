@@ -110,7 +110,8 @@ parameter.
 
 ```{r}
 ## moreover I can add a list of files to source in che code chunk
-RFilesList <- list.files(system.file("code_example", package="easyreporting"))
+RFilesList <- list.files(system.file("code_example", package="easyreporting"), 
+                        full.names=TRUE)
 er$mkdCodeChunkSt(optionsList=optList, sourceFilesList=RFilesList)
 er$mkdGeneralMsg(message="v <- fakeFunction(10)")
 er$mkdCodeChunkEnd()
@@ -141,7 +142,7 @@ er$mkdCodeChunkCommented(
 # Compiling
 
 ```{r}
-
+er$compile()
 ```
 
 

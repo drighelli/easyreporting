@@ -17,6 +17,9 @@ Depends:
     rmarkdown
 Suggests:
     knitr,
-    readxl
+    readxl,
+    edgeR,
+    limma, 
+    EDASeq
 RoxygenNote: 6.1.1
 VignetteBuilder: knitr

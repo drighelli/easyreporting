@@ -24,18 +24,77 @@ knitr::opts_chunk$set(
 ```
 
 
-# Donloading Data
+# Requirements 
+
+For the usage you just need to load the **easyreporting** package, which will 
+load the **R6** and **rmarkdown** packages.
 
 ```{r}
-
-countsFile <- system.file("example_data/GSE134118_Table_S3.xlsx", 
-                        package="easyreporting")
-
-geneCounts <- as.data.frame(readxl::read_xlsx(countsFile))
-rownames(geneCounts) <- geneCounts$`Feature ID`
-geneCounts <- geneCounts[,c(2:7)]
-
-factors <- colnames(geneCounts)
-
+library("easyreporting")
 ```
+
+# easyreporting instance creation
+
+For simplicity we setup a project directory path starting from the working 
+directory for our report, but you can just enter any path.
+The **filenamepath** and the **title** parameters are mandatory, while the 
+**author(s)** paramenter is optional.
+
+Once created the **easyreporting** class instance, we can use it in our further
+code to make other operations.
+It stores some variables for us, in order to not be called again during next 
+opreations.
+For example the name and the path of the report, the type of report
+and the general rmarkdown options of the document.
+
+```{r}
+proj.path <- file.path(getwd(), "bioinfo_report")
+
+bioEr <- easyreporting$new(filenamepath=proj.path, title="bioinfo_report",
+                        author=c("Dario Righelli"))
+```
+
+
+# Downloading Data
+
+For this vignette we previously downloaded an xlsx table from GEO with accession
+number [https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE134118](*GSE134118*).
+
+For importing the xls file, we prepared an ad-hoc function called *importData*
+stored in the *importFunctions.R* file.
+
+```{r}
+bioEr$mkdCodeChunkComplete(message="geneCounts <- importData(system.file('example_data/GSE134118_Table_S3.xlsx', 
+                        package='easyreporting'))", 
+                sourceFilesList=system.file("code_example/geneFunctions.R", package="easyreporting"))
+```
+
+# Counts exploration 
+
+```{r}
+bioEr$mkdCodeChunkComplete(message="EDASeq::plotPCA(as.matrix(geneCounts))")
+```
+
+# Differential expression
+
+Let's suppose we stored a function for applying edgeR on our counts in an R file.
+We called the file *geneFunctions.R* and the function *applyEdgeRExample*.
+
+It will be easy for us to source the file and to call the function with a single
+call of easyreporting package.
+
+```{r}
+bioEr$mkdCodeChunkComplete(message="degList <- applyEdgeRExample(counts=geneCounts, samples=colnames(geneCounts), contrast='Pleura - Broth')", 
+                    sourceFilesList=system.file("code_example/geneFunctions.R", 
+                                                package="easyreporting"))
+```
+
+
+
+```{r}
+bioEr$mkdCodeChunkComplete(message="limma::plotMD(degList$test)")
+```
+
+
+
 
