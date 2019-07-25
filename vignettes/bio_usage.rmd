@@ -6,7 +6,7 @@ output:
   BiocStyle::html_document:
     toc: true
 vignette: >
-  %\VignetteEncoding{UTF-8} 
+  %\VignetteEncoding{UTF-8}
 editor_options: 
   chunk_output_type: console
 ---
@@ -55,7 +55,7 @@ bioEr <- easyreporting$new(filenamepath=proj.path, title="bioinfo_report",
 ```
 
 
-# Downloading Data
+# Loading Data
 
 For this vignette we previously downloaded an xlsx table from GEO with accession
 number [https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE134118](*GSE134118*).
@@ -64,14 +64,20 @@ For importing the xls file, we prepared an ad-hoc function called *importData*
 stored in the *importFunctions.R* file.
 
 ```{r}
+bioEr$mkdTitle("Loading Counts Data")
 bioEr$mkdCodeChunkComplete(message="geneCounts <- importData(system.file('example_data/GSE134118_Table_S3.xlsx', 
                         package='easyreporting'))", 
                 sourceFilesList=system.file("code_example/geneFunctions.R", package="easyreporting"))
 ```
 
 # Counts exploration 
+In order to explore the counts we can perform a PCA with *plotPCA* function 
+within the *EDASeq* package.
+To trace this step we again use a *mkdCodeChunkComplete* function, inserting the
+function call as the message to track.
 
 ```{r}
+bioEr$mkdTitle("Plot PCA on count data", level=2)
 bioEr$mkdCodeChunkComplete(message="EDASeq::plotPCA(as.matrix(geneCounts))")
 ```
 
@@ -82,19 +88,35 @@ We called the file *geneFunctions.R* and the function *applyEdgeRExample*.
 
 It will be easy for us to source the file and to call the function with a single
 call of easyreporting package.
+By aid of the *mkdCodeChunkCommented* function we can add a comment preceeding the code chunk.
+
 
 ```{r}
-bioEr$mkdCodeChunkComplete(message="degList <- applyEdgeRExample(counts=geneCounts, samples=colnames(geneCounts), contrast='Pleura - Broth')", 
+bioEr$mkdTitle("Differential Expression Analysis")
+bioEr$mkdCodeChunkCommented(codeMsg="degList <- applyEdgeRExample(counts=geneCounts, samples=colnames(geneCounts), contrast='Pleura - Broth')", 
+                        commentMsg="As we saw from the PCA, the groups are well separated, so we can perform a Differential Expression analysis with edgeR.",
                     sourceFilesList=system.file("code_example/geneFunctions.R", 
                                                 package="easyreporting"))
 ```
 
+## Inspecting DEGs
 
+Usually to have a graphical representation of the obtained results we can plot an 
+MD plot by using the *plotMD* function of the *limma* package.
+
+Also in this case, we create a new title and a new chunk within the function to call.
 
 ```{r}
+bioEr$mkdTitle("MD Plot of DEGs", level=2)
 bioEr$mkdCodeChunkComplete(message="limma::plotMD(degList$test)")
 ```
 
 
+# compiling the report
+Once finished our analysis it is possible to compile the produced rmarkdown report 
+simply by using the *compile* method.
+```{r, eval=FALSE}
+bioEr$compile()
+```
 
 

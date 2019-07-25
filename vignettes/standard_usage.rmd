@@ -141,7 +141,7 @@ er$mkdCodeChunkCommented(
 
 # Compiling
 
-```{r}
+```{r, eval=FALSE}
 er$compile()
 ```
 
