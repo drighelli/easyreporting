@@ -27,6 +27,7 @@ The first one has been designed for illustrating the easy way to implement and u
 ```{r}
 vignette("bio_usage", package="easyreporting")
 ```
+
 ### Standard usage
 
 This one is for illustrating a standard usage of the package showing all its multiple functionalities.
@@ -34,4 +35,5 @@ This one is for illustrating a standard usage of the package showing all its mul
 ```{r}
 vignette("standard_usage", package="easyreporting")
 ```
+
 
