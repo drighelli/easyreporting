@@ -14,5 +14,5 @@ At the current status, the easyiest way to install it is through devtools:
 if (!requireNamespace("devtools", quietly = TRUE))
     install.packages("devtools")
     
-devtools::install_github("drighelli/easyreporting")
+devtools::install_github("drighelli/easyreporting", build_vignettes=TRUE)
 ```
