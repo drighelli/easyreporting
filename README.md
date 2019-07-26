@@ -16,3 +16,22 @@ if (!requireNamespace("devtools", quietly = TRUE))
     
 devtools::install_github("drighelli/easyreporting", build_vignettes=TRUE)
 ```
+
+## Long documentations
+
+The easyreporting package comes with two vignettes to guide the user on its usage:
+
+### Bioinformatics usage
+The first one has been designed for illustrating the easy way to implement and use  easyreporting during bioinformatics analysis.
+
+```{r}
+vignette("bio_usage", package="easyreporting")
+```
+### Standard usage
+
+This one is for illustrating a standard usage of the package showing all its multiple functionalities.
+
+```{r}
+vignette("standard_usage", package="easyreporting")
+```
+
