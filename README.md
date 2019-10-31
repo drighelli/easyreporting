@@ -5,6 +5,7 @@ easyreporting
 
 This package implements an R6 class for facilitating the automation of creation of
  rmarkdown files inside other packages/software.
+ 
 
 ## Installation
 

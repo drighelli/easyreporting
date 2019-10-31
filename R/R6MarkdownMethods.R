@@ -340,7 +340,7 @@ mkdCodeChunkSt <- function(optionsList=self$getOptionsList(),
     {
         files <- list(sourceFilesList)
         self.message <- ""
-        for(i in 1:length(files))
+        for(i in seq_along(files)(files))
         {
             self.message <- paste0(self.message,
                                    "source(\"",

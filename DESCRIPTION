@@ -10,11 +10,12 @@ Description: An R6 class for facilitating the automation of creation of
  rmarkdown files inside other packages/software
 License: Artistic-2.0
 Encoding: UTF-8
-biocViews: software, filemanipulation
+biocViews: ReproducibleResearch
 LazyData: true
 Depends:
     R6,
-    rmarkdown
+    rmarkdown,
+    tools
 Suggests:
     knitr,
     readxl,
