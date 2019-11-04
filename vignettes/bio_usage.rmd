@@ -18,8 +18,9 @@ editor_options:
 
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
+  collapse = FALSE,
+  comment = "#>",
+  eval=FALSE
 )
 ```
 
@@ -70,7 +71,8 @@ stored in the *importFunctions.R* file.
 bioEr$mkdTitle("Loading Counts Data")
 bioEr$mkdCodeChunkComplete(message="geneCounts <- importData(system.file('example_data/GSE134118_Table_S3.xlsx', 
                         package='easyreporting'))", 
-                sourceFilesList=system.file("code_example/geneFunctions.R", package="easyreporting"))
+                sourceFilesList=system.file("code_example/geneFunctions.R", 
+                                            package="easyreporting"))
 ```
 
 # Counts exploration 
