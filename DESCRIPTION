@@ -1,13 +1,14 @@
 Package: easyreporting
 Type: Package
 Title: Helps creating report for improving Reproducible computational Research
-Version: 0.99.1
+Version: 0.99.2
 Author@R: person("Dario", "Righelli", email=dario.righelli@gmail.com, 
  role=c("cre", aut"))
 Author: Dario Righelli [aut, cre]
 Maintainer: Dario Righelli <dario.righelli@gmail.com>
-Description: An R6 class for facilitating the automation of creation of 
- rmarkdown files inside other packages/software
+Description: An R6 class for facilitating the automated creation of 
+ rmarkdown files inside other packages/software, even without knowing rmarkdown
+ language. Best if implemented in functions as "recursive" style programming.
 License: Artistic-2.0
 Encoding: UTF-8
 biocViews: ReproducibleResearch
