@@ -10,13 +10,15 @@
 #' @importFrom tools file_ext
 #'
 #' @return none
-initReportFilename=function(filenamepath=NULL, mainTitle=NULL,
-                            author=NULL, documentType="html",
-                            optionsList=NULL)
+setMethod(f="initReportFilename", signature="easyreporting",
+        definition=function(object, 
+                filenamepath=NULL, title=NULL,
+                author=NULL, optionList=NULL)
 {
     if(is.null(filenamepath)) stop("Report file name is NULL!")
-    if(is.null(mainTitle)) stop("Please provide a title for the document!")
-    documentType <- match.arg(documentType)
+    if(is.null(title)) stop("Please provide a title for the document!")
+    if(object@documentType != "html") stop("documentType has to be HTML!")
+    
     if(!file.exists(filenamepath))
     {
         if(tools::file_ext(filenamepath) != "Rmd")
@@ -26,25 +28,27 @@ initReportFilename=function(filenamepath=NULL, mainTitle=NULL,
         file.create(filenamepath)
     }
 
-    private$filenamePath <- filenamepath
+    object@filenamePath <- filenamepath
 
     if(length(author) > 1)
     {
         message("Only the first author will be put inside the report.")
         author <- author[1]
     }
+    object@author <- author
+    object@title <- title
     ## do not indent!
     header <- paste0(
-    "---
-    title: \"", mainTitle, "\"
-    author: \"", author, "\"
+        "---
+    title: \"", object@title, "\"
+    author: \"", object@author, "\"
     date: \"`r Sys.Date()`\"
-    output: rmarkdown::", documentType, "_document\n---\n")
+    output: rmarkdown::", object@documentType, "_document\n---\n")
 
     base::write(header, file=filenamepath,
                 append=TRUE, sep="\n")
-    private$markdownSetGlobalOpts(optionList=optionsList)
-}
+    mkdSetGlobalOpts(object=object, optionList=optionList)
+})
 
 #' mkdSetGlobalOpts
 #' @description internal function for appending to the report the initial
@@ -55,22 +59,41 @@ initReportFilename=function(filenamepath=NULL, mainTitle=NULL,
 #' @return none
 #' @keywords internal
 #'
-mkdSetGlobalOpts <- function(optionList)
-{
-    options <- paste0("```{r global_options, include=FALSE}\n",
-                    "knitr::opts_chunk$set(",
-                    "eval=", optionList$evalFlag,
-                    ", echo=", optionList$echoFlag,
-                    ", warning=", optionList$warningFlag,
-                    ", message=", optionList$showMessages,
-                    ", include=", optionList$includeFlag,
-                    ", cache=", optionList$cacheFlag,
-                    ")\n```\n")
-
-    base::write(options, file=private$filenamePath,
-                append=TRUE, sep="\n")
-
-}
+setMethod(f="mkdSetGlobalOpts", signature="easyreporting",
+    definition=function(object, optionList=list())
+    {
+        if(!is.null(optionList)) object@optionsList <- optionList
+        options <- paste0("```{r global_options, include=FALSE}\n",
+                          "knitr::opts_chunk$set(",
+                          "eval=", object@optionsList$evalFlag,
+                          ", echo=", object@optionsList$echoFlag,
+                          ", warning=", object@optionsList$warningFlag,
+                          ", message=", object@optionsList$showMessages,
+                          ", include=", object@optionsList$includeFlag,
+                          ", cache=", object@optionsList$cacheFlag,
+                          ")\n```\n")
+        
+        base::write(options, file=object@filenamePath,
+                    append=TRUE, sep="\n")
+    }
+)
+# mkdSetGlobalOpts <- function(optionList=list())
+# {
+#     if(length(optionList)==0) stop("Please provide a list of options!")
+#     options <- paste0("```{r global_options, include=FALSE}\n",
+#                     "knitr::opts_chunk$set(",
+#                     "eval=", optionList$evalFlag,
+#                     ", echo=", optionList$echoFlag,
+#                     ", warning=", optionList$warningFlag,
+#                     ", message=", optionList$showMessages,
+#                     ", include=", optionList$includeFlag,
+#                     ", cache=", optionList$cacheFlag,
+#                     ")\n```\n")
+# 
+#     base::write(options, file=private$filenamePath,
+#                 append=TRUE, sep="\n")
+# 
+# }
 
 #' mkdTitle
 #'
@@ -90,10 +113,10 @@ mkdSetGlobalOpts <- function(optionList)
 #' rd$mkdTitle("First Level Title")
 #' rd$mkdTitle("Second Level Title", level=2)
 #'
-mkdTitle <- function(title, level=1)
+mkdTitle <- function(object, title, level=1)
 {
     if(!is.character(title)) stop("You can enter only string values for title!")
-    if(level > 6) stop("You can use at last level!")
+    if(level > 6) stop("You can use at last level 6!")
 
     message <- paste0(
         strrep("#", times=level),

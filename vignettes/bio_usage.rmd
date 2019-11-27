@@ -26,7 +26,8 @@ knitr::opts_chunk$set(
 
 # Description
 
-A cosa serve?
+This vignettes will guide you throught a tipycal usage of the **easyreporting**
+package, while performing a simplified bioinformatics analysis workflow. 
 
 # Requirements 
 

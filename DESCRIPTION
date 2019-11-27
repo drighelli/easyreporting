@@ -6,7 +6,7 @@ Author@R: person("Dario", "Righelli", email=dario.righelli@gmail.com,
  role=c("cre", aut"))
 Author: Dario Righelli [aut, cre]
 Maintainer: Dario Righelli <dario.righelli@gmail.com>
-Description: An R6 class for facilitating the automated creation of 
+Description: An S4 class for facilitating the automated creation of 
  rmarkdown files inside other packages/software, even without knowing rmarkdown
  language. Best if implemented in functions as "recursive" style programming.
 License: Artistic-2.0
@@ -14,7 +14,6 @@ Encoding: UTF-8
 biocViews: ReproducibleResearch
 LazyData: true
 Depends:
-    R6,
     rmarkdown,
     tools
 Suggests:
@@ -23,5 +22,5 @@ Suggests:
     edgeR,
     limma, 
     EDASeq
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.1
 VignetteBuilder: knitr
