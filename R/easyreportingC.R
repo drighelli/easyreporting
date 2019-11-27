@@ -39,52 +39,11 @@ setMethod(f="initialize",
     signature="easyreporting",
     definition=function(.Object, filenamePath, title, author, optionList=NULL)
     {
-        initReportFilename(object=.Object, filenamepath=filenamePath, 
+        .Object <- initReportFilename(object=.Object, filenamepath=filenamePath, 
                         title=title, author=author, optionList=optionList)
         return(.Object)
     }
 )
-
-
-# easyreporting <- R6::R6Class("easyreporting",
-#    public=list(
-#        initialize=function(filenamepath, title=NULL, author=NULL)
-#        {
-#             private$initReportFilename(filenamepath=filenamepath,
-#                                         mainTitle=title,
-#                                         author=author,
-#                                         optionsList=private$optionsList)
-#        },
-#        setOptionsList=setOptionsList,
-#        getOptionsList=getOptionsList,
-#        mkdGeneralMsg=mkdGeneralMsg,
-#        mkdTitle=mkdTitle,
-#        compile=compile,
-#        getReportFilename=getReportFilename,
-#        mkdVariableAssignment=mkdVariableAssignment,
-#        mkdCodeChunkSt=mkdCodeChunkSt,
-#        mkdCodeChunkEnd=mkdCodeChunkEnd,
-#        mkdSourceFiles=mkdSourceFiles,
-#        mkdCodeChunkComplete=mkdCodeChunkComplete,
-#        mkdCodeChunkCommented=mkdCodeChunkCommented
-#    ),
-#    private=list(
-#         ## methods
-#         initReportFilename=initReportFilename,
-#         markdownSetGlobalOpts=mkdSetGlobalOpts,
-# 
-#         ## attributes
-#         filenamePath=NULL,
-#         optionsList=list(
-#             cacheFlag=TRUE,
-#             evalFlag=TRUE,
-#             echoFlag=TRUE,
-#             warningFlag=FALSE,
-#             showMessages=FALSE,
-#             includeFlag=TRUE
-#         )
-#     )
-# )
 
 
 

@@ -4,9 +4,11 @@
 \alias{mkdTitle}
 \title{mkdTitle}
 \usage{
-mkdTitle(title, level = 1)
+mkdTitle(object, title, level = 1)
 }
 \arguments{
+\item{object}{an easyreporting class object}
+
 \item{title}{a string within the title.}
 
 \item{level}{a numeric from 1 to 6 (default is 1).}
@@ -18,10 +20,10 @@ none
 Inserts an rmarkdown title inside the report.
 }
 \examples{
-rd <- easyreporting$new(filenamepath="./project_report",
+rd <- easyreporting(filenamePath="./project_report",
                         title="example_report", author=c("It's me"))
 
-rd$mkdTitle("First Level Title")
-rd$mkdTitle("Second Level Title", level=2)
+mkdTitle(rd, "First Level Title")
+mkdTitle(rd, "Sub-Title", level=2)
 
 }

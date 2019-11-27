@@ -1,7 +1,8 @@
 #' initReportFilename
 #' @description internal funtion usefull to init the report for the first time.
 #'
-#' @param filenamepath the name of the report with or without the path
+#' @param object an easyreporting class object 
+#' @param filenamePath the name of the report with or without the path
 #' @param mainTitle the title of the report
 #' @param author the name of the report author
 #' @param documentType type of report final document. (html is default)
@@ -9,7 +10,7 @@
 #' @keywords internal
 #' @importFrom tools file_ext
 #'
-#' @return none
+#' @return an easyreporting class object 
 setMethod(f="initReportFilename", signature="easyreporting",
         definition=function(object, 
                 filenamepath=NULL, title=NULL,
@@ -47,16 +48,18 @@ setMethod(f="initReportFilename", signature="easyreporting",
 
     base::write(header, file=filenamepath,
                 append=TRUE, sep="\n")
-    mkdSetGlobalOpts(object=object, optionList=optionList)
+    object <- mkdSetGlobalOpts(object=object, optionList=optionList)
+    return(object)
 })
 
 #' mkdSetGlobalOpts
 #' @description internal function for appending to the report the initial
 #' options setup
 #'
+#' @param object an easyreporting class object
 #' @param optionsList a list of options
 #'
-#' @return none
+#' @return an easyreporting class object
 #' @keywords internal
 #'
 setMethod(f="mkdSetGlobalOpts", signature="easyreporting",
@@ -75,43 +78,26 @@ setMethod(f="mkdSetGlobalOpts", signature="easyreporting",
         
         base::write(options, file=object@filenamePath,
                     append=TRUE, sep="\n")
+        return(object)
     }
 )
-# mkdSetGlobalOpts <- function(optionList=list())
-# {
-#     if(length(optionList)==0) stop("Please provide a list of options!")
-#     options <- paste0("```{r global_options, include=FALSE}\n",
-#                     "knitr::opts_chunk$set(",
-#                     "eval=", optionList$evalFlag,
-#                     ", echo=", optionList$echoFlag,
-#                     ", warning=", optionList$warningFlag,
-#                     ", message=", optionList$showMessages,
-#                     ", include=", optionList$includeFlag,
-#                     ", cache=", optionList$cacheFlag,
-#                     ")\n```\n")
-# 
-#     base::write(options, file=private$filenamePath,
-#                 append=TRUE, sep="\n")
-# 
-# }
 
 #' mkdTitle
 #'
 #' @description Inserts an rmarkdown title inside the report.
-#'
+#' 
+#' @param object an easyreporting class object
 #' @param title a string within the title.
 #' @param level a numeric from 1 to 6 (default is 1).
 #'
 #' @return none
 #' @export
-#'
-#'
 #' @examples
-#' rd <- easyreporting$new(filenamepath="./project_report",
+#' rd <- easyreporting(filenamePath="./project_report",
 #'                         title="example_report", author=c("It's me"))
 #'
-#' rd$mkdTitle("First Level Title")
-#' rd$mkdTitle("Second Level Title", level=2)
+#' mkdTitle(rd, "First Level Title")
+#' mkdTitle(rd, "Sub-Title", level=2)
 #'
 mkdTitle <- function(object, title, level=1)
 {
@@ -123,7 +109,7 @@ mkdTitle <- function(object, title, level=1)
         " ",
         title
     )
-    base::write(message, file=self$getReportFilename(),
+    base::write(message, file=getReportFilename(object),
                 ncolumns=if(is.character(message)) 1 else 5,
                 append=TRUE,
                 sep="\n")
@@ -133,28 +119,31 @@ mkdTitle <- function(object, title, level=1)
 #' @description It appends a general message to the report.
 #' Useful for adding natural language comments.
 #'
+#' @param object an easyreporting class object
 #' @param message the message to append to the report
 #'
 #' @return none
 #' @export
 #'
 #' @examples
-#' rd <- easyreporting$new(filenamepath="./project_report",
+#' rd <- easyreporting(filenamePath="./project_report",
 #'                         title="example_report", author=c("It's me"))
-#' rd$mkdGeneralMsg("Writing a paragraph to describe my code chunk")
-mkdGeneralMsg <- function(message)
-{
-    base::write(x=paste0("\n", message, "\n"), file=self$getReportFilename(),
-                ncolumns=if(is.character(message)) 1 else 5,
-                append=TRUE,
-                sep="\n")
-}
-
+#' mkdGeneralMsg(rd, "Writing a paragraph to describe my code chunk")
+setMethod(f="mkdGeneralMsg", signature="easyreporting",
+    definition=function(object, message)
+    {
+        base::write(x=paste0("\n", message, "\n"), 
+            file=getReportFilename(object),
+            ncolumns=if(is.character(message)) 1 else 5,
+            append=TRUE, sep="\n")
+    }
+)
 
 
 #' setOptionsList
 #' @description set an optionList to the rmarkdown R6 class
-#'
+#' 
+#' @param object an easyreporting class object
 #' @param cacheFlag boolean for caching chunk data (default TRUE)
 #' @param evalFlag boolean for evaluating the code chunk in the compiled version
 #' (default TRUE)
@@ -168,51 +157,61 @@ mkdGeneralMsg <- function(message)
 #' @export
 #'
 #' @examples
-#' rd <- easyreporting$new(filenamepath="./project_report",
+#' rd <- easyreporting(filenamePath="./project_report",
 #'                         title="example_report", author=c("It's me"))
 #'
 #' ## setting default option
-#' rd$setOptionsList()
+#' setOptionsList(rd)
 #'
 #' ## modifying only some options
-#' rd$setOptionsList(warningFlag=TRUE, showMessages=TRUE, includeFlag=TRUE)
-#'
-setOptionsList <- function(cacheFlag=TRUE,
+#' rd <- setOptionsList(rd, warningFlag=TRUE, 
+#'         showMessages=TRUE, includeFlag=TRUE)
+#' 
+setMethod(f="setOptionsList", signature="easyreporting",
+    definition=function(object, 
+                        cacheFlag=TRUE,
                         evalFlag=TRUE,
                         echoFlag=TRUE,
                         warningFlag=FALSE,
                         showMessages=FALSE,
                         includeFlag=TRUE
                         )
-{
-    private$optionsList <- list(
-        cacheFlag=cacheFlag,
-        evalFlag=evalFlag,
-        echoFlag=echoFlag,
-        warningFlag=warningFlag,
-        showMessages=showMessages,
-        includeFlag=includeFlag
-    )
-}
+    {
+        object@optionsList <- list(
+            cacheFlag=cacheFlag,
+            evalFlag=evalFlag,
+            echoFlag=echoFlag,
+            warningFlag=warningFlag,
+            showMessages=showMessages,
+            includeFlag=includeFlag
+        )
+        return(object)
+    }
+)
 
 #' getOptionsList
+#'
 #' @description returns the optionsList from the easyreporting class
+#'
+#' @param object an easyreporting class object
 #'
 #' @return a list of options
 #' @export
 #'
 #' @examples
-#' rd <- easyreporting$new(filenamepath="./project_report",
+#' rd <- easyreporting(filenamePath="./project_report",
 #'                         title="example_report", author=c("It's me"))
-#' optList <- rd$getOptionsList()
+#' optList <- getOptionsList(rd)
 #'
-getOptionsList <- function()
-{
-    return(private$optionsList)
-}
+setMethod(f="getOptionsList",signature="easyreporting", 
+    definition=function(object)
+    {
+        return(object@optionsList)
+    }
+)
 
 
-#' maketOptionsList
+#' makeOptionsList
 #' @description makes an list of rmarkdown options
 #'
 #' @param cacheFlag boolean for caching chunk data (default TRUE)
@@ -249,37 +248,43 @@ makeOptionsList <- function(cacheFlag=TRUE,
 
 #' getReportFilename
 #' @description returns the report filename with path
+#' @param object an easyreporting class object
 #' @return a string of report file name with path
 #' @export
 #'
 #' @examples
-#' rd <- easyreporting$new(filenamepath="./project_report",
+#' rd <- easyreporting(filenamePath="./project_report",
 #'                         title="example_report", author=c("It's me"))
-#' rep <- rd$getReportFilename()
-getReportFilename <- function()
-{
-    return(private$filenamePath)
-}
-
+#' rep <- getReportFilename(rd)
+setMethod(f="getReportFilename", signature="easyreporting", 
+    definition=function(object)
+    {
+        return(object@filenamePath)
+    }
+)
 
 #' compile
 #' @description compiles the rmarkdown file
+#' @param object an easyreporting class object
 #' @return none
 #' @export
 #' @importFrom rmarkdown render
 #' @examples
-#' rd <- easyreporting$new(filenamepath="./project_report",
+#' rd <- easyreporting(filenamePath="./project_report",
 #'                         title="example_report", author=c("It's me"))
-#' rd$compile()
-compile <- function()
-{
-    rmarkdown::render(self$getReportFilename())
-}
-
+#' compile(rd)
+setMethod(f=compile, signature="easyreporting",
+    definition=function(object)
+    {
+        rmarkdown::render(getReportFilename(object))
+    }
+)
 
 #' mkdVariableAssignment
 #' @description it includes a variable assignment in the report.
 #' NB: a call to the "mkdCodeChunkSt" has to be done before using it.
+#'
+#' @param object an easyreporting class object
 #'
 #' @param variable.name a string indicating the name of the variabe to store in
 #' the report. (This can be changed here, but further uses of the variable needs
@@ -294,32 +299,36 @@ compile <- function()
 #'
 #'
 #' @examples
-#' rd <- easyreporting$new(filenamepath="./project_report",
+#' rd <- easyreporting(filenamePath="./project_report",
 #'                         title="example_report", author=c("It's me"))
 #' ## leaving the default options to the code chunk
-#' rd$mkdCodeChunkSt()
+#' mkdCodeChunkSt(rd)
 #' ## adding a variable assignement
 #' variable <- 1
-#' rd$mkdVariableAssignment("variable", "variable", show=TRUE)
-#' rd$mkdCodeChunkEnd()
+#' mkdVariableAssignment(rd, "variable", "variable", show=TRUE)
+#' mkdCodeChunkEnd(rd)
 #'
-mkdVariableAssignment <- function(variable.name, variable.object.name,
-                                show=FALSE)
-{
-    self.message <- paste0(variable.name, " <- \`", variable.object.name,"\`\n")
-    if(show) self.message <- paste0(self.message, "print(", variable.name,")\n")
-    # print(self.message)
-    base::write(self.message,
-                file=self$getReportFilename(),
-                ncolumns=if(is.character(self.message)) 1 else 5,
-                append=TRUE,
-                sep = "\n")
-}
+setMethod(f="mkdVariableAssignment", signature="easyreporting", 
+    definition=function(object, variable.name, variable.object.name, show=FALSE)
+    {
+        self.message <- paste0(variable.name, " <- \`", 
+                            variable.object.name,"\`\n")
+        if(show) self.message <- paste0(self.message, 
+                                    "print(", variable.name,")\n")
+        # print(self.message)
+        base::write(self.message,
+                    file=getReportFilename(object),
+                    ncolumns=if(is.character(self.message)) 1 else 5,
+                    append=TRUE,
+                    sep = "\n")
+    }
+)
 
 
 #' mkdCodeChunkSt
 #' @description it creates a code chunk start. A list of options and files to
 #' source  for the chunk can optionally be passed to the function.
+#' @param object an easyreporting class object
 #' @param optionsList a list of options
 #' @param sourceFilesList a list of files that can be sourced inside the code
 #' chunk.
@@ -330,115 +339,120 @@ mkdVariableAssignment <- function(variable.name, variable.object.name,
 #'
 #'
 #' @examples
-#'  rd <- easyreporting$new(filenamepath="./project_report",
+#' rd <- easyreporting(filenamePath="./project_report",
 #'                         title="example_report", author=c("It's me"))
 #' ## no options
-#' rd$mkdCodeChunkSt()
+#' mkdCodeChunkSt(rd)
 #' ## just leaving empty
-#' rd$mkdCodeChunkEnd()
+#' mkdCodeChunkEnd(rd)
 #'
 #' ## setting options
-#' optList <- makeOptionsList(includeFlag=TRUE)
-#' rd$mkdCodeChunkSt(optionsList=optList)
+#' optList <- makeOptionsList(rd, includeFlag=TRUE)
+#' mkdCodeChunkSt(rd, optionsList=optList)
 #' ## just leaving empty
-#' rd$mkdCodeChunkEnd()
+#' mkdCodeChunkEnd(rd)
 #'
-mkdCodeChunkSt <- function(optionsList=self$getOptionsList(),
-                           sourceFilesList=NULL, isComplete=FALSE)
-{
-    self.message <- paste0("```{r eval=", optionsList$evalFlag,
-                            ", echo=", optionsList$echoFlag,
-                            ", warning=", optionsList$warningFlag,
-                            ", message=", optionsList$showMessages,
-                            ", include=", optionsList$includeFlag,
-                            ", cache=", optionsList$cacheFlag,
-                            "}\n")
-    base::write(self.message,
-                file=self$getReportFilename(),
+setMethod(f="mkdCodeChunkSt", signature="easyreporting", 
+    definition=function(object, optionsList=getOptionsList(object),
+                        sourceFilesList=NULL, isComplete=FALSE)
+    {
+        self.message <- paste0("```{r eval=", optionsList$evalFlag,
+                                ", echo=", optionsList$echoFlag,
+                                ", warning=", optionsList$warningFlag,
+                                ", message=", optionsList$showMessages,
+                                ", include=", optionsList$includeFlag,
+                                ", cache=", optionsList$cacheFlag,
+                                "}\n")
+        base::write(self.message,
+                file=getReportFilename(object),
                 ncolumns=if(is.character(self.message)) 1 else 5,
                 append=TRUE,
                 sep="\n")
-
-    if(!is.null(sourceFilesList))
-    {
-        files <- list(sourceFilesList)
-        self.message <- ""
-        for(i in seq_along(files)(files))
+    
+        if(!is.null(sourceFilesList))
         {
-            self.message <- paste0(self.message,
-                                   "source(\"",
-                                   files[[i]],
-                                   "\")\n")
+            files <- list(sourceFilesList)
+            self.message <- ""
+            for(i in seq_along(files)(files))
+            {
+                self.message <- paste0(self.message,
+                                       "source(\"",
+                                       files[[i]],
+                                       "\")\n")
+            }
+            base::write(self.message,
+                        file=getReportFilename(object),
+                        ncolumns=if(is.character(self.message)) 1 else 5,
+                        append=TRUE,
+                        sep="\n")
         }
-        base::write(self.message,
-                    file=self$getReportFilename(),
-                    ncolumns=if(is.character(self.message)) 1 else 5,
-                    append=TRUE,
-                    sep="\n")
+        if(!isComplete)
+        {
+            message(paste0("Please remember to close the Code Chunk!\n",
+                    "Just invoke mkdCodeChunkEnd() once you complete your",
+                    " function calling :)"))
+        }
     }
-    if(!isComplete)
-    {
-        message(paste0("Please remember to close the Code Chunk!\n",
-                "Just invoke mkdCodeChunkEnd() once you complete your",
-                " function calling :)"))
-    }
-}
+)
 
 #' mkdSourceFiles
 #' @description includes a list of source files inside the rmarkdown
-#'
+#' @param object an easyreporting class object
 #' @param ... a list of files to source
 #'
 #' @return none
 #'
 #' @keywords internal
-mkdSourceFiles <- function(...)
-{
-    files <- list(...)
-    self.message <- ""
-    for(i in 1:length(files))
+setMethod(f="mkdSourceFiles", signature="easyreporting", 
+          definition=function(object, ...)
     {
-        self.message <- paste0(self.message,
-                            "source(\"",
-                            file.path(getwd(), files[[i]]),
-                            "\")\n")
+        files <- list(...)
+        self.message <- ""
+        for(i in 1:length(files))
+        {
+            self.message <- paste0(self.message,
+                                "source(\"",
+                                file.path(getwd(), files[[i]]),
+                                "\")\n")
+        }
+        base::write(self.message,
+            file=getReportFilename(object),
+            ncolumns=if(is.character(self.message)) 1 else 5,
+            append=TRUE,
+            sep="\n")
     }
-    base::write(self.message,
-                file=self$getReportFilename(),
-                ncolumns=if(is.character(self.message)) 1 else 5,
-                append=TRUE,
-                sep="\n")
-}
+)
 
 
 #' mkdCodeChunkEnd
 #' @description it creates a code chunk end. Always use it after a
 #' mkdCodeChunkSt()
-#'
+#' @param object an easyreporting class object
 #' @return none
 #'
 #' @export
 #'
 #' @examples
-#'  rd <- easyreporting$new(filenamepath="./project_report",
+#'  rd <- easyreporting(filenamepath="./project_report",
 #'                         title="example_report", author=c("It's me"))
-#' rd$mkdCodeChunkSt()
+#' mkdCodeChunkSt(rd)
 #' ## just leaving empty
-#' rd$mkdCodeChunkEnd()
-mkdCodeChunkEnd <- function()
-{
-    self.message <- paste0("```\n")
-    base::write(self.message,
-            file=self$getReportFilename(),
+#' mkdCodeChunkEnd(rd)
+setMethod(f="mkdCodeChunkEnd", signature="easyreporting", 
+          definition=function(object)
+    {
+        self.message <- paste0("```\n")
+        base::write(self.message,
+            file=getReportFilename(object),
             ncolumns=if(is.character(self.message)) 1 else 5,
             append=TRUE,
             sep="\n")
-}
-
-
+    }
+)
 
 #' mkdCodeChunkComplete
 #' @description it creates a complete code chunk.
+#' @param object an easyreporting class object
 #' @param message a string containing a function call or the entire code chunk
 #' to trace.
 #' @param optionsList a list of options.
@@ -448,23 +462,26 @@ mkdCodeChunkEnd <- function()
 #' @export
 #'
 #' @examples
-#'  rd <- easyreporting$new(filenamepath="./project_report",
+#'  rd <- easyreporting(filenamepath="./project_report",
 #'                         title="example_report", author=c("It's me"))
-#' rd$mkdCodeChunkComplete(message="a <- 1\nb <- 2\nc <- a+b\n print(c)")
-mkdCodeChunkComplete <- function(message,
-                                optionsList=self$getOptionsList(),
-                                sourceFilesList=NULL)
-{
-    self$mkdCodeChunkSt(optionsList=optionsList,
+#' mkdCodeChunkComplete(rd, message="a <- 1\nb <- 2\nc <- a+b\n print(c)")
+setMethod(f="mkdCodeChunkComplete", signature="easyreporting", 
+    definition=function(object, message,
+                optionsList=getOptionsList(object),
+                sourceFilesList=NULL)
+    {
+        mkdCodeChunkSt(object, optionsList=optionsList,
                         sourceFilesList=sourceFilesList,
                         isComplete=TRUE)
-    self$mkdGeneralMsg(message)
-    self$mkdCodeChunkEnd()
-}
+        mkdGeneralMsg(object, message)
+        mkdCodeChunkEnd(object)
+    }
+)
 
 #' mkdCodeChunkCommented
 #' @description it creates a complete code chunk, adding a natural language
 #' comment before of it.
+#' @param object an easyreporting class object
 #' @param commentMsg a string with the natural language comment for the chunk.
 #' @param codeMsg a string within the code.
 #' @param optionsList a list of options (default is the class options).
@@ -477,21 +494,24 @@ mkdCodeChunkComplete <- function(message,
 #' rd <- easyreporting$new(filenamepath="./project_report",
 #'                         title="example_report", author=c("It's me"))
 #' optList <- makeOptionsList(includeFlag=TRUE, cacheFlag=TRUE)
-#' rd$mkdCodeChunkCommented(
+#' mkdCodeChunkCommented(rd,
 #'                 commentMsg="This is the comment of the following code chunk",
 #'                 codeMsg="a <- 1\nb <- 2\n(c <- a+b)\n", optionsList=optList,
 #'                 sourceFilesList=NULL)
-mkdCodeChunkCommented <- function(commentMsg=NULL, codeMsg,
-                                 optionsList=self$getOptionsList(),
+#'
+setMethod(f="mkdCodeChunkCommented", signature="easyreporting", 
+          definition=function(object, commentMsg=NULL, codeMsg,
+                                 optionsList=getOptionsList(object),
                                  sourceFilesList=NULL)
-{
-    if(!is.null(commentMsg))
     {
-        self$mkdGeneralMsg(commentMsg)
+        if(!is.null(commentMsg))
+        {
+            mkdGeneralMsg(object, commentMsg)
+        }
+        mkdCodeChunkComplete(object, message=codeMsg, optionsList=optionsList,
+                                  sourceFilesList=sourceFilesList)
     }
-    self$mkdCodeChunkComplete(message=codeMsg, optionsList=optionsList,
-                              sourceFilesList=sourceFilesList)
-}
+)
 
 
 

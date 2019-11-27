@@ -2,7 +2,7 @@
 % Please edit documentation in R/easyreportingM.R
 \name{makeOptionsList}
 \alias{makeOptionsList}
-\title{maketOptionsList}
+\title{makeOptionsList}
 \usage{
 makeOptionsList(
   cacheFlag = TRUE,

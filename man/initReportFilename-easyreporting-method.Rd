@@ -7,23 +7,24 @@
 \S4method{initReportFilename}{easyreporting}(
   object,
   filenamepath = NULL,
-  mainTitle = NULL,
+  title = NULL,
   author = NULL,
-  documentType = "html",
-  optionsList = NULL
+  optionList = NULL
 )
 }
 \arguments{
-\item{filenamepath}{the name of the report with or without the path}
-
-\item{mainTitle}{the title of the report}
+\item{object}{an easyreporting class object}
 
 \item{author}{the name of the report author}
+
+\item{filenamePath}{the name of the report with or without the path}
+
+\item{mainTitle}{the title of the report}
 
 \item{documentType}{type of report final document. (html is default)}
 }
 \value{
-none
+an easyreporting class object
 }
 \description{
 internal funtion usefull to init the report for the first time.
