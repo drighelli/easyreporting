@@ -30,5 +30,5 @@ it creates a complete code chunk.
 \examples{
  rd <- easyreporting(filenamepath="./project_report",
                         title="example_report", author=c("It's me"))
-mkdCodeChunkComplete(rd, message="a <- 1\nb <- 2\nc <- a+b\n print(c)")
+mkdCodeChunkComplete(rd, message="a <- 1\\nb <- 2\\nc <- a+b\\n print(c)")
 }

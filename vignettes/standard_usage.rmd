@@ -52,7 +52,7 @@ and the general rmarkdown options of the document.
 ```{r}
 proj.path <- file.path(getwd(), "project_report")
 
-er <- easyreporting$new(filenamepath=proj.path, title="example_report",
+er <- easyreporting(filenamepath=proj.path, title="example_report",
                         author=c("Dario Righelli"))
 ```
 
@@ -64,9 +64,9 @@ The good norm, when writing reports, is always to add a title to a new code
 chunk (CC) followed by a natural language text, which describes the CC.
 
 ```{r}
-er$mkdTitle(title="Code Chunks", level=1)
+mkdTitle(er, title="Code Chunks", level=1)
 
-er$mkdGeneralMsg("A simple paragraph useful to describe my code chunk...")
+mkdGeneralMsg(er, "A simple paragraph useful to describe my code chunk...")
 ```
 
 ## Manually creating a code chunk
@@ -76,12 +76,12 @@ to insert the code, and then to close it.
 Here we show how to insert a variable assignenent inside a CC.
 
 ```{r}
-er$mkdTitle(title="Manual code chunk", level=2)
+mkdTitle(er, title="Manual code chunk", level=2)
 
-er$mkdCodeChunkSt()
+mkdCodeChunkSt(er)
 variable <- 1
-er$mkdVariableAssignment("variable", "variable", show=TRUE)
-er$mkdCodeChunkEnd()
+mkdVariableAssignment(er, "variable", "variable", show=TRUE)
+mkdCodeChunkEnd(er)
 ```
 
 ## Code Chunks Options
@@ -99,8 +99,8 @@ easyreporting class *mkdCodeChunkSt* method.
 
 ```{r}
 optList <- makeOptionsList(includeFlag=TRUE)
-er$mkdCodeChunkSt(optionsList=optList)
-er$mkdCodeChunkEnd()
+mkdCodeChunkSt(er, optionsList=optList)
+mkdCodeChunkEnd(er)
 ```
 
 ## Adding personal files to source
@@ -113,9 +113,9 @@ parameter.
 ## moreover I can add a list of files to source in che code chunk
 RFilesList <- list.files(system.file("code_example", package="easyreporting"), 
                         full.names=TRUE)
-er$mkdCodeChunkSt(optionsList=optList, sourceFilesList=RFilesList)
-er$mkdGeneralMsg(message="v <- fakeFunction(10)")
-er$mkdCodeChunkEnd()
+mkdCodeChunkSt(er, optionsList=optList, sourceFilesList=RFilesList)
+mkdGeneralMsg(er, message="v <- fakeFunction(10)")
+mkdCodeChunkEnd(er)
 ```
 
 ## Complete chunk creation
@@ -124,7 +124,7 @@ It is also possible to create a complete chunk by using the
 *mkdCodeChunkComplete* function.
 
 ```{r}
-er$mkdCodeChunkComplete(message="v <- fakeFunction(11)")
+mkdCodeChunkComplete(er, message="v <- fakeFunction(11)")
 ```
 
 Finally, it is possible to create a unique code chunk within all the 
@@ -133,7 +133,7 @@ functionalities desribed before.
 ```{r}
 optList <- makeOptionsList(includeFlag=TRUE, cacheFlag=TRUE)
 
-er$mkdCodeChunkCommented(
+mkdCodeChunkCommented(er, 
                 commentMsg="This is the comment of the following code chunk",
                 codeMsg="v <- fakeFunction(12)",
                 optionsList=optList,
@@ -143,7 +143,7 @@ er$mkdCodeChunkCommented(
 # Compiling
 
 ```{r, eval=FALSE}
-er$compile()
+compile(er)
 ```
 
 

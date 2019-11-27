@@ -255,7 +255,7 @@ makeOptionsList <- function(cacheFlag=TRUE,
 #' @examples
 #' rd <- easyreporting(filenamePath="./project_report",
 #'                         title="example_report", author=c("It's me"))
-#' rep <- getReportFilename(rd)
+#' (rep <- getReportFilename(rd))
 setMethod(f="getReportFilename", signature="easyreporting", 
     definition=function(object)
     {
@@ -491,7 +491,7 @@ setMethod(f="mkdCodeChunkComplete", signature="easyreporting",
 #' @export
 #'
 #' @examples
-#' rd <- easyreporting$new(filenamepath="./project_report",
+#' rd <- easyreporting(filenamepath="./project_report",
 #'                         title="example_report", author=c("It's me"))
 #' optList <- makeOptionsList(includeFlag=TRUE, cacheFlag=TRUE)
 #' mkdCodeChunkCommented(rd,
