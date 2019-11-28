@@ -2,17 +2,18 @@
 % Please edit documentation in R/easyreportingG.R
 \name{mkdCodeChunkEnd}
 \alias{mkdCodeChunkEnd}
-\title{mkdCodeChunkEnd-generic}
+\title{mkdCodeChunkEnd}
 \usage{
 mkdCodeChunkEnd(object)
 }
 \arguments{
-\item{object}{a general object}
+\item{object}{an easyreporting class object}
 }
 \value{
 none
 }
 \description{
-mkdCodeChunkEnd-generic
+it creates a code chunk end. Always use it after a
+mkdCodeChunkSt()
 }
 \keyword{internal}

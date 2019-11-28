@@ -2,20 +2,30 @@
 % Please edit documentation in R/easyreportingG.R
 \name{mkdCodeChunkComplete}
 \alias{mkdCodeChunkComplete}
-\title{mkdCodeChunkComplete-generic}
+\title{mkdCodeChunkComplete}
 \usage{
-mkdCodeChunkComplete(object, ...)
+mkdCodeChunkComplete(
+  object,
+  message,
+  optionList = getOptionsList(object),
+  sourceFilesList = NULL
+)
 }
 \arguments{
-\item{object}{a general object}
+\item{object}{an easyreporting class object}
 
-\item{...}{whatever}
+\item{message}{a string containing a function call or the entire code chunk
+to trace.}
+
+\item{optionList}{a list of options.}
+
+\item{sourceFilesList}{a list of files to source.}
 }
 \value{
 none
 }
 \description{
-mkdCodeChunkComplete-generic
+it creates a complete code chunk.
 }
 \examples{
  rd <- easyreporting(filenamePath="./project_report",

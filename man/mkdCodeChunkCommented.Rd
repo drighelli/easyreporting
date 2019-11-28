@@ -2,20 +2,33 @@
 % Please edit documentation in R/easyreportingG.R
 \name{mkdCodeChunkCommented}
 \alias{mkdCodeChunkCommented}
-\title{mkdCodeChunkCommented-generic}
+\title{mkdCodeChunkCommented}
 \usage{
-mkdCodeChunkCommented(object, ...)
+mkdCodeChunkCommented(
+  object,
+  commentMsg = NULL,
+  codeMsg,
+  optionList = getOptionsList(object),
+  sourceFilesList = NULL
+)
 }
 \arguments{
-\item{object}{a general object}
+\item{object}{an easyreporting class object}
 
-\item{...}{whatever}
+\item{commentMsg}{a string with the natural language comment for the chunk.}
+
+\item{codeMsg}{a string within the code.}
+
+\item{optionList}{a list of options (default is the class options).}
+
+\item{sourceFilesList}{a optional list of files to source inside the chunk.}
 }
 \value{
 none
 }
 \description{
-mkdCodeChunkCommented-generic
+it creates a complete code chunk, adding a natural language
+comment before of it.
 }
 \examples{
 rd <- easyreporting(filenamePath="./project_report",

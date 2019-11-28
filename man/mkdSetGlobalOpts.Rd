@@ -2,19 +2,19 @@
 % Please edit documentation in R/easyreportingG.R
 \name{mkdSetGlobalOpts}
 \alias{mkdSetGlobalOpts}
-\title{mkdSetGlobalOpts-generic}
+\title{mkdSetGlobalOpts}
 \usage{
-mkdSetGlobalOpts(object, ...)
+mkdSetGlobalOpts(object, optionList = list())
 }
 \arguments{
-\item{object}{a general object}
+\item{object}{an easyreporting class object}
 
-\item{...}{whatever}
+\item{optionList}{a list of options}
 }
 \value{
-none
+an easyreporting class object
 }
 \description{
-mkdSetGlobalOpts-generic
+mkdSetGlobalOpts
 }
 \keyword{internal}

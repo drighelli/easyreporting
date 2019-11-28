@@ -2,19 +2,31 @@
 % Please edit documentation in R/easyreportingG.R
 \name{initReportFilename}
 \alias{initReportFilename}
-\title{initReportFilename-generic}
+\title{initReportFilename}
 \usage{
-initReportFilename(object, ...)
+initReportFilename(
+  object,
+  filenamepath = NULL,
+  title = NULL,
+  author = NULL,
+  optionList = NULL
+)
 }
 \arguments{
-\item{object}{a general object}
+\item{object}{an easyreporting class object}
 
-\item{...}{whatever}
+\item{filenamepath}{the name of the report with or without the path}
+
+\item{author}{the name of the report author}
+
+\item{mainTitle}{the title of the report}
+
+\item{documentType}{type of report final document. (html is default)}
 }
 \value{
-none
+an easyreporting class object
 }
 \description{
-initReportFilename-generic
+initReportFilename
 }
 \keyword{internal}

@@ -316,8 +316,8 @@ setMethod(f="compile", signature="easyreporting",
 setMethod(f="mkdVariableAssignment", signature="easyreporting", 
     definition=function(object, variable.name, variable.object.name, show=FALSE)
     {
-        self.message <- paste0(variable.name, " <- \`", 
-                            variable.object.name,"\`\n")
+        self.message <- paste0(variable.name, " <- ", 
+                            variable.object.name,"\n")
         if(show) self.message <- paste0(self.message, 
                                     "print(", variable.name,")\n")
         # print(self.message)
@@ -376,9 +376,9 @@ setMethod(f="mkdCodeChunkSt", signature="easyreporting",
     
         if(!is.null(sourceFilesList))
         {
-            files <- list(sourceFilesList)
+            files <- sourceFilesList
             self.message <- ""
-            for(i in seq_along(files)(files))
+            for(i in seq_along(files))
             {
                 self.message <- paste0(self.message,
                                        "source(\"",

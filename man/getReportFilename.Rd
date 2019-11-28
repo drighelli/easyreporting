@@ -2,7 +2,7 @@
 % Please edit documentation in R/easyreportingG.R
 \name{getReportFilename}
 \alias{getReportFilename}
-\title{getReportFilename-generic}
+\title{getReportFilename}
 \usage{
 getReportFilename(object)
 }
@@ -10,10 +10,10 @@ getReportFilename(object)
 \item{object}{a general object}
 }
 \value{
-none
+a string of report file name with path
 }
 \description{
-getReportFilename-generic
+getReportFilename
 }
 \examples{
 rd <- easyreporting(filenamePath="./project_report",

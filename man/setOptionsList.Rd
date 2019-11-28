@@ -2,20 +2,40 @@
 % Please edit documentation in R/easyreportingG.R
 \name{setOptionsList}
 \alias{setOptionsList}
-\title{setOptionsList-generic}
+\title{setOptionsList}
 \usage{
-setOptionsList(object, ...)
+setOptionsList(
+  object,
+  cacheFlag = TRUE,
+  evalFlag = TRUE,
+  echoFlag = TRUE,
+  warningFlag = FALSE,
+  showMessages = FALSE,
+  includeFlag = TRUE
+)
 }
 \arguments{
-\item{object}{a general object}
+\item{object}{an easyreporting class object}
 
-\item{...}{whatever}
+\item{cacheFlag}{boolean for caching chunk data (default TRUE)}
+
+\item{evalFlag}{boolean for evaluating the code chunk in the compiled version
+(default TRUE)}
+
+\item{echoFlag}{boolean for showing the code chunk (default TRUE)}
+
+\item{warningFlag}{boolean for showing the chunk warnings (default FALSE)}
+
+\item{showMessages}{boolean for showing the chunk warnings in compiled}
+
+\item{includeFlag}{boolean for including the code chunk in the compiled
+version (default TRUE)}
 }
 \value{
 none
 }
 \description{
-setOptionsList-generic
+setOptionsList
 }
 \examples{
 rd <- easyreporting(filenamePath="./project_report",

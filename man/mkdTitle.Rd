@@ -2,20 +2,22 @@
 % Please edit documentation in R/easyreportingG.R
 \name{mkdTitle}
 \alias{mkdTitle}
-\title{mkdTitle-generic}
+\title{mkdTitle}
 \usage{
-mkdTitle(object, ...)
+mkdTitle(object, title, level = 1)
 }
 \arguments{
-\item{object}{a general object}
+\item{object}{an easyreporting class object}
 
-\item{...}{whatever}
+\item{title}{a string within the title.}
+
+\item{level}{a numeric from 1 to 6 (default is 1).}
 }
 \value{
 none
 }
 \description{
-mkdTitle-generic
+mkdTitle
 }
 \examples{
 rd <- easyreporting(filenamePath="./project_report",

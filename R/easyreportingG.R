@@ -1,29 +1,37 @@
-#' initReportFilename-generic
+#' initReportFilename
 #'
-#' @param object a general object 
-#' @param ... whatever
+#' @param object an easyreporting class object 
+#' @param filenamepath the name of the report with or without the path
+#' @param mainTitle the title of the report
+#' @param author the name of the report author
+#' @param documentType type of report final document. (html is default)
 #'
-#' @return none
+#' @return an easyreporting class object 
 #' @keywords internal
 setGeneric (
     name="initReportFilename",
-    def=function(object, ...){standardGeneric("initReportFilename")}
+    def=function(object, filenamepath=NULL, title=NULL,
+                 author=NULL, optionList=NULL)
+    {
+        standardGeneric("initReportFilename")
+    }
 )
-#' mkdSetGlobalOpts-generic
+#' mkdSetGlobalOpts
 #'
-#' @param object a general object 
-#' @param ... whatever
+#' @param object an easyreporting class object
+#' @param optionList a list of options
 #'
-#' @return none
+#' @return an easyreporting class object
 #' @keywords internal
 setGeneric (
     name="mkdSetGlobalOpts",
-    def=function(object, ...){standardGeneric("mkdSetGlobalOpts")}
+    def=function(object, optionList=list()){standardGeneric("mkdSetGlobalOpts")}
 )
-#' mkdTitle-generic
+#' mkdTitle
 #'
-#' @param object a general object 
-#' @param ... whatever
+#' @param object an easyreporting class object
+#' @param title a string within the title.
+#' @param level a numeric from 1 to 6 (default is 1).
 #'
 #' @return none
 #' @export
@@ -36,13 +44,13 @@ setGeneric (
 #'
 setGeneric (
     name="mkdTitle",
-    def=function(object, ...){standardGeneric("mkdTitle")}
+    def=function(object, title, level=1){standardGeneric("mkdTitle")}
 )
-#' getReportFilename-generic
+#' getReportFilename
 #'
 #' @param object a general object 
 #'
-#' @return none
+#' @return a string of report file name with path
 #' @export
 #'
 #' @examples
@@ -53,10 +61,10 @@ setGeneric (
     name="getReportFilename",
     def=function(object){standardGeneric("getReportFilename")}
 )
-#' mkdGeneralMsg-generic
+#' mkdGeneralMsg
 #'
-#' @param object a general object 
-#' @param ... whatever
+#' @param object an easyreporting class object
+#' @param message the message to append to the report
 #'
 #' @return none
 #' @export
@@ -69,10 +77,17 @@ setGeneric (
     name="mkdGeneralMsg",
     def=function(object, ...){standardGeneric("mkdGeneralMsg")}
 )
-#' setOptionsList-generic
+#' setOptionsList
 #'
-#' @param object a general object 
-#' @param ... whatever
+#' @param object an easyreporting class object
+#' @param cacheFlag boolean for caching chunk data (default TRUE)
+#' @param evalFlag boolean for evaluating the code chunk in the compiled version
+#' (default TRUE)
+#' @param echoFlag boolean for showing the code chunk (default TRUE)
+#' @param warningFlag boolean for showing the chunk warnings (default FALSE)
+#' @param showMessages boolean for showing the chunk warnings in compiled
+#' @param includeFlag boolean for including the code chunk in the compiled
+#' version (default TRUE)
 #'
 #' @return none
 #' @export
@@ -90,13 +105,15 @@ setGeneric (
 #' 
 setGeneric (
     name="setOptionsList",
-    def=function(object, ...){standardGeneric("setOptionsList")}
+    def=function(object, cacheFlag=TRUE, evalFlag=TRUE, echoFlag=TRUE, 
+                 warningFlag=FALSE, showMessages=FALSE, includeFlag=TRUE)
+    {standardGeneric("setOptionsList")}
 )
-#' getOptionsList-generic
+#' getOptionsList
 #'
 #' @param object a general object 
 #'
-#' @return none
+#' @return a list of options
 #' @export
 #'
 #' @examples
@@ -119,15 +136,24 @@ setGeneric (
 #' rd <- easyreporting(filenamePath="./project_report", title="example_report",
 #'                         author=c("It's me"))
 #' compile(rd)
-#' 
 setGeneric (
     name="compile",
     def=function(object){standardGeneric("compile")}
 )
-#' mkdVariableAssignment-generic
+#' mkdVariableAssignment
 #'
-#' @param object a general object 
-#' @param ... whatever
+#' @description it includes a variable assignment in the report.
+#' NB: a call to the "mkdCodeChunkSt" has to be done before using it.
+#'
+#' @param object an easyreporting class object
+#'
+#' @param variable.name a string indicating the name of the variabe to store in
+#' the report. (This can be changed here, but further uses of the variable needs
+#' to take into account the variable name change).
+#' @param variable.object.name the name of the already existing variable. (This
+#' cannot be canged.)
+#' @param show a boolean indicating if to show the message before writing it
+#' into the rmardown file.
 #'
 #' @return none
 #' @export
@@ -145,10 +171,14 @@ setGeneric (
     name="mkdVariableAssignment",
     def=function(object, ...){standardGeneric("mkdVariableAssignment")}
 )
-#' mkdCodeChunkSt-generic
-#'
-#' @param object a general object 
-#' @param ... whatever
+#' mkdCodeChunkSt
+#' @description it creates a code chunk start. A list of options and files to
+#' source  for the chunk can optionally be passed to the function.
+#' @param object an easyreporting class object
+#' @param optionList a list of options
+#' @param sourceFilesList a list of files that can be sourced inside the code
+#' chunk.
+#' @param isComplete a flag determining if the chunk is already a complete chunk
 #'
 #' @return none
 #' @keywords internal
@@ -156,31 +186,35 @@ setGeneric (
     name="mkdCodeChunkSt",
     def=function(object, ...){standardGeneric("mkdCodeChunkSt")}
 )
-#' mkdSourceFiles-generic
-#'
-#' @param object a general object 
-#' @param ... whatever
+#' mkdSourceFiles
+#' @description includes a list of source files inside the rmarkdown
+#' @param object an easyreporting class object
+#' @param ... a list of files to source
 #'
 #' @return none
+#'
 #' @keywords internal
 setGeneric (
     name="mkdSourceFiles",
     def=function(object, ...){standardGeneric("mkdSourceFiles")}
 )
-#' mkdCodeChunkEnd-generic
-#'
-#' @param object a general object 
-#'
+#' mkdCodeChunkEnd
+#' @description it creates a code chunk end. Always use it after a
+#' mkdCodeChunkSt()
+#' @param object an easyreporting class object
 #' @return none
 #' @keywords internal
 setGeneric (
     name="mkdCodeChunkEnd",
     def=function(object){standardGeneric("mkdCodeChunkEnd")}
 )
-#' mkdCodeChunkComplete-generic
-#'
-#' @param object a general object 
-#' @param ... whatever
+#' mkdCodeChunkComplete
+#' @description it creates a complete code chunk.
+#' @param object an easyreporting class object
+#' @param message a string containing a function call or the entire code chunk
+#' to trace.
+#' @param optionList a list of options.
+#' @param sourceFilesList a list of files to source.
 #'
 #' @return none
 #' @export
@@ -191,12 +225,18 @@ setGeneric (
 #' mkdCodeChunkComplete(rd, message="a <- 1\nb <- 2\nc <- a+b\n print(c)")
 setGeneric (
     name="mkdCodeChunkComplete",
-    def=function(object, ...){standardGeneric("mkdCodeChunkComplete")}
+    def=function(object, message,
+                 optionList=getOptionsList(object),
+                 sourceFilesList=NULL){standardGeneric("mkdCodeChunkComplete")}
 )
-#' mkdCodeChunkCommented-generic
-#'
-#' @param object a general object 
-#' @param ... whatever
+#' mkdCodeChunkCommented
+#' @description it creates a complete code chunk, adding a natural language
+#' comment before of it.
+#' @param object an easyreporting class object
+#' @param commentMsg a string with the natural language comment for the chunk.
+#' @param codeMsg a string within the code.
+#' @param optionList a list of options (default is the class options).
+#' @param sourceFilesList a optional list of files to source inside the chunk.
 #'
 #' @return none
 #' @export
@@ -212,7 +252,9 @@ setGeneric (
 #'
 setGeneric (
     name="mkdCodeChunkCommented",
-    def=function(object, ...){standardGeneric("mkdCodeChunkCommented")}
+    def=function(object, commentMsg=NULL, codeMsg,
+                 optionList=getOptionsList(object),
+                 sourceFilesList=NULL){standardGeneric("mkdCodeChunkCommented")}
 )
 
 

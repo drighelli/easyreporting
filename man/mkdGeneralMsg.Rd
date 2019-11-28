@@ -2,20 +2,20 @@
 % Please edit documentation in R/easyreportingG.R
 \name{mkdGeneralMsg}
 \alias{mkdGeneralMsg}
-\title{mkdGeneralMsg-generic}
+\title{mkdGeneralMsg}
 \usage{
 mkdGeneralMsg(object, ...)
 }
 \arguments{
-\item{object}{a general object}
+\item{object}{an easyreporting class object}
 
-\item{...}{whatever}
+\item{message}{the message to append to the report}
 }
 \value{
 none
 }
 \description{
-mkdGeneralMsg-generic
+mkdGeneralMsg
 }
 \examples{
 rd <- easyreporting(filenamePath="./project_report",

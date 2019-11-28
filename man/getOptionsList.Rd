@@ -2,7 +2,7 @@
 % Please edit documentation in R/easyreportingG.R
 \name{getOptionsList}
 \alias{getOptionsList}
-\title{getOptionsList-generic}
+\title{getOptionsList}
 \usage{
 getOptionsList(object)
 }
@@ -10,10 +10,10 @@ getOptionsList(object)
 \item{object}{a general object}
 }
 \value{
-none
+a list of options
 }
 \description{
-getOptionsList-generic
+getOptionsList
 }
 \examples{
 rd <- easyreporting(filenamePath="./project_report", title="example_report",

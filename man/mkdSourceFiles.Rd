@@ -2,19 +2,19 @@
 % Please edit documentation in R/easyreportingG.R
 \name{mkdSourceFiles}
 \alias{mkdSourceFiles}
-\title{mkdSourceFiles-generic}
+\title{mkdSourceFiles}
 \usage{
 mkdSourceFiles(object, ...)
 }
 \arguments{
-\item{object}{a general object}
+\item{object}{an easyreporting class object}
 
-\item{...}{whatever}
+\item{...}{a list of files to source}
 }
 \value{
 none
 }
 \description{
-mkdSourceFiles-generic
+includes a list of source files inside the rmarkdown
 }
 \keyword{internal}

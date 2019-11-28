@@ -2,20 +2,29 @@
 % Please edit documentation in R/easyreportingG.R
 \name{mkdVariableAssignment}
 \alias{mkdVariableAssignment}
-\title{mkdVariableAssignment-generic}
+\title{mkdVariableAssignment}
 \usage{
 mkdVariableAssignment(object, ...)
 }
 \arguments{
-\item{object}{a general object}
+\item{object}{an easyreporting class object}
 
-\item{...}{whatever}
+\item{variable.name}{a string indicating the name of the variabe to store in
+the report. (This can be changed here, but further uses of the variable needs
+to take into account the variable name change).}
+
+\item{variable.object.name}{the name of the already existing variable. (This
+cannot be canged.)}
+
+\item{show}{a boolean indicating if to show the message before writing it
+into the rmardown file.}
 }
 \value{
 none
 }
 \description{
-mkdVariableAssignment-generic
+it includes a variable assignment in the report.
+NB: a call to the "mkdCodeChunkSt" has to be done before using it.
 }
 \examples{
 rd <- easyreporting(filenamePath="./project_report",

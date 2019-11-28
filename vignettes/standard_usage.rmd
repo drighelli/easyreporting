@@ -52,7 +52,7 @@ and the general rmarkdown options of the document.
 ```{r}
 proj.path <- file.path(getwd(), "project_report")
 
-er <- easyreporting(filenamepath=proj.path, title="example_report",
+er <- easyreporting(filenamePath=proj.path, title="example_report",
                         author=c("Dario Righelli"))
 ```
 
@@ -80,7 +80,7 @@ mkdTitle(er, title="Manual code chunk", level=2)
 
 mkdCodeChunkSt(er)
 variable <- 1
-mkdVariableAssignment(er, "variable", "variable", show=TRUE)
+mkdVariableAssignment(er, "variable", `variable`, show=TRUE)
 mkdCodeChunkEnd(er)
 ```
 
@@ -98,8 +98,8 @@ When opening the code chunk, it is possible to pass the new optionsList to the
 easyreporting class *mkdCodeChunkSt* method.
 
 ```{r}
-optList <- makeOptionsList(includeFlag=TRUE)
-mkdCodeChunkSt(er, optionsList=optList)
+optList <- makeOptionsList(echoFlag=TRUE, includeFlag=TRUE)
+mkdCodeChunkSt(er, optionList=optList)
 mkdCodeChunkEnd(er)
 ```
 
@@ -113,7 +113,7 @@ parameter.
 ## moreover I can add a list of files to source in che code chunk
 RFilesList <- list.files(system.file("code_example", package="easyreporting"), 
                         full.names=TRUE)
-mkdCodeChunkSt(er, optionsList=optList, sourceFilesList=RFilesList)
+mkdCodeChunkSt(er, optionList=optList, sourceFilesList=RFilesList)
 mkdGeneralMsg(er, message="v <- fakeFunction(10)")
 mkdCodeChunkEnd(er)
 ```
@@ -136,13 +136,13 @@ optList <- makeOptionsList(includeFlag=TRUE, cacheFlag=TRUE)
 mkdCodeChunkCommented(er, 
                 commentMsg="This is the comment of the following code chunk",
                 codeMsg="v <- fakeFunction(12)",
-                optionsList=optList,
+                optionList=optList,
                 sourceFilesList=NULL)
 ```
 
 # Compiling
 
-```{r, eval=FALSE}
+```{r}
 compile(er)
 ```
 

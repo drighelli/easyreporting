@@ -2,19 +2,25 @@
 % Please edit documentation in R/easyreportingG.R
 \name{mkdCodeChunkSt}
 \alias{mkdCodeChunkSt}
-\title{mkdCodeChunkSt-generic}
+\title{mkdCodeChunkSt}
 \usage{
 mkdCodeChunkSt(object, ...)
 }
 \arguments{
-\item{object}{a general object}
+\item{object}{an easyreporting class object}
 
-\item{...}{whatever}
+\item{optionList}{a list of options}
+
+\item{sourceFilesList}{a list of files that can be sourced inside the code
+chunk.}
+
+\item{isComplete}{a flag determining if the chunk is already a complete chunk}
 }
 \value{
 none
 }
 \description{
-mkdCodeChunkSt-generic
+it creates a code chunk start. A list of options and files to
+source  for the chunk can optionally be passed to the function.
 }
 \keyword{internal}

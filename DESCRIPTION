@@ -1,7 +1,7 @@
 Package: easyreporting
 Type: Package
 Title: Helps creating report for improving Reproducible computational Research
-Version: 0.99.3
+Version: 0.99.4
 Author@R: person("Dario", "Righelli", email=dario.righelli@gmail.com, 
  role=c("cre", aut"))
 Author: Dario Righelli [aut, cre]
