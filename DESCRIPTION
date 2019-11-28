@@ -1,7 +1,7 @@
 Package: easyreporting
 Type: Package
 Title: Helps creating report for improving Reproducible computational Research
-Version: 0.99.5
+Version: 0.99.6
 Author@R: person("Dario", "Righelli", email=dario.righelli@gmail.com, 
  role=c("cre", aut"))
 Author: Dario Righelli [aut, cre]
@@ -11,7 +11,7 @@ Description: An S4 class for facilitating the automated creation of
  language. Best if implemented in functions as "recursive" style programming.
 License: Artistic-2.0
 Encoding: UTF-8
-biocViews: ReproducibleResearch
+biocViews: ReportWriting
 LazyData: true
 Depends:
     rmarkdown,

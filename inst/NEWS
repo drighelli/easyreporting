@@ -1,4 +1,7 @@
-V. 0.99.4:
-- Re-Shaping the class as S4 
+V. 0.99.6:
+- changing biocViews from ReproducibleResearch to ReportWriting
 V. 0.99.5:
 - fixing documentation in generic functions
+V. 0.99.4:
+- Re-Shaping the class as S4 
+
