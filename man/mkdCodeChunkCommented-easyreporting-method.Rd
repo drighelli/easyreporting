@@ -8,7 +8,7 @@
   object,
   commentMsg = NULL,
   codeMsg,
-  optionsList = getOptionsList(object),
+  optionList = getOptionsList(object),
   sourceFilesList = NULL
 )
 }
@@ -19,7 +19,7 @@
 
 \item{codeMsg}{a string within the code.}
 
-\item{optionsList}{a list of options (default is the class options).}
+\item{optionList}{a list of options (default is the class options).}
 
 \item{sourceFilesList}{a optional list of files to source inside the chunk.}
 }
@@ -31,12 +31,12 @@ it creates a complete code chunk, adding a natural language
 comment before of it.
 }
 \examples{
-rd <- easyreporting(filenamepath="./project_report",
+rd <- easyreporting(filenamePath="./project_report",
                         title="example_report", author=c("It's me"))
 optList <- makeOptionsList(includeFlag=TRUE, cacheFlag=TRUE)
 mkdCodeChunkCommented(rd,
                 commentMsg="This is the comment of the following code chunk",
-                codeMsg="a <- 1\\nb <- 2\\n(c <- a+b)\\n", optionsList=optList,
+                codeMsg="a <- 1\nb <- 2\n(c <- a+b)\n", optionList=optList,
                 sourceFilesList=NULL)
 
 }

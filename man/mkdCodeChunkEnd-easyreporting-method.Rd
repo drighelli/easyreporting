@@ -17,7 +17,7 @@ it creates a code chunk end. Always use it after a
 mkdCodeChunkSt()
 }
 \examples{
- rd <- easyreporting(filenamepath="./project_report",
+ rd <- easyreporting(filenamePath="./project_report",
                         title="example_report", author=c("It's me"))
 mkdCodeChunkSt(rd)
 ## just leaving empty

@@ -15,6 +15,7 @@ biocViews: ReproducibleResearch
 LazyData: true
 Depends:
     rmarkdown,
+    methods,
     tools
 Suggests:
     knitr,

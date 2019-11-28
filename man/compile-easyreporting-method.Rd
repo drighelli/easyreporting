@@ -16,7 +16,9 @@ none
 compiles the rmarkdown file
 }
 \examples{
-rd <- easyreporting(filenamePath="./project_report",
-                        title="example_report", author=c("It's me"))
+library(easyreporting)
+rd <- easyreporting(filenamePath="./project_report", title="example_report",
+                        author=c("It's me"))
 compile(rd)
+
 }

@@ -6,7 +6,7 @@
 \usage{
 \S4method{mkdCodeChunkSt}{easyreporting}(
   object,
-  optionsList = getOptionsList(object),
+  optionList = getOptionsList(object),
   sourceFilesList = NULL,
   isComplete = FALSE
 )
@@ -14,7 +14,7 @@
 \arguments{
 \item{object}{an easyreporting class object}
 
-\item{optionsList}{a list of options}
+\item{optionList}{a list of options}
 
 \item{sourceFilesList}{a list of files that can be sourced inside the code
 chunk.}
@@ -37,8 +37,8 @@ mkdCodeChunkSt(rd)
 mkdCodeChunkEnd(rd)
 
 ## setting options
-optList <- makeOptionsList(rd, includeFlag=TRUE)
-mkdCodeChunkSt(rd, optionsList=optList)
+optList <- makeOptionsList(includeFlag=TRUE)
+mkdCodeChunkSt(rd, optionList=optList)
 ## just leaving empty
 mkdCodeChunkEnd(rd)
 

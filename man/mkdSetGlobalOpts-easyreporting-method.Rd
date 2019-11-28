@@ -9,7 +9,7 @@
 \arguments{
 \item{object}{an easyreporting class object}
 
-\item{optionsList}{a list of options}
+\item{optionList}{a list of options}
 }
 \value{
 an easyreporting class object

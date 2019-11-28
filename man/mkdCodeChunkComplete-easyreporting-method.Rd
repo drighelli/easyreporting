@@ -7,7 +7,7 @@
 \S4method{mkdCodeChunkComplete}{easyreporting}(
   object,
   message,
-  optionsList = getOptionsList(object),
+  optionList = getOptionsList(object),
   sourceFilesList = NULL
 )
 }
@@ -17,7 +17,7 @@
 \item{message}{a string containing a function call or the entire code chunk
 to trace.}
 
-\item{optionsList}{a list of options.}
+\item{optionList}{a list of options.}
 
 \item{sourceFilesList}{a list of files to source.}
 }
@@ -28,7 +28,7 @@ none
 it creates a complete code chunk.
 }
 \examples{
- rd <- easyreporting(filenamepath="./project_report",
+ rd <- easyreporting(filenamePath="./project_report",
                         title="example_report", author=c("It's me"))
-mkdCodeChunkComplete(rd, message="a <- 1\\nb <- 2\\nc <- a+b\\n print(c)")
+mkdCodeChunkComplete(rd, message="a <- 1\nb <- 2\nc <- a+b\n print(c)")
 }

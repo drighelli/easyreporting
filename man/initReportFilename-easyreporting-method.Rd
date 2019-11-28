@@ -15,9 +15,9 @@
 \arguments{
 \item{object}{an easyreporting class object}
 
-\item{author}{the name of the report author}
+\item{filenamepath}{the name of the report with or without the path}
 
-\item{filenamePath}{the name of the report with or without the path}
+\item{author}{the name of the report author}
 
 \item{mainTitle}{the title of the report}
 
