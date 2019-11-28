@@ -5,8 +5,6 @@
 \title{mkdGeneralMsg-generic}
 \usage{
 mkdGeneralMsg(object, ...)
-
-mkdGeneralMsg(object, ...)
 }
 \arguments{
 \item{object}{a general object}
@@ -15,12 +13,12 @@ mkdGeneralMsg(object, ...)
 }
 \value{
 none
-
-none
 }
 \description{
 mkdGeneralMsg-generic
-
-mkdGeneralMsg-generic
 }
-\keyword{internal}
+\examples{
+rd <- easyreporting(filenamePath="./project_report",
+                        title="example_report", author=c("It's me"))
+mkdGeneralMsg(rd, "Writing a paragraph to describe my code chunk")
+}

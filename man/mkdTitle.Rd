@@ -17,4 +17,11 @@ none
 \description{
 mkdTitle-generic
 }
-\keyword{internal}
+\examples{
+rd <- easyreporting(filenamePath="./project_report",
+                        title="example_report", author=c("It's me"))
+
+mkdTitle(rd, "First Level Title")
+mkdTitle(rd, "Sub-Title", level=2)
+
+}

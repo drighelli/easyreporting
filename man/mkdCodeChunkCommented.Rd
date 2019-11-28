@@ -17,4 +17,13 @@ none
 \description{
 mkdCodeChunkCommented-generic
 }
-\keyword{internal}
+\examples{
+rd <- easyreporting(filenamePath="./project_report",
+                        title="example_report", author=c("It's me"))
+optList <- makeOptionsList(includeFlag=TRUE, cacheFlag=TRUE)
+mkdCodeChunkCommented(rd,
+                commentMsg="This is the comment of the following code chunk",
+                codeMsg="a <- 1\nb <- 2\n(c <- a+b)\n", optionList=optList,
+                sourceFilesList=NULL)
+
+}

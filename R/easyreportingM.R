@@ -271,11 +271,10 @@ setMethod(f="getReportFilename", signature="easyreporting",
 #' @param object an easyreporting class object
 #' 
 #' @return none
-#' @export
 #' @importFrom rmarkdown render
+#' @export
 #' 
 #' @examples
-#' library(easyreporting)
 #' rd <- easyreporting(filenamePath="./project_report", title="example_report",
 #'                         author=c("It's me"))
 #' compile(rd)
@@ -303,7 +302,6 @@ setMethod(f="compile", signature="easyreporting",
 #'
 #' @return none
 #' @export
-#'
 #'
 #' @examples
 #' rd <- easyreporting(filenamePath="./project_report",

@@ -17,4 +17,13 @@ none
 \description{
 mkdVariableAssignment-generic
 }
-\keyword{internal}
+\examples{
+rd <- easyreporting(filenamePath="./project_report",
+                        title="example_report", author=c("It's me"))
+## leaving the default options to the code chunk
+mkdCodeChunkSt(rd)
+## adding a variable assignement
+variable <- 1
+mkdVariableAssignment(rd, "variable", "variable", show=TRUE)
+mkdCodeChunkEnd(rd)
+}

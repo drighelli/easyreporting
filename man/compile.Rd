@@ -15,4 +15,9 @@ none
 \description{
 compile-generic
 }
-\keyword{internal}
+\examples{
+rd <- easyreporting(filenamePath="./project_report", title="example_report",
+                        author=c("It's me"))
+compile(rd)
+
+}

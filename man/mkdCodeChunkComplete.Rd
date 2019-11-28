@@ -17,4 +17,8 @@ none
 \description{
 mkdCodeChunkComplete-generic
 }
-\keyword{internal}
+\examples{
+ rd <- easyreporting(filenamePath="./project_report",
+                        title="example_report", author=c("It's me"))
+mkdCodeChunkComplete(rd, message="a <- 1\nb <- 2\nc <- a+b\n print(c)")
+}

@@ -15,4 +15,9 @@ none
 \description{
 getOptionsList-generic
 }
-\keyword{internal}
+\examples{
+rd <- easyreporting(filenamePath="./project_report", title="example_report",
+                        author=c("It's me"))
+optList <- getOptionsList(rd)
+
+}
