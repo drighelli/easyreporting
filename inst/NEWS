@@ -1,2 +1,4 @@
 V. 0.99.4:
-- Re-Shaping the class as S4  
+- Re-Shaping the class as S4 
+V. 0.99.5:
+- fixing documentation in generic functions

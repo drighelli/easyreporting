@@ -72,10 +72,10 @@ setGeneric (
 #' @examples
 #' rd <- easyreporting(filenamePath="./project_report",
 #'                         title="example_report", author=c("It's me"))
-#' mkdGeneralMsg(rd, "Writing a paragraph to describe my code chunk")
+#' mkdGeneralMsg(rd, message="Writing a paragraph to describe my code chunk")
 setGeneric (
     name="mkdGeneralMsg",
-    def=function(object, ...){standardGeneric("mkdGeneralMsg")}
+    def=function(object, message){standardGeneric("mkdGeneralMsg")}
 )
 #' setOptionsList
 #'
@@ -169,7 +169,10 @@ setGeneric (
 #' mkdCodeChunkEnd(rd)
 setGeneric (
     name="mkdVariableAssignment",
-    def=function(object, ...){standardGeneric("mkdVariableAssignment")}
+    def=function(object, variable.name, variable.object.name, show)
+    {
+        standardGeneric("mkdVariableAssignment")
+    }
 )
 #' mkdCodeChunkSt
 #' @description it creates a code chunk start. A list of options and files to

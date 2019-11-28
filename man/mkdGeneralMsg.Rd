@@ -4,7 +4,7 @@
 \alias{mkdGeneralMsg}
 \title{mkdGeneralMsg}
 \usage{
-mkdGeneralMsg(object, ...)
+mkdGeneralMsg(object, message)
 }
 \arguments{
 \item{object}{an easyreporting class object}
@@ -20,5 +20,5 @@ mkdGeneralMsg
 \examples{
 rd <- easyreporting(filenamePath="./project_report",
                         title="example_report", author=c("It's me"))
-mkdGeneralMsg(rd, "Writing a paragraph to describe my code chunk")
+mkdGeneralMsg(rd, message="Writing a paragraph to describe my code chunk")
 }

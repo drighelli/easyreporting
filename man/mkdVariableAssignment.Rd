@@ -4,7 +4,7 @@
 \alias{mkdVariableAssignment}
 \title{mkdVariableAssignment}
 \usage{
-mkdVariableAssignment(object, ...)
+mkdVariableAssignment(object, variable.name, variable.object.name, show)
 }
 \arguments{
 \item{object}{an easyreporting class object}
