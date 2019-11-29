@@ -28,7 +28,7 @@ setGeneric (
     def=function(object, optionList=list()){standardGeneric("mkdSetGlobalOpts")}
 )
 #' mkdTitle
-#'
+#' @description Inserts an rmarkdown title inside the report.
 #' @param object an easyreporting class object
 #' @param title a string within the title.
 #' @param level a numeric from 1 to 6 (default is 1).
@@ -47,6 +47,8 @@ setGeneric (
     def=function(object, title, level=1){standardGeneric("mkdTitle")}
 )
 #' getReportFilename
+#' 
+#' @description returns the report filename with path
 #'
 #' @param object a general object 
 #'
@@ -62,7 +64,8 @@ setGeneric (
     def=function(object){standardGeneric("getReportFilename")}
 )
 #' mkdGeneralMsg
-#'
+#' @description It appends a general message to the report.
+#' Useful for adding natural language comments.
 #' @param object an easyreporting class object
 #' @param message the message to append to the report
 #'
@@ -78,6 +81,7 @@ setGeneric (
     def=function(object, message){standardGeneric("mkdGeneralMsg")}
 )
 #' setOptionsList
+#' @description set an optionList to the class
 #'
 #' @param object an easyreporting class object
 #' @param cacheFlag boolean for caching chunk data (default TRUE)
@@ -111,6 +115,7 @@ setGeneric (
 )
 #' getOptionsList
 #'
+#' @description returns the optionList from the easyreporting class
 #' @param object a general object 
 #'
 #' @return a list of options
@@ -126,7 +131,7 @@ setGeneric (
     def=function(object){standardGeneric("getOptionsList")}
 )
 #' compile-generic
-#'
+#' @description compiles the rmarkdown file
 #' @param object a general object 
 #'
 #' @return none

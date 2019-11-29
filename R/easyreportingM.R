@@ -143,7 +143,7 @@ setMethod(f="mkdGeneralMsg", signature="easyreporting",
 
 
 #' setOptionsList
-#' @description set an optionList to the rmarkdown R6 class
+#' @description set an optionList to the class
 #' 
 #' @param object an easyreporting class object
 #' @param cacheFlag boolean for caching chunk data (default TRUE)
