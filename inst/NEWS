@@ -1,4 +1,6 @@
-V. 0.99.6:
+V. 0.99.8:
+- adding BiocStyle in the DESCRIPTION "suggests"
+V. 0.99.7:
 - adding some descriptions in documentations
 V. 0.99.6:
 - changing biocViews from ReproducibleResearch to ReportWriting
