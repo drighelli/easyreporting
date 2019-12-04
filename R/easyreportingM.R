@@ -266,7 +266,7 @@ setMethod(f="getReportFilename", signature="easyreporting",
 )
 
 #' compile
-#' @description compiles the rmarkdown file
+#' @description prints the sessionInfo and compiles the rmarkdown file
 #' 
 #' @param object an easyreporting class object
 #' 

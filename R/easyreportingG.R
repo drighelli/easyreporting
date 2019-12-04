@@ -130,8 +130,8 @@ setGeneric (
     name="getOptionsList",
     def=function(object){standardGeneric("getOptionsList")}
 )
-#' compile-generic
-#' @description compiles the rmarkdown file
+#' compile
+#' @description prints the sessionInfo and compiles the rmarkdown file
 #' @param object a general object 
 #'
 #' @return none
