@@ -264,5 +264,33 @@ setGeneric (
                  optionList=getOptionsList(object),
                  sourceFilesList=NULL){standardGeneric("mkdCodeChunkCommented")}
 )
-
-
+#' mkdCodeChunkCommented
+#' @description it creates a complete code chunk, adding a natural language
+#' comment before of it.
+#' @param object an easyreporting class object
+#' @param title the title to assign to the code chunk section
+#' @param level the level of the title (default is 1)
+#' @param commentMsg a string with the natural language comment for the chunk.
+#' @param codeMsg a string within the code.
+#' @param optionList a list of options (default is the class options).
+#' @param sourceFilesList a optional list of files to source inside the chunk.
+#'
+#' @return none
+#' @export
+#'
+#' @examples
+#' rd <- easyreporting(filenamePath="./project_report",
+#'                         title="example_report", author=c("It's me"))
+#' optList <- makeOptionsList(includeFlag=TRUE, cacheFlag=TRUE)
+#' mkdCodeChunkCommented(rd,
+#'                 commentMsg="This is the comment of the following code chunk",
+#'                 codeMsg="a <- 1\nb <- 2\n(c <- a+b)\n", optionList=optList,
+#'                 sourceFilesList=NULL)
+#'
+setGeneric (
+    name="mkdCodeChunkTitledCommented",
+    def=function(object, title=NULL, level=1, commentMsg=NULL, codeMsg,
+                optionList=getOptionsList(object),
+                sourceFilesList=NULL){
+                standardGeneric("mkdCodeChunkTitledCommented")}
+)

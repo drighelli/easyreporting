@@ -15,7 +15,8 @@ mkdGeneralMsg(object, message)
 none
 }
 \description{
-mkdGeneralMsg
+It appends a general message to the report.
+Useful for adding natural language comments.
 }
 \examples{
 rd <- easyreporting(filenamePath="./project_report",

@@ -282,6 +282,8 @@ setMethod(f="getReportFilename", signature="easyreporting",
 setMethod(f="compile", signature="easyreporting",
     definition=function(object)
     {
+        mkdCodeChunkTitledCommented(object=object, title="Session Info", 
+            codeMsg="sessionInfo()")
         rmarkdown::render(getReportFilename(object))
     }
 )
@@ -506,8 +508,8 @@ setMethod(f="mkdCodeChunkComplete", signature="easyreporting",
 #'
 setMethod(f="mkdCodeChunkCommented", signature="easyreporting", 
           definition=function(object, commentMsg=NULL, codeMsg,
-                                 optionList=getOptionsList(object),
-                                 sourceFilesList=NULL)
+                                optionList=getOptionsList(object),
+                                sourceFilesList=NULL)
     {
         if(!is.null(commentMsg))
         {
@@ -518,5 +520,42 @@ setMethod(f="mkdCodeChunkCommented", signature="easyreporting",
     }
 )
 
+
+#' mkdCodeChunkTitledCommented
+#' @description it creates a complete code chunk, adding a natural language
+#' comment before of it.
+#' @param object an easyreporting class object
+#' @param title the title to assign to the code chunk section
+#' @param level the level of the title (default is 1)
+#' @param commentMsg a string with the natural language comment for the chunk.
+#' @param codeMsg a string within the code.
+#' @param optionList a list of options (default is the class options).
+#' @param sourceFilesList a optional list of files to source inside the chunk.
+#'
+#' @return none
+#' @export
+#'
+#' @examples
+#' rd <- easyreporting(filenamePath="./project_report",
+#'                         title="example_report", author=c("It's me"))
+#' optList <- makeOptionsList(includeFlag=TRUE, cacheFlag=TRUE)
+#' mkdCodeChunkTitledCommented(rd, title="Title Example", level=1,
+#'                 commentMsg="This is the comment of the following code chunk",
+#'                 codeMsg="a <- 1\nb <- 2\n(c <- a+b)\n", optionList=optList,
+#'                 sourceFilesList=NULL)
+#'
+setMethod(f="mkdCodeChunkTitledCommented", signature="easyreporting", 
+          definition=function(object, title=NULL, level=1, 
+                                commentMsg=NULL, codeMsg,
+                                optionList=getOptionsList(object),
+                                sourceFilesList=NULL)
+          {
+                mkdTitle(rd, title=title, level=level)
+                mkdCodeChunkCommented(object, commentMsg=commentMsg, 
+                                    codeMsg=codeMsg,
+                                    optionList=optionList,
+                                    sourceFilesList=sourceFilesList)
+          }
+)
 
 

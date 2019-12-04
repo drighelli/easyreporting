@@ -13,7 +13,7 @@ getOptionsList(object)
 a list of options
 }
 \description{
-getOptionsList
+returns the optionList from the easyreporting class
 }
 \examples{
 rd <- easyreporting(filenamePath="./project_report", title="example_report",

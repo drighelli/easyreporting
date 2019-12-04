@@ -35,7 +35,7 @@ version (default TRUE)}
 none
 }
 \description{
-set an optionList to the rmarkdown R6 class
+set an optionList to the class
 }
 \examples{
 rd <- easyreporting(filenamePath="./project_report",

@@ -13,7 +13,7 @@ getReportFilename(object)
 a string of report file name with path
 }
 \description{
-getReportFilename
+returns the report filename with path
 }
 \examples{
 rd <- easyreporting(filenamePath="./project_report",

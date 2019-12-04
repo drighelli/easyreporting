@@ -1,3 +1,6 @@
+V. 0.99.9:
+- adding mkdCodeChunkTitledCommented method
+- adding auto insertion of sessionInfo in the compile method
 V. 0.99.8:
 - adding BiocStyle in the DESCRIPTION "suggests"
 V. 0.99.7:

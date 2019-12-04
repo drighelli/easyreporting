@@ -13,7 +13,7 @@ compile(object)
 none
 }
 \description{
-compile-generic
+compiles the rmarkdown file
 }
 \examples{
 rd <- easyreporting(filenamePath="./project_report", title="example_report",

@@ -35,7 +35,7 @@ version (default TRUE)}
 none
 }
 \description{
-setOptionsList
+set an optionList to the class
 }
 \examples{
 rd <- easyreporting(filenamePath="./project_report",

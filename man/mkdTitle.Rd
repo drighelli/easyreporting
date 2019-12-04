@@ -17,7 +17,7 @@ mkdTitle(object, title, level = 1)
 none
 }
 \description{
-mkdTitle
+Inserts an rmarkdown title inside the report.
 }
 \examples{
 rd <- easyreporting(filenamePath="./project_report",
