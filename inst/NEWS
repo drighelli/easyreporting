@@ -1,14 +1,30 @@
-V. 0.99.9:
-- adding mkdCodeChunkTitledCommented method
-- adding auto insertion of sessionInfo in the compile method
-V. 0.99.8:
-- adding BiocStyle in the DESCRIPTION "suggests"
-V. 0.99.7:
-- adding some descriptions in documentations
-V. 0.99.6:
-- changing biocViews from ReproducibleResearch to ReportWriting
-V. 0.99.5:
-- fixing documentation in generic functions
-V. 0.99.4:
-- Re-Shaping the class as S4 
+Changes in version 0.99.4 (2019-29-11)
++ Re-Shaping the class as S4 
+
+Changes in version 0.99.5 (2019-29-11)
++ fixing documentation in generic functions
+
+Changes in version 0.99.6 (2019-29-11)
++ changing biocViews from ReproducibleResearch to ReportWriting
+
+Changes in version 0.99.7 (2019-29-11)
++ adding some descriptions in documentations
+
+Changes in version 0.99.8 (2019-02-12)
++ adding BiocStyle in the DESCRIPTION "suggests"
+
+Changes in version 0.99.9 (2019-05-12)
++ adding mkdCodeChunkTitledCommented method
++ adding auto insertion of sessionInfo in the compile method
+
+Changes in version 0.99.10 (2019-10-12)
++ adding bioconductor revisions
+
+
+
+
+
+
+
+
 

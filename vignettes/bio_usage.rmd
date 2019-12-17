@@ -20,7 +20,7 @@ editor_options:
 knitr::opts_chunk$set(
   collapse = FALSE,
   comment = "#>",
-  eval=FALSE
+  eval=TRUE
 )
 ```
 
@@ -32,9 +32,13 @@ package, while performing a simplified bioinformatics analysis workflow.
 # Requirements 
 
 For the usage you just need to load the **easyreporting** package, which will 
-load the **S4** and **rmarkdown** packages.
+load the **rmarkdown** and **tools** packages.
 
 ```{r}
+if(!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+BiocManager::install("easyreporting")
+
 library("easyreporting")
 ```
 
@@ -43,10 +47,10 @@ library("easyreporting")
 For simplicity we setup a project directory path starting from the working 
 directory for our report, but you can just enter any path.
 The **filenamepath** and the **title** parameters are mandatory, while the 
-**author(s)** paramenter is optional.
+**author** paramenter is optional.
 
-Once created the **easyreporting** class instance, we can use it in our further
-code to make other operations.
+Once created the **easyreporting** class instance, we can use it into our 
+further code to make other operations.
 It stores some variables for us, in order to not be called again during next 
 opreations.
 For example the name and the path of the report, the type of report
@@ -63,7 +67,7 @@ bioEr <- easyreporting(filenamePath=proj.path, title="bioinfo_report",
 # Loading Data
 
 For this vignette we previously downloaded an xlsx table from GEO with accession
-number [https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE134118](*GSE134118*).
+number [*GSE134118*](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE134118).
 
 For importing the xls file, we prepared an ad-hoc function called *importData*
 stored in the *importFunctions.R* file.
@@ -71,7 +75,7 @@ stored in the *importFunctions.R* file.
 ```{r}
 mkdTitle(bioEr, title="Loading Counts Data")
 mkdCodeChunkComplete(object=bioEr, message=paste0("geneCounts <- importData(sy",
-        "stem.file('example_data/GSE134118_Table_S3.xlsx',",
+        "stem.file('extdata/GSE134118_Table_S3.xlsx',",
         "package='easyreporting'))"), 
         sourceFilesList=system.file("code_example/importFunctions.R", 
                                             package="easyreporting"))
@@ -124,11 +128,16 @@ mkdCodeChunkComplete(bioEr, message="limma::plotMD(degList$test)")
 ```
 
 
-# compiling the report
-Once finished our analysis it is possible to compile the produced rmarkdown report 
-simply by using the *compile* method.
+# Compiling the report
+Once finished our analysis it is possible to compile the produced rmarkdown report  simply by using the *compile* method.
+The compile method appends a sessionInfo() to the report to trace all the packages and versions used for the analysis.
 ```{r}
 compile(bioEr)
+```
+
+# Session Info
+```{r}
+sessionInfo()
 ```
 
 

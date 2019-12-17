@@ -24,6 +24,10 @@ knitr::opts_chunk$set(
 )
 ```
 
+# Description
+
+This vignettes will guide the user in the exploration of the functionalities of
+easyreporting.
 
 # Requirements 
 
@@ -31,6 +35,10 @@ For the usage you just need to load the **easyreporting** package, which will
 load the **R6** and **rmarkdown** packages.
 
 ```{r}
+if(!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+BiocManager::install("easyreporting")
+
 library("easyreporting")
 ```
 
@@ -109,7 +117,7 @@ If you have one or more files with some functions that you want to use inside
 your code, it is possible to add them by using the *sourceFilesList* 
 parameter.
 
-```{r, eval=FALSE}
+```{r}
 ## moreover I can add a list of files to source in che code chunk
 RFilesList <- list.files(system.file("code_example", package="easyreporting"), 
                         full.names=TRUE)
@@ -146,6 +154,11 @@ mkdCodeChunkCommented(er,
 compile(er)
 ```
 
+# Session Info
+
+```{r}
+sessionInfo()
+```
 
 
 

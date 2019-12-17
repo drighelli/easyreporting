@@ -7,13 +7,14 @@
 getOptionsList(object)
 }
 \arguments{
-\item{object}{a general object}
+\item{object}{an easyreporting class object}
 }
 \value{
 a list of options
 }
 \description{
-returns the optionList from the easyreporting class
+returns the optionList from the easyreporting class 
+(see the makeOptionList function for more details).
 }
 \examples{
 rd <- easyreporting(filenamePath="./project_report", title="example_report",

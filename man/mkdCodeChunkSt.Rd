@@ -23,4 +23,18 @@ none
 it creates a code chunk start. A list of options and files to
 source  for the chunk can optionally be passed to the function.
 }
-\keyword{internal}
+\examples{
+rd <- easyreporting(filenamePath="./project_report",
+                        title="example_report", author=c("It's me"))
+## no options
+mkdCodeChunkSt(rd)
+## just leaving empty
+mkdCodeChunkEnd(rd)
+
+## setting options
+optList <- makeOptionsList(includeFlag=TRUE)
+mkdCodeChunkSt(rd, optionList=optList)
+## just leaving empty
+mkdCodeChunkEnd(rd)
+
+}

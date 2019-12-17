@@ -4,7 +4,6 @@ Title: Helps creating report for improving Reproducible computational Research
 Version: 0.99.9
 Author@R: person("Dario", "Righelli", email=dario.righelli@gmail.com, 
  role=c("cre", aut"))
-Author: Dario Righelli [aut, cre]
 Maintainer: Dario Righelli <dario.righelli@gmail.com>
 Description: An S4 class for facilitating the automated creation of 
  rmarkdown files inside other packages/software, even without knowing rmarkdown
@@ -12,8 +11,9 @@ Description: An S4 class for facilitating the automated creation of
 License: Artistic-2.0
 Encoding: UTF-8
 biocViews: ReportWriting
-LazyData: true
-Depends:
+LazyData: false
+BugReports: https://github.com/drighelli/easyreporting/issues
+Imports:
     rmarkdown,
     methods,
     tools
@@ -24,5 +24,5 @@ Suggests:
     edgeR,
     limma, 
     EDASeq
-RoxygenNote: 7.0.1
+RoxygenNote: 7.0.2
 VignetteBuilder: knitr

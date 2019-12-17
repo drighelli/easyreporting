@@ -2,18 +2,19 @@
 % Please edit documentation in R/easyreportingG.R
 \name{compile}
 \alias{compile}
-\title{compile-generic}
+\title{compile}
 \usage{
 compile(object)
 }
 \arguments{
-\item{object}{a general object}
+\item{object}{an easyreporting class object}
 }
 \value{
 none
 }
 \description{
-compiles the rmarkdown file
+prints the sessionInfo and compiles the produced rmarkdown file
+into an HTML report.
 }
 \examples{
 rd <- easyreporting(filenamePath="./project_report", title="example_report",

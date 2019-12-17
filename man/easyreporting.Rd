@@ -6,22 +6,9 @@
 \title{easyreporting}
 \usage{
 easyreporting(filenamePath, title, author, optionList = NULL)
-
-easyreporting(filenamePath, title, author, optionList = NULL)
-}
-\arguments{
-\item{filenamePath}{the path with the name of the rmarkdown.}
-
-\item{title}{the title fo the report.}
-
-\item{author}{the author of the report.}
-
-\item{optionList}{a list of options for the general rmarkdown document.}
 }
 \value{
 an easyreporting class instance
-
-an easyreporting class object instance
 }
 \description{
 An S4 class for managing rmarkdown report.
@@ -44,7 +31,4 @@ Each instance describes an rmarkdown file.
 \examples{
 rd <- easyreporting(filenamePath="./project_report",
                         title="example_report", author="It's me")
-rd <- easyreporting(filenamePath="./project_report",
-                        title="example_report", author=c("It's me"),
-                        optionList=makeOptionsList())
 }

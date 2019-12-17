@@ -35,7 +35,9 @@ version (default TRUE)}
 none
 }
 \description{
-set an optionList to the class
+set an optionList to the class, it automatically sets the 
+options for the rmarkdown file. Are useful for the 
+interpretation/execution of the code chunks.
 }
 \examples{
 rd <- easyreporting(filenamePath="./project_report",

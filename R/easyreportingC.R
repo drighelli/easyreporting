@@ -47,20 +47,6 @@ setMethod(f="initialize",
     }
 )
 
-#' easyreporting
-#'
-#' @param filenamePath the path with the name of the rmarkdown.
-#' @param title the title fo the report.
-#' @param author the author of the report.
-#' @param optionList a list of options for the general rmarkdown document.
-#'
-#' @return an easyreporting class object instance
-#' @export
-#'
-#' @examples
-#' rd <- easyreporting(filenamePath="./project_report",
-#'                         title="example_report", author=c("It's me"),
-#'                         optionList=makeOptionsList())
 easyreporting <- function(filenamePath, title, author, optionList=NULL)
 {
     new(Class="easyreporting", filenamePath=filenamePath, title=title, 

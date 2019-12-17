@@ -2,7 +2,7 @@
 # library(easyreporting)
 #devtools::load_all()
 ## creating report file with default options on global document
-rd <- easyreporting(filenamepath="./project_report", title="example_report",
+rd <- easyreporting(filenamePath="./project_report", title="example_report",
                         author=c("Dario Righelli"))
 
 mkdTitle(rd, "First Level Title")
@@ -24,8 +24,8 @@ mkdCodeChunkEnd(rd)
 
 ## moreover I can add a list of files to source in che code chunk
 mkdCodeChunkSt(rd, optionsList=optList, source.files.list=
-                      c("R/old/cachingFunctions.R",
-                      "R/old/cachingFunctions.R"))
+                    c("R/old/cachingFunctions.R",
+                    "R/old/cachingFunctions.R"))
 mkdCodeChunkEnd(rd)
 
 
@@ -38,7 +38,7 @@ optList <- makeOptionsList(includeFlag=TRUE, cacheFlag=TRUE)
 mkdCodeChunkCommented(rd, 
                 commentMsg="This is the comment of the following code chunk",
                 codeMsg="a <- 1\nb <- 2\n(c <- a+b)\n",
-                optionsList=optList,
+                optionList=optList,
                 sourceFilesList=NULL)
 
 ## finally I can directly compile my report

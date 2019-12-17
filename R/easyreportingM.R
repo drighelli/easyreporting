@@ -67,14 +67,14 @@ setMethod(f="mkdSetGlobalOpts", signature="easyreporting",
     {
         if(!is.null(optionList)) object@optionList <- optionList
         options <- paste0("```{r global_options, include=FALSE}\n",
-                          "knitr::opts_chunk$set(",
-                          "eval=", object@optionList$evalFlag,
-                          ", echo=", object@optionList$echoFlag,
-                          ", warning=", object@optionList$warningFlag,
-                          ", message=", object@optionList$showMessages,
-                          ", include=", object@optionList$includeFlag,
-                          ", cache=", object@optionList$cacheFlag,
-                          ")\n```\n")
+                        "knitr::opts_chunk$set(",
+                        "eval=", object@optionList$evalFlag,
+                        ", echo=", object@optionList$echoFlag,
+                        ", warning=", object@optionList$warningFlag,
+                        ", message=", object@optionList$showMessages,
+                        ", include=", object@optionList$includeFlag,
+                        ", cache=", object@optionList$cacheFlag,
+                        ")\n```\n")
         
         base::write(options, file=object@filenamePath,
                     append=TRUE, sep="\n")
@@ -100,9 +100,10 @@ setMethod(f="mkdSetGlobalOpts", signature="easyreporting",
 #' mkdTitle(rd, "Sub-Title", level=2)
 #'
 setMethod(f="mkdTitle", signature="easyreporting",
-          definition=function(object, title, level=1)
+        definition=function(object, title, level=1)
     {
-        if(!is.character(title)) stop("You can enter only string values for title!")
+        if(!is.character(title)) 
+            stop("You can enter only string values for title!")
         if(level > 6) stop("You can use at last level 6!")
     
         message <- paste0(
@@ -141,6 +142,33 @@ setMethod(f="mkdGeneralMsg", signature="easyreporting",
     }
 )
 
+
+#' mkdGeneralTitledMsg
+#' @description It appends a a titled section followed by a general message to 
+#' the report. Useful for adding natural language comments.
+#' @param object an easyreporting class object
+#' @param title the optional title to give to the message section
+#' @param level the level (1 to 6) of the title (default is 1)
+#' @param message the message to append to the report
+#'
+#' @return none
+#' @export
+#'
+#' @examples
+#' rd <- easyreporting(filenamePath="./project_report",
+#'                         title="example_report", author=c("It's me"))
+#' mkdGeneralMsg(rd, title="Generic SubTitle for this message", level=2,
+#' message="Writing a paragraph to describe my code chunk")
+setMethod(f="mkdGeneralTitledMsg", signature="easyreporting",
+        definition=function(object, title=NULL, level=1, message)
+        {
+            if(!is.null(title)) mkdTitle(object, title=title, level=level)
+            base::write(x=paste0("\n", message, "\n"), 
+                        file=getReportFilename(object),
+                        ncolumns=if(is.character(message)) 1 else 5,
+                        append=TRUE, sep="\n")
+        }
+)
 
 #' setOptionsList
 #' @description set an optionList to the class
@@ -232,11 +260,11 @@ setMethod(f="getOptionsList", signature="easyreporting",
 #' @examples
 #' optList <- makeOptionsList()
 makeOptionsList <- function(cacheFlag=TRUE,
-                           evalFlag=TRUE,
-                           echoFlag=TRUE,
-                           warningFlag=FALSE,
-                           showMessages=FALSE,
-                           includeFlag=TRUE)
+                            evalFlag=TRUE,
+                            echoFlag=TRUE,
+                            warningFlag=FALSE,
+                            showMessages=FALSE,
+                            includeFlag=TRUE)
 {
     return( list(
         cacheFlag=cacheFlag,
@@ -383,9 +411,9 @@ setMethod(f="mkdCodeChunkSt", signature="easyreporting",
             for(i in seq_along(files))
             {
                 self.message <- paste0(self.message,
-                                       "source(\"",
-                                       files[[i]],
-                                       "\")\n")
+                                        "source(\"",
+                                        files[[i]],
+                                        "\")\n")
             }
             base::write(self.message,
                         file=getReportFilename(object),
@@ -516,7 +544,7 @@ setMethod(f="mkdCodeChunkCommented", signature="easyreporting",
             mkdGeneralMsg(object, commentMsg)
         }
         mkdCodeChunkComplete(object, message=codeMsg, optionList=optionList,
-                                  sourceFilesList=sourceFilesList)
+                                sourceFilesList=sourceFilesList)
     }
 )
 
@@ -549,13 +577,11 @@ setMethod(f="mkdCodeChunkTitledCommented", signature="easyreporting",
                                 commentMsg=NULL, codeMsg,
                                 optionList=getOptionsList(object),
                                 sourceFilesList=NULL)
-          {
-                mkdTitle(rd, title=title, level=level)
+        {
+                mkdTitle(object, title=title, level=level)
                 mkdCodeChunkCommented(object, commentMsg=commentMsg, 
                                     codeMsg=codeMsg,
                                     optionList=optionList,
                                     sourceFilesList=sourceFilesList)
-          }
+        }
 )
-
-

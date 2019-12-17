@@ -13,7 +13,7 @@
 none
 }
 \description{
-compiles the rmarkdown file
+prints the sessionInfo and compiles the rmarkdown file
 }
 \examples{
 rd <- easyreporting(filenamePath="./project_report", title="example_report",
