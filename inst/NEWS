@@ -20,6 +20,8 @@ Changes in version 0.99.9 (2019-05-12)
 Changes in version 0.99.10 (2019-10-12)
 + adding bioconductor revisions
 
+Changes in version 0.99.11 (2019-10-17)
++ changing DESCRIPTION->authors field
 
 
 
