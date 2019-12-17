@@ -23,6 +23,8 @@ Changes in version 0.99.10 (2019-10-12)
 Changes in version 0.99.11 (2019-10-17)
 + changing DESCRIPTION->authors field
 
+Changes in version 0.99.11 (2019-10-17)
++ fixing DESCRIPTION->authors field error
 
 
 

@@ -1,9 +1,9 @@
 Package: easyreporting
 Type: Package
 Title: Helps creating report for improving Reproducible computational Research
-Version: 0.99.11
+Version: 0.99.12
 Authors@R: person("Dario", "Righelli", email=dario.righelli@gmail.com, 
- role=c("cre", aut"))
+ role=c("cre", "aut"))
 Description: An S4 class for facilitating the automated creation of 
  rmarkdown files inside other packages/software, even without knowing rmarkdown
  language. Best if implemented in functions as "recursive" style programming.
