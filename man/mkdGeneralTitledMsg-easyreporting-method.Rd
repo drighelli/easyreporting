@@ -25,6 +25,6 @@ the report. Useful for adding natural language comments.
 \examples{
 rd <- easyreporting(filenamePath="./project_report",
                         title="example_report", author=c("It's me"))
-mkdGeneralMsg(rd, title="Generic SubTitle for this message", level=2,
-message="Writing a paragraph to describe my code chunk")
+mkdGeneralTitledMsg(rd, title="Generic SubTitle for this message", level=2,
+        message="Writing a paragraph to describe my code chunk")
 }

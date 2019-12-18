@@ -9,7 +9,9 @@ mkdGeneralTitledMsg(object, title = NULL, level = 1, message)
 \arguments{
 \item{object}{an easyreporting class object}
 
-\item{level}{the level of the title}
+\item{title}{the title of the report section.}
+
+\item{level}{the level (1 to 6) of the title (default is 1)}
 
 \item{message}{the message to append to the report}
 }
@@ -23,5 +25,6 @@ the report. Useful for adding natural language comments.
 \examples{
 rd <- easyreporting(filenamePath="./project_report",
                         title="example_report", author=c("It's me"))
-mkdGeneralMsg(rd, message="Writing a paragraph to describe my code chunk")
+mkdGeneralTitledMsg(rd, title="Generic SubTitle for this message", level=2,
+            message="Writing a paragraph to describe my code chunk")
 }

@@ -157,8 +157,8 @@ setMethod(f="mkdGeneralMsg", signature="easyreporting",
 #' @examples
 #' rd <- easyreporting(filenamePath="./project_report",
 #'                         title="example_report", author=c("It's me"))
-#' mkdGeneralMsg(rd, title="Generic SubTitle for this message", level=2,
-#' message="Writing a paragraph to describe my code chunk")
+#' mkdGeneralTitledMsg(rd, title="Generic SubTitle for this message", level=2,
+#'         message="Writing a paragraph to describe my code chunk")
 setMethod(f="mkdGeneralTitledMsg", signature="easyreporting",
         definition=function(object, title=NULL, level=1, message)
         {
@@ -443,7 +443,7 @@ setMethod(f="mkdSourceFiles", signature="easyreporting",
     {
         files <- list(...)
         self.message <- ""
-        for(i in 1:length(files))
+        for(i in seq_along(files))
         {
             self.message <- paste0(self.message,
                                 "source(\"",

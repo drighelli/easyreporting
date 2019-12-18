@@ -1,8 +1,8 @@
 Package: easyreporting
 Type: Package
 Title: Helps creating report for improving Reproducible computational Research
-Version: 0.99.12
-Authors@R: person("Dario", "Righelli", email=dario.righelli@gmail.com, 
+Version: 0.99.13
+Authors@R: person("Dario", "Righelli", email="dario.righelli@gmail.com", 
  role=c("cre", "aut"))
 Description: An S4 class for facilitating the automated creation of 
  rmarkdown files inside other packages/software, even without knowing rmarkdown
@@ -22,6 +22,7 @@ Suggests:
     readxl,
     edgeR,
     limma, 
-    EDASeq
+    EDASeq,
+    statmod
 RoxygenNote: 7.0.2
 VignetteBuilder: knitr

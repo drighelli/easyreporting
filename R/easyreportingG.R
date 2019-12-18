@@ -88,8 +88,8 @@ setGeneric (
 #' @description It appends a a titled section followed by a general message to 
 #' the report. Useful for adding natural language comments.
 #' @param object an easyreporting class object
+#' @param title the title of the report section.
 #' @param level the level (1 to 6) of the title (default is 1)
-#' @param level the level of the title
 #' @param message the message to append to the report
 #'
 #' @return none
@@ -98,7 +98,8 @@ setGeneric (
 #' @examples
 #' rd <- easyreporting(filenamePath="./project_report",
 #'                         title="example_report", author=c("It's me"))
-#' mkdGeneralMsg(rd, message="Writing a paragraph to describe my code chunk")
+#' mkdGeneralTitledMsg(rd, title="Generic SubTitle for this message", level=2,
+#'             message="Writing a paragraph to describe my code chunk")
 setGeneric (
     name="mkdGeneralTitledMsg",
     def=function(object, title=NULL, level=1, message)
@@ -239,7 +240,9 @@ setGeneric (
 #'
 setGeneric (
     name="mkdCodeChunkSt",
-    def=function(object, ...){standardGeneric("mkdCodeChunkSt")}
+    def=function(object, optionList=getOptionsList(object),
+                 sourceFilesList=NULL, isComplete=FALSE)
+    {standardGeneric("mkdCodeChunkSt")}
 )
 #' mkdSourceFiles
 #' @description includes a list of source files inside the rmarkdown

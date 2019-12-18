@@ -3,14 +3,31 @@
 \docType{class}
 \name{easyreporting}
 \alias{easyreporting}
+\alias{easyreporting-class}
 \title{easyreporting}
 \usage{
 easyreporting(filenamePath, title, author, optionList = NULL)
+
+easyreporting(filenamePath, title, author, optionList = NULL)
+}
+\arguments{
+\item{filenamePath}{the path with the name of the rmarkdown.}
+
+\item{title}{the title of the report section.}
+
+\item{author}{the author of the report.}
+
+\item{optionList}{a list of options for the general rmarkdown document.}
 }
 \value{
 an easyreporting class instance
+
+an S4 easyreporting class instance
 }
 \description{
+An S4 class for managing rmarkdown report.
+Each instance describes an rmarkdown file.
+
 An S4 class for managing rmarkdown report.
 Each instance describes an rmarkdown file.
 }
@@ -19,7 +36,7 @@ Each instance describes an rmarkdown file.
 \describe{
 \item{\code{filenamePath}}{the path with the name of the rmarkdown.}
 
-\item{\code{title}}{the title fo the report.}
+\item{\code{title}}{the title of the report section.}
 
 \item{\code{author}}{the author of the report.}
 
@@ -29,6 +46,8 @@ Each instance describes an rmarkdown file.
 }}
 
 \examples{
+rd <- easyreporting(filenamePath="./project_report",
+                        title="example_report", author="It's me")
 rd <- easyreporting(filenamePath="./project_report",
                         title="example_report", author="It's me")
 }

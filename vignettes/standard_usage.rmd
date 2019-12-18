@@ -20,7 +20,7 @@ editor_options:
 knitr::opts_chunk$set(
   collapse = FALSE,
   comment = "#>",
-  eval=FALSE
+  eval=TRUE
 )
 ```
 
@@ -58,7 +58,7 @@ and the general rmarkdown options of the document.
 
 
 ```{r}
-proj.path <- file.path(getwd(), "project_report")
+proj.path <- file.path("~", "project_report")
 
 er <- easyreporting(filenamePath=proj.path, title="example_report",
                         author=c("Dario Righelli"))

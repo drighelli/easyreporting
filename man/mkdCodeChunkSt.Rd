@@ -4,7 +4,12 @@
 \alias{mkdCodeChunkSt}
 \title{mkdCodeChunkSt}
 \usage{
-mkdCodeChunkSt(object, ...)
+mkdCodeChunkSt(
+  object,
+  optionList = getOptionsList(object),
+  sourceFilesList = NULL,
+  isComplete = FALSE
+)
 }
 \arguments{
 \item{object}{an easyreporting class object}

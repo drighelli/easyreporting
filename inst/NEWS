@@ -26,6 +26,11 @@ Changes in version 0.99.11 (2019-10-17)
 Changes in version 0.99.11 (2019-10-17)
 + fixing DESCRIPTION->authors field error
 
+Changes in version 0.99.12 (2019-10-17)
++ building works
+
+Changes in version 0.99.13 (2019-10-18)
++ passing all checks
 
 
 
