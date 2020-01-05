@@ -1,7 +1,4 @@
 #' easyreporting
-#' @description An S4 class for managing rmarkdown report.
-#' Each instance describes an rmarkdown file.
-#' @docType class
 #' @rdname easyreporting-class
 #' @aliases easyreporting-class
 #' @slot filenamePath the path with the name of the rmarkdown.
@@ -9,13 +6,7 @@
 #' @slot author the author of the report.
 #' @slot documentType the type of the final document (fixed to "html").
 #' @slot optionList a list of options for the general rmarkdown document.
-#'
-#' @return an easyreporting class instance
 #' @exportClass easyreporting
-#'
-#' @examples
-#' rd <- easyreporting(filenamePath="./project_report",
-#'                         title="example_report", author="It's me")
 easyreporting <- setClass(Class="easyreporting", 
     representation=representation(
          ## attributes

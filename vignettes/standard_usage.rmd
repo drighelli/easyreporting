@@ -34,11 +34,14 @@ easyreporting.
 For the usage you just need to load the **easyreporting** package, which will 
 load the **R6** and **rmarkdown** packages.
 
-```{r}
+```{r, eval=FALSE}
 if(!requireNamespace("BiocManager", quietly = TRUE))
     install.packages("BiocManager")
 BiocManager::install("easyreporting")
+```
 
+
+```{r}
 library("easyreporting")
 ```
 
@@ -119,7 +122,7 @@ parameter.
 
 ```{r}
 ## moreover I can add a list of files to source in che code chunk
-RFilesList <- list.files(system.file("code_example", package="easyreporting"), 
+RFilesList <- list.files(system.file("script", package="easyreporting"), 
                         full.names=TRUE)
 mkdCodeChunkSt(er, optionList=optList, sourceFilesList=RFilesList)
 mkdGeneralMsg(er, message="v <- fakeFunction(10)")
