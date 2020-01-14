@@ -61,7 +61,7 @@ and the general rmarkdown options of the document.
 
 
 ```{r}
-proj.path <- tempdir()
+proj.path <- file.path(tempdir(), "bioinfo_report")
 er <- easyreporting(filenamePath=proj.path, title="example_report",
                         author=c("Dario Righelli"))
 ```

@@ -433,7 +433,7 @@ setMethod(f="mkdCodeChunkSt", signature="easyreporting",
 #' mkdSourceFiles
 #' @description includes a list of source files inside the rmarkdown
 #' @param object an easyreporting class object
-#' @param ... a list of files to source
+#' @param ... a list of files to source with path
 #'
 #' @return none
 #'
@@ -447,7 +447,7 @@ setMethod(f="mkdSourceFiles", signature="easyreporting",
         {
             self.message <- paste0(self.message,
                                 "source(\"",
-                                file.path(getwd(), files[[i]]),
+                                file.path(files[[i]]),
                                 "\")\n")
         }
         base::write(self.message,

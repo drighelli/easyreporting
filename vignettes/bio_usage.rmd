@@ -60,7 +60,7 @@ For example the name and the path of the report, the type of report
 and the general rmarkdown options of the document.
 
 ```{r}
-proj.path <- tempdir()
+proj.path <- file.path(tempdir(), "bioinfo_report")
 bioEr <- easyreporting(filenamePath=proj.path, title="bioinfo_report",
                         author=c("Dario Righelli"))
 ```
