@@ -41,6 +41,10 @@ Changes in version 0.99.15 (2020-01-14)
 Changes in version 0.99.16 (2020-01-14)
 + adding tmpdir+filename instead of home directory in the vignettes
 
+Changes in version 0.99.17 (2020-02-12)
++ adding BMDC data
++ adding script/plotFunctions.R
++ changing script/geneFunctions.R
 
 
 
