@@ -1,7 +1,7 @@
 Package: easyreporting
 Type: Package
 Title: Helps creating report for improving Reproducible computational Research
-Version: 0.99.17
+Version: 1.0.0
 Authors@R: person("Dario", "Righelli", email="dario.righelli@gmail.com", 
  role=c("cre", "aut"))
 Description: An S4 class for facilitating the automated creation of 
