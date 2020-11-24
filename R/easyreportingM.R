@@ -585,3 +585,5 @@ setMethod(f="mkdCodeChunkTitledCommented", signature="easyreporting",
                                     sourceFilesList=sourceFilesList)
         }
 )
+
+

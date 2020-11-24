@@ -5,4 +5,4 @@
 doc
 Meta
 *.Rproj
-
+.DS_Store
