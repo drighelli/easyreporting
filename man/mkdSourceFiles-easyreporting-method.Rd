@@ -9,7 +9,7 @@
 \arguments{
 \item{object}{an easyreporting class object}
 
-\item{...}{a list of files to source}
+\item{...}{a list of files to source with path}
 }
 \value{
 none

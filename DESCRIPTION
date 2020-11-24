@@ -25,5 +25,5 @@ Suggests:
     limma, 
     EDASeq,
     statmod
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.1
 VignetteBuilder: knitr

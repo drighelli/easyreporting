@@ -2,6 +2,7 @@
 
 export(compile)
 export(easyreporting)
+export(erGUIVolcano)
 export(getOptionsList)
 export(getReportFilename)
 export(makeOptionsList)

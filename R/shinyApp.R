@@ -1,4 +1,12 @@
 
+#' erGUIVolcano
+#' @description executes a Shiny GUI to perform a volcano plot and trace its
+#' executed functions.
+#' @return none
+#' @export
+#'
+#' @examples
+#' erGUIVolcano()
 erGUIVolcano <- function()
 {
     appDir <- system.file("shiny_examples", "volcano_app", package="easyreporting")

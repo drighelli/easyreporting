@@ -7,6 +7,7 @@
 \usage{
 easyreporting(filenamePath, title, author, optionList = NULL)
 
+easyreporting(filenamePath, title, author, optionList = NULL)
 }
 \arguments{
 \item{filenamePath}{the path with the name of the rmarkdown.}
