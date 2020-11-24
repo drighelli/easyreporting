@@ -6,3 +6,4 @@ doc
 Meta
 *.Rproj
 .DS_Store
+.Rincr_history
