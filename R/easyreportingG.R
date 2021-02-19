@@ -11,7 +11,7 @@
 setGeneric (
     name="initReportFilename",
     def=function(object, filenamepath=NULL, title=NULL,
-                author=NULL, optionList=NULL)
+                author=NULL, optionList=NULL, bibfile=NULL, documentType=NULL)
     {
         standardGeneric("initReportFilename")
     }
@@ -138,8 +138,20 @@ setGeneric (
 #' 
 setGeneric (
     name="setOptionsList",
-    def=function(object, cacheFlag=TRUE, evalFlag=TRUE, echoFlag=TRUE, 
-                warningFlag=FALSE, showMessages=FALSE, includeFlag=TRUE)
+    def=function(object, cacheFlag=TRUE,
+                 evalFlag=TRUE,
+                 echoFlag=TRUE,
+                 warningFlag=FALSE,
+                 showMessages=FALSE,
+                 includeFlag=TRUE,
+                 collapseFlag=FALSE,
+                 purlFlag=TRUE,
+                 errorFlag=TRUE,
+                 messageFlag=TRUE,
+                 highlightFlag=TRUE,
+                 promptFlag=FALSE,
+                 stripWhiteFlag=TRUE,
+                 tidyFlag=FALSE)
     {standardGeneric("setOptionsList")}
 )
 #' getOptionsList

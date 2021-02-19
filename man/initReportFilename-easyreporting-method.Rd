@@ -9,7 +9,9 @@
   filenamepath = NULL,
   title = NULL,
   author = NULL,
-  optionList = NULL
+  optionList = NULL,
+  bibfile = NULL,
+  documentType = "rmarkdown::html_document"
 )
 }
 \arguments{
@@ -17,16 +19,27 @@
 
 \item{filenamepath}{the name of the report with or without the path}
 
-\item{author}{the name of the report author}
+\item{author}{the name of the report author as a \link[link]{person} format 
+(where expected \code{comment} named fields are \code{ORCID}, \code{url}, 
+\code{affiliation}, \code{affiliation_url}).
+In case author is a \code{character}, it will be reported as it is.}
+
+\item{bibfile}{a bibfile for bibliography.}
+
+\item{documentType}{type of report final document, if author(s) is a \code{person} 
+it will be \code{distill::distill_article} (\code{rmarkdown::html_document} default)}
 
 \item{mainTitle}{the title of the report}
 
-\item{documentType}{type of report final document. (html is default)}
+\item{metadataList}{}
 }
 \value{
 an easyreporting class object
 }
 \description{
 internal funtion usefull to init the report for the first time.
+}
+\seealso{
+\link[utils]{person}
 }
 \keyword{internal}

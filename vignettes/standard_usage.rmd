@@ -62,6 +62,25 @@ and the general rmarkdown options of the document.
 
 ```{r}
 proj.path <- file.path(tempdir(), "bioinfo_report")
+
+er <- easyreporting(filenamePath=proj.path, title="example_report",
+                  author=c(
+                      person(given="Dario", family="Righelli", 
+                          email="fake_email@gmail.com",
+                          comment=c(ORCID="ORCIDNUMBER", 
+                                    url="www.fakepersonalurl.com",
+                                    affiliation="Institute of Applied Mathematics, CNR, Naples, IT", 
+                                    affiliation_url="www.fakeurl.com")),
+                    person(given="Claudia", family="Angelini",
+                    comment=c(ORCID="ORCIDNUMBER",
+                              url="www.fakepersonalurl.com",
+                              affiliation="Institute of Applied Mathematics, CNR, Naples, IT",
+                              affiliation_url="www.fakeurl.com"))
+                    )
+                  )
+                    
+
+
 er <- easyreporting(filenamePath=proj.path, title="example_report",
                         author=c("Dario Righelli"))
 ```

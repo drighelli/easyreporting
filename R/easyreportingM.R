@@ -4,9 +4,16 @@
 #' @param object an easyreporting class object 
 #' @param filenamepath the name of the report with or without the path
 #' @param mainTitle the title of the report
-#' @param author the name of the report author
-#' @param documentType type of report final document. (html is default)
+#' @param author the name of the report author as a \link[link]{person} format 
+#' (where expected \code{comment} named fields are \code{ORCID}, \code{url}, 
+#' \code{affiliation}, \code{affiliation_url}).
+#' In case author is a \code{character}, it will be reported as it is.
+#' @param documentType type of report final document, if author(s) is a \code{person} 
+#' it will be \code{distill::distill_article} (\code{rmarkdown::html_document} default)
+#' @param metadataList 
+#' @param bibfile a bibfile for bibliography.
 #'
+#' @seealso \link[utils]{person}
 #' @keywords internal
 #' @importFrom tools file_ext
 #'
@@ -14,11 +21,11 @@
 setMethod(f="initReportFilename", signature="easyreporting",
         definition=function(object, 
                 filenamepath=NULL, title=NULL,
-                author=NULL, optionList=NULL)
+                author=NULL, optionList=NULL,
+                bibfile="", documentType="rmarkdown::html_document")
 {
     if(is.null(filenamepath)) stop("Report file name is NULL!")
     if(is.null(title)) stop("Please provide a title for the document!")
-    if(object@documentType != "html") stop("documentType has to be HTML!")
     
     if(!file.exists(filenamepath))
     {
@@ -27,30 +34,57 @@ setMethod(f="initReportFilename", signature="easyreporting",
             filenamepath <- paste0(filenamepath, ".Rmd")
         }
         file.create(filenamepath)
+    } else {
+        warning("File ", filenamepath, " already exists!\n Using old one...")
     }
 
     object@filenamePath <- filenamepath
 
-    if(length(author) > 1)
+    if( is(author, "person") ) 
     {
-        message("Only the first author will be put inside the report.")
-        author <- author[1]
+        object@author <- .parseAuthors(author)
+        require(distill)
+        object@documentType="distill::distill_article"
+    } else {
+        object@author <- paste0("\"", author, "\"")
+        object@documentType=documentType
     }
-    object@author <- author
+    # object@author <- author
     object@title <- title
+    object@bibfile <- bibfile
     ## do not indent!
     header <- paste0(
         "---
     title: \"", object@title, "\"
-    author: \"", object@author, "\"
-    date: \"`r Sys.Date()`\"
-    output: rmarkdown::", object@documentType, "_document\n---\n")
-
+    author: ", object@author, "
+    date: \"`r Sys.Date()`\"")
+    if(object@bibfile != "") header <- paste0(header, "bibfile: \"", object@bibfile, "\"")
+    header <- paste0(header, "\n    output: ", object@documentType, "\n---\n")
+    
     base::write(header, file=filenamepath,
                 append=TRUE, sep="\n")
     object <- mkdSetGlobalOpts(object=object, optionList=optionList)
     return(object)
 })
+
+.parseAuthors <- function(author)
+{
+    # gets a list of person and returns a formatted string 
+    authors.list <- lapply(author, function(a)
+    {
+        if(all(is.null(a$given), is.null(a$family))) stop("Please provide the Authors given and family name!")
+        a.str <- "\n      - name: \""
+        a.str <- paste(a.str, a$given, sep=" ")
+        a.str <- paste(a.str, a$family,  sep=" ")
+        ifelse(!is.null(a$email), a.str <- paste(a.str, a$email, "\"\n", sep=" " ), a.str <- paste0(a.str, "\"\n"))
+        if(!is.na(a$comment["ORCID"])) a.str <- paste0(a.str, "        orcid_id: ", a$comment["ORCID"], "\n")
+        if(!is.na(a$comment["affiliation"])) a.str <- paste0(a.str, "        affiliation: ", a$comment["affiliation"], "\n")
+        if(!is.na(a$comment["affiliation_url"])) a.str <- paste0(a.str, "        affiliation_url: ", a$comment["affiliation_url"], "\n")
+        if(!is.na(a$comment["url"])) a.str <- paste0(a.str, "        url: ", a$comment["url"], "\n")
+        return(a.str)
+    })
+    return(paste(authors.list, collapse=""))
+}
 
 #' mkdSetGlobalOpts
 #' @description internal function for appending to the report the initial
@@ -68,12 +102,20 @@ setMethod(f="mkdSetGlobalOpts", signature="easyreporting",
         if(!is.null(optionList)) object@optionList <- optionList
         options <- paste0("```{r global_options, include=FALSE}\n",
                         "knitr::opts_chunk$set(",
-                        "eval=", object@optionList$evalFlag,
-                        ", echo=", object@optionList$echoFlag,
-                        ", warning=", object@optionList$warningFlag,
+                        "eval=", object@optionList$eval,
+                        ", echo=", object@optionList$echo,
+                        ", warning=", object@optionList$warning,
                         ", message=", object@optionList$showMessages,
-                        ", include=", object@optionList$includeFlag,
-                        ", cache=", object@optionList$cacheFlag,
+                        ", include=", object@optionList$include,
+                        ", cache=", object@optionList$cache,
+                        ", collapse=", object@optionList$collapse,
+                        ", purl=", object@optionList$purl,
+                        ", error=", object@optionList$error,
+                        ", message=", object@optionList$message,
+                        ", highlight=", object@optionList$highlight,
+                        ", prompt=", object@optionList$prompt,
+                        ", strip.white=", object@optionList$strip.white,
+                        ", tidy=", object@optionList$tidy,
                         ")\n```\n")
         
         base::write(options, file=object@filenamePath,
@@ -109,7 +151,8 @@ setMethod(f="mkdTitle", signature="easyreporting",
         message <- paste0(
             strrep("#", times=level),
             " ",
-            title
+            title,
+            "\n"
         )
         base::write(message, file=getReportFilename(object),
                     ncolumns=if(is.character(message)) 1 else 5,
@@ -204,16 +247,32 @@ setMethod(f="setOptionsList", signature="easyreporting",
                         echoFlag=TRUE,
                         warningFlag=FALSE,
                         showMessages=FALSE,
-                        includeFlag=TRUE
+                        includeFlag=TRUE,
+                        collapseFlag=FALSE,
+                        purlFlag=TRUE,
+                        errorFlag=TRUE,
+                        messageFlag=TRUE,
+                        highlightFlag=TRUE,
+                        promptFlag=FALSE,
+                        stripWhiteFlag=TRUE,
+                        tidyFlag=FALSE
                         )
     {
         object@optionList <- list(
-            cacheFlag=cacheFlag,
-            evalFlag=evalFlag,
-            echoFlag=echoFlag,
-            warningFlag=warningFlag,
+            cache=cacheFlag,
+            eval=evalFlag,
+            echo=echoFlag,
+            warning=warningFlag,
             showMessages=showMessages,
-            includeFlag=includeFlag
+            include=includeFlag,
+            collapse=collapseFlag,
+            purl=purlFlag,
+            error=errorFlag,
+            message=messageFlag,
+            highlight=highlightFlag,
+            prompt=promptFlag,
+            strip.white=stripWhiteFlag,
+            tidy=tidyFlag
         )
         return(object)
     }
@@ -264,15 +323,31 @@ makeOptionsList <- function(cacheFlag=TRUE,
                             echoFlag=TRUE,
                             warningFlag=FALSE,
                             showMessages=FALSE,
-                            includeFlag=TRUE)
+                            includeFlag=TRUE,
+                            collapseFlag=FALSE,
+                            purlFlag=TRUE,
+                            errorFlag=TRUE,
+                            messageFlag=TRUE,
+                            highlightFlag=TRUE,
+                            promptFlag=FALSE,
+                            stripWhiteFlag=TRUE,
+                            tidyFlag=FALSE)
 {
     return( list(
-        cacheFlag=cacheFlag,
-        evalFlag=evalFlag,
-        echoFlag=echoFlag,
-        warningFlag=warningFlag,
+        cache=cacheFlag,
+        eval=evalFlag,
+        echo=echoFlag,
+        warning=warningFlag,
         showMessages=showMessages,
-        includeFlag=includeFlag
+        include=includeFlag,
+        collapse=collapseFlag,
+        purl=purlFlag,
+        error=errorFlag,
+        message=messageFlag,
+        highlight=highlightFlag,
+        prompt=promptFlag,
+        strip.white=stripWhiteFlag,
+        tidy=tidyFlag
     ))
 }
 
@@ -311,7 +386,7 @@ setMethod(f="compile", signature="easyreporting",
     definition=function(object)
     {
         mkdCodeChunkTitledCommented(object=object, title="Session Info", 
-            codeMsg="sessionInfo()")
+            codeMsg="sessionInfo()", optionList=makeOptionsList(tidyFlag=TRUE))
         rmarkdown::render(getReportFilename(object))
     }
 )
@@ -391,12 +466,20 @@ setMethod(f="mkdCodeChunkSt", signature="easyreporting",
     definition=function(object, optionList=getOptionsList(object),
                         sourceFilesList=NULL, isComplete=FALSE)
     {
-        self.message <- paste0("```{r eval=", optionList$evalFlag,
-                                ", echo=", optionList$echoFlag,
-                                ", warning=", optionList$warningFlag,
+        self.message <- paste0("```{r eval=", optionList$eval,
+                                ", echo=", optionList$echo,
+                                ", warning=", optionList$warning,
                                 ", message=", optionList$showMessages,
-                                ", include=", optionList$includeFlag,
-                                ", cache=", optionList$cacheFlag,
+                                ", include=", optionList$include,
+                                ", cache=", optionList$cache,
+                                ", collapse=", object@optionList$collapse,
+                                ", purl=", object@optionList$purl,
+                                ", error=", object@optionList$error,
+                                ", message=", object@optionList$message,
+                                ", highlight=", object@optionList$highlight,
+                                ", prompt=", object@optionList$prompt,
+                                ", strip.white=", object@optionList$strip.white,
+                                ", tidy=", object@optionList$tidy,
                                 "}\n")
         base::write(self.message,
                 file=getReportFilename(object),

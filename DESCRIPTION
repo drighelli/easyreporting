@@ -18,6 +18,7 @@ Imports:
     tools,
     shiny
 Suggests:
+    distill,
     BiocStyle,
     knitr,
     readxl,

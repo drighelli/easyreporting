@@ -11,7 +11,15 @@ setOptionsList(
   echoFlag = TRUE,
   warningFlag = FALSE,
   showMessages = FALSE,
-  includeFlag = TRUE
+  includeFlag = TRUE,
+  collapseFlag = FALSE,
+  purlFlag = TRUE,
+  errorFlag = TRUE,
+  messageFlag = TRUE,
+  highlightFlag = TRUE,
+  promptFlag = FALSE,
+  stripWhiteFlag = TRUE,
+  tidyFlag = FALSE
 )
 }
 \arguments{

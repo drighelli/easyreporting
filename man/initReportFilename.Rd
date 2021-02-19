@@ -9,7 +9,9 @@ initReportFilename(
   filenamepath = NULL,
   title = NULL,
   author = NULL,
-  optionList = NULL
+  optionList = NULL,
+  bibfile = NULL,
+  documentType = NULL
 )
 }
 \arguments{
@@ -19,9 +21,9 @@ initReportFilename(
 
 \item{author}{the name of the report author}
 
-\item{mainTitle}{the title of the report}
-
 \item{documentType}{type of report final document. (html is default)}
+
+\item{mainTitle}{the title of the report}
 }
 \value{
 an easyreporting class object

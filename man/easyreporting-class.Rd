@@ -5,18 +5,32 @@
 \alias{easyreporting-class}
 \title{easyreporting}
 \usage{
-easyreporting(filenamePath, title, author, optionList = NULL)
+easyreporting(
+  filenamePath,
+  title,
+  author,
+  optionList = NULL,
+  documentType = "rmarkdown::html_document",
+  bibfile = NULL
+)
 
-easyreporting(filenamePath, title, author, optionList = NULL)
+easyreporting(
+  filenamePath,
+  title,
+  author,
+  optionList = NULL,
+  documentType = "rmarkdown::html_document",
+  bibfile = NULL
+)
 }
 \arguments{
 \item{filenamePath}{the path with the name of the rmarkdown.}
 
 \item{title}{the title of the report section.}
 
-\item{author}{the author of the report.}
-
 \item{optionList}{a list of options for the general rmarkdown document.}
+
+\item{author(s)}{the author of the report.}
 }
 \value{
 an S4 easyreporting class instance
@@ -32,7 +46,7 @@ Each instance describes an rmarkdown file.
 
 \item{\code{title}}{the title of the report section.}
 
-\item{\code{author}}{the author of the report.}
+\item{\code{author}}{the author(s) of the report.}
 
 \item{\code{documentType}}{the type of the final document (fixed to "html").}
 
