@@ -1,5 +1,5 @@
 
-function(input, output, session) {
+server <- function(input, output, session) {
     library(easyreporting)
     library(ggplot2)
     source(system.file("script/plotFunctions.R",
