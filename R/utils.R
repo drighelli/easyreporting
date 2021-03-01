@@ -26,10 +26,9 @@
         strlist <- lapply(code, function(c) deparse(c))
         str <- paste(unlist(strlist), collapse="\n")
     } else if ( is(code, "<-") ) { # not working?
-        print("Single")
-        str <- deparse(c)
+        str <- deparse(code)
     } else {
         str <- code
     }
-    return(code)
+    return(str)
 }
