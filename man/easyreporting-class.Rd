@@ -11,7 +11,7 @@ easyreporting(
   author,
   optionList = NULL,
   documentType = "rmarkdown::html_document",
-  bibfile = NULL
+  bibfile = ""
 )
 
 easyreporting(
@@ -20,7 +20,7 @@ easyreporting(
   author,
   optionList = NULL,
   documentType = "rmarkdown::html_document",
-  bibfile = NULL
+  bibfile = ""
 )
 }
 \arguments{
@@ -28,9 +28,14 @@ easyreporting(
 
 \item{title}{the title of the report section.}
 
+\item{author}{the author(s) of the report.}
+
 \item{optionList}{a list of options for the general rmarkdown document.}
 
-\item{author(s)}{the author of the report.}
+\item{documentType}{type of report final document, if author(s) is a \code{person} 
+it will be \code{distill::distill_article} (\code{rmarkdown::html_document} default)}
+
+\item{bibfile}{a bibfile for bibliography.}
 }
 \value{
 an S4 easyreporting class instance
@@ -48,12 +53,17 @@ Each instance describes an rmarkdown file.
 
 \item{\code{author}}{the author(s) of the report.}
 
-\item{\code{documentType}}{the type of the final document (fixed to "html").}
+\item{\code{type}}{of report final document, if author(s) is a \code{person} 
+it will be \code{distill::distill_article} (\code{rmarkdown::html_document} default)}
+
+\item{\code{bibfile}}{a bibfile for bibliography.}
 
 \item{\code{optionList}}{a list of options for the general rmarkdown document.}
 }}
 
 \examples{
+\dontrun{
 rd <- easyreporting(filenamePath="./project_report",
                         title="example_report", author="It's me")
+}
 }

@@ -62,7 +62,20 @@ and the general rmarkdown options of the document.
 ```{r}
 proj.path <- file.path(tempdir(), "bioinfo_report")
 bioEr <- easyreporting(filenamePath=proj.path, title="bioinfo_report",
-                        author=c("Dario Righelli"))
+                        author=c(
+                      person(given="Dario", family="Righelli", 
+                          email="fake_email@gmail.com",
+                          comment=c(ORCID="ORCIDNUMBER", 
+                                    url="www.fakepersonalurl.com",
+                                    affiliation="Institute of Applied Mathematics, CNR, Naples, IT", 
+                                    affiliation_url="www.fakeurl.com")),
+                    person(given="Claudia", family="Angelini",
+                    comment=c(ORCID="ORCIDNUMBER",
+                              url="www.fakepersonalurl.com",
+                              affiliation="Institute of Applied Mathematics, CNR, Naples, IT",
+                              affiliation_url="www.fakeurl.com"))
+                    )
+                  )
 ```
 
 
@@ -76,11 +89,10 @@ stored in the *importFunctions.R* file.
 
 ```{r}
 mkdTitle(bioEr, title="Loading Counts Data")
-mkdCodeChunkComplete(object=bioEr, message=paste0("geneCounts <- importData(sy",
-        "stem.file('extdata/GSE134118_Table_S3.xlsx',",
-        "package='easyreporting'))"), 
-        sourceFilesList=system.file("script/importFunctions.R", 
-                                            package="easyreporting"))
+mkdCodeChunkComplete(object=bioEr, code=quote(geneCounts <- importData(
+      system.file("extdata/GSE134118_Table_S3.xlsx", package="easyreporting"))), 
+      sourceFilesList=system.file("script/importFunctions.R", package="easyreporting"))
+
 ```
 
 # Counts exploration 
@@ -92,7 +104,7 @@ function call as the message to track.
 ```{r}
 mkdTitle(bioEr, title="Plot PCA on count data", level=2)
 mkdCodeChunkComplete(bioEr, 
-                        message="EDASeq::plotPCA(as.matrix(geneCounts))")
+                        code=quote(EDASeq::plotPCA(as.matrix(geneCounts))))
 ```
 
 # Differential expression
@@ -109,9 +121,9 @@ the code chunk.
 ```{r}
 mkdTitle(bioEr, "Differential Expression Analysis")
 mkdCodeChunkCommented(bioEr, 
-    codeMsg="degList <- applyEdgeRExample(counts=geneCounts, 
+    code="degList <- applyEdgeRExample(counts=geneCounts, 
                     samples=colnames(geneCounts), contrast='Pleura - Broth')", 
-    commentMsg=paste0("As we saw from the PCA, the groups are well separated",
+    comment=paste0("As we saw from the PCA, the groups are well separated",
         ", so we can perform a Differential Expression analysis with edgeR."),
     sourceFilesList=system.file("script/geneFunctions.R", 
                                 package="easyreporting"))
@@ -126,19 +138,22 @@ Also in this case, we create a new title and a new chunk within the function to 
 
 ```{r}
 mkdTitle(bioEr, "MD Plot of DEGs", level=2)
-mkdCodeChunkComplete(bioEr, message="limma::plotMD(degList$test)")
+mkdCodeChunkComplete(bioEr, code="limma::plotMD(degList$test)")
 ```
 
 
 # Compiling the report
+
 Once finished our analysis it is possible to compile the produced rmarkdown report  simply by using the *compile* method.
 The compile method appends a sessionInfo() to the report to trace all the packages and versions used for the analysis.
-```{r}
+
+```{r, eval=FALSE}
 compile(bioEr)
 ```
 
 # Session Info
-```{r}
+
+```{r, tidy=TRUE}
 sessionInfo()
 ```
 

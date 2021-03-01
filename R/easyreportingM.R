@@ -10,7 +10,6 @@
 #' In case author is a \code{character}, it will be reported as it is.
 #' @param documentType type of report final document, if author(s) is a \code{person} 
 #' it will be \code{distill::distill_article} (\code{rmarkdown::html_document} default)
-#' @param metadataList 
 #' @param bibfile a bibfile for bibliography.
 #'
 #' @seealso \link[utils]{person}
@@ -64,65 +63,11 @@ setMethod(f="initReportFilename", signature="easyreporting",
     base::write(header, file=filenamepath,
                 append=TRUE, sep="\n")
     object <- mkdSetGlobalOpts(object=object, optionList=optionList)
+
+    
     return(object)
 })
 
-.parseAuthors <- function(author)
-{
-    # gets a list of person and returns a formatted string 
-    authors.list <- lapply(author, function(a)
-    {
-        if(all(is.null(a$given), is.null(a$family))) stop("Please provide the Authors given and family name!")
-        a.str <- "\n      - name: \""
-        a.str <- paste(a.str, a$given, sep=" ")
-        a.str <- paste(a.str, a$family,  sep=" ")
-        ifelse(!is.null(a$email), a.str <- paste(a.str, a$email, "\"\n", sep=" " ), a.str <- paste0(a.str, "\"\n"))
-        if(!is.na(a$comment["ORCID"])) a.str <- paste0(a.str, "        orcid_id: ", a$comment["ORCID"], "\n")
-        if(!is.na(a$comment["affiliation"])) a.str <- paste0(a.str, "        affiliation: ", a$comment["affiliation"], "\n")
-        if(!is.na(a$comment["affiliation_url"])) a.str <- paste0(a.str, "        affiliation_url: ", a$comment["affiliation_url"], "\n")
-        if(!is.na(a$comment["url"])) a.str <- paste0(a.str, "        url: ", a$comment["url"], "\n")
-        return(a.str)
-    })
-    return(paste(authors.list, collapse=""))
-}
-
-#' mkdSetGlobalOpts
-#' @description internal function for appending to the report the initial
-#' options setup
-#'
-#' @param object an easyreporting class object
-#' @param optionList a list of options
-#'
-#' @return an easyreporting class object
-#' @keywords internal
-#'
-setMethod(f="mkdSetGlobalOpts", signature="easyreporting",
-    definition=function(object, optionList=list())
-    {
-        if(!is.null(optionList)) object@optionList <- optionList
-        options <- paste0("```{r global_options, include=FALSE}\n",
-                        "knitr::opts_chunk$set(",
-                        "eval=", object@optionList$eval,
-                        ", echo=", object@optionList$echo,
-                        ", warning=", object@optionList$warning,
-                        ", message=", object@optionList$showMessages,
-                        ", include=", object@optionList$include,
-                        ", cache=", object@optionList$cache,
-                        ", collapse=", object@optionList$collapse,
-                        ", purl=", object@optionList$purl,
-                        ", error=", object@optionList$error,
-                        ", message=", object@optionList$message,
-                        ", highlight=", object@optionList$highlight,
-                        ", prompt=", object@optionList$prompt,
-                        ", strip.white=", object@optionList$strip.white,
-                        ", tidy=", object@optionList$tidy,
-                        ")\n```\n")
-        
-        base::write(options, file=object@filenamePath,
-                    append=TRUE, sep="\n")
-        return(object)
-    }
-)
 
 #' mkdTitle
 #'
@@ -135,11 +80,13 @@ setMethod(f="mkdSetGlobalOpts", signature="easyreporting",
 #' @return none
 #' @export
 #' @examples
+#' \dontrun{
 #' rd <- easyreporting(filenamePath="./project_report",
 #'                         title="example_report", author=c("It's me"))
 #'
 #' mkdTitle(rd, "First Level Title")
 #' mkdTitle(rd, "Sub-Title", level=2)
+#' }
 #'
 setMethod(f="mkdTitle", signature="easyreporting",
         definition=function(object, title, level=1)
@@ -172,9 +119,11 @@ setMethod(f="mkdTitle", signature="easyreporting",
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' rd <- easyreporting(filenamePath="./project_report",
 #'                         title="example_report", author=c("It's me"))
 #' mkdGeneralMsg(rd, "Writing a paragraph to describe my code chunk")
+#' }
 setMethod(f="mkdGeneralMsg", signature="easyreporting",
     definition=function(object, message)
     {
@@ -198,10 +147,12 @@ setMethod(f="mkdGeneralMsg", signature="easyreporting",
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' rd <- easyreporting(filenamePath="./project_report",
 #'                         title="example_report", author=c("It's me"))
 #' mkdGeneralTitledMsg(rd, title="Generic SubTitle for this message", level=2,
 #'         message="Writing a paragraph to describe my code chunk")
+#' }
 setMethod(f="mkdGeneralTitledMsg", signature="easyreporting",
         definition=function(object, title=NULL, level=1, message)
         {
@@ -213,144 +164,6 @@ setMethod(f="mkdGeneralTitledMsg", signature="easyreporting",
         }
 )
 
-#' setOptionsList
-#' @description set an optionList to the class
-#' 
-#' @param object an easyreporting class object
-#' @param cacheFlag boolean for caching chunk data (default TRUE)
-#' @param evalFlag boolean for evaluating the code chunk in the compiled version
-#' (default TRUE)
-#' @param echoFlag boolean for showing the code chunk (default TRUE)
-#' @param warningFlag boolean for showing the chunk warnings (default FALSE)
-#' @param showMessages boolean for showing the chunk warnings in compiled
-#' @param includeFlag boolean for including the code chunk in the compiled
-#' version (default TRUE)
-#'
-#' @return none
-#' @export
-#'
-#' @examples
-#' rd <- easyreporting(filenamePath="./project_report",
-#'                         title="example_report", author=c("It's me"))
-#'
-#' ## setting default option
-#' setOptionsList(rd)
-#'
-#' ## modifying only some options
-#' rd <- setOptionsList(rd, warningFlag=TRUE, 
-#'         showMessages=TRUE, includeFlag=TRUE)
-#' 
-setMethod(f="setOptionsList", signature="easyreporting",
-    definition=function(object, 
-                        cacheFlag=TRUE,
-                        evalFlag=TRUE,
-                        echoFlag=TRUE,
-                        warningFlag=FALSE,
-                        showMessages=FALSE,
-                        includeFlag=TRUE,
-                        collapseFlag=FALSE,
-                        purlFlag=TRUE,
-                        errorFlag=TRUE,
-                        messageFlag=TRUE,
-                        highlightFlag=TRUE,
-                        promptFlag=FALSE,
-                        stripWhiteFlag=TRUE,
-                        tidyFlag=FALSE
-                        )
-    {
-        object@optionList <- list(
-            cache=cacheFlag,
-            eval=evalFlag,
-            echo=echoFlag,
-            warning=warningFlag,
-            showMessages=showMessages,
-            include=includeFlag,
-            collapse=collapseFlag,
-            purl=purlFlag,
-            error=errorFlag,
-            message=messageFlag,
-            highlight=highlightFlag,
-            prompt=promptFlag,
-            strip.white=stripWhiteFlag,
-            tidy=tidyFlag
-        )
-        return(object)
-    }
-)
-
-#' getOptionsList
-#'
-#' @description returns the optionList from the easyreporting class
-#'
-#' @param object an easyreporting class object
-#'
-#' @return a list of options
-#' @export
-#'
-#' @examples
-#' rd <- easyreporting(filenamePath="./project_report", title="example_report",
-#'                         author=c("It's me"))
-#' optList <- getOptionsList(rd)
-#'
-setMethod(f="getOptionsList", signature="easyreporting", 
-    definition=function(object)
-    {
-        return(object@optionList)
-    }
-)
-
-
-#' makeOptionsList
-#' @description makes an list of rmarkdown options
-#'
-#' @param cacheFlag boolean for caching chunk data (default TRUE)
-#' @param evalFlag boolean for evaluating the code chunk in the compiled version
-#' (default TRUE)
-#' @param echoFlag boolean for showing the code chunk (default TRUE)
-#' @param warningFlag boolean for showing the chunk warnings (default FALSE)
-#' @param showMessages boolean for showing the chunk warnings in compiled
-#' version (default FALSE)
-#' @param includeFlag boolean for including the code chunk in the compiled
-#' version (default TRUE)
-#'
-#' @return list of rmarkdown options
-#' @export
-#'
-#' @examples
-#' optList <- makeOptionsList()
-makeOptionsList <- function(cacheFlag=TRUE,
-                            evalFlag=TRUE,
-                            echoFlag=TRUE,
-                            warningFlag=FALSE,
-                            showMessages=FALSE,
-                            includeFlag=TRUE,
-                            collapseFlag=FALSE,
-                            purlFlag=TRUE,
-                            errorFlag=TRUE,
-                            messageFlag=TRUE,
-                            highlightFlag=TRUE,
-                            promptFlag=FALSE,
-                            stripWhiteFlag=TRUE,
-                            tidyFlag=FALSE)
-{
-    return( list(
-        cache=cacheFlag,
-        eval=evalFlag,
-        echo=echoFlag,
-        warning=warningFlag,
-        showMessages=showMessages,
-        include=includeFlag,
-        collapse=collapseFlag,
-        purl=purlFlag,
-        error=errorFlag,
-        message=messageFlag,
-        highlight=highlightFlag,
-        prompt=promptFlag,
-        strip.white=stripWhiteFlag,
-        tidy=tidyFlag
-    ))
-}
-
 #' getReportFilename
 #' @description returns the report filename with path
 #' @param object an easyreporting class object
@@ -358,9 +171,11 @@ makeOptionsList <- function(cacheFlag=TRUE,
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' rd <- easyreporting(filenamePath="./project_report",
 #'                         title="example_report", author=c("It's me"))
 #' (rep <- getReportFilename(rd))
+#' }
 setMethod(f="getReportFilename", signature="easyreporting", 
     definition=function(object)
     {
@@ -378,15 +193,16 @@ setMethod(f="getReportFilename", signature="easyreporting",
 #' @export
 #' 
 #' @examples
+#' \dontrun{
 #' rd <- easyreporting(filenamePath="./project_report", title="example_report",
 #'                         author=c("It's me"))
 #' compile(rd)
-#' 
+#' }
 setMethod(f="compile", signature="easyreporting",
     definition=function(object)
     {
         mkdCodeChunkTitledCommented(object=object, title="Session Info", 
-            codeMsg="sessionInfo()", optionList=makeOptionsList(tidyFlag=TRUE))
+            code="sessionInfo()", optionList=makeOptionsList(tidyFlag=TRUE))
         rmarkdown::render(getReportFilename(object))
     }
 )
@@ -409,6 +225,7 @@ setMethod(f="compile", signature="easyreporting",
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' rd <- easyreporting(filenamePath="./project_report",
 #'                         title="example_report", author=c("It's me"))
 #' ## leaving the default options to the code chunk
@@ -417,7 +234,7 @@ setMethod(f="compile", signature="easyreporting",
 #' variable <- 1
 #' mkdVariableAssignment(rd, "variable", "variable", show=TRUE)
 #' mkdCodeChunkEnd(rd)
-#'
+#' }
 setMethod(f="mkdVariableAssignment", signature="easyreporting", 
     definition=function(object, variable.name, variable.object.name, show=FALSE)
     {
@@ -449,6 +266,7 @@ setMethod(f="mkdVariableAssignment", signature="easyreporting",
 #'
 #'
 #' @examples
+#' \dontrun{
 #' rd <- easyreporting(filenamePath="./project_report",
 #'                         title="example_report", author=c("It's me"))
 #' ## no options
@@ -461,7 +279,7 @@ setMethod(f="mkdVariableAssignment", signature="easyreporting",
 #' mkdCodeChunkSt(rd, optionList=optList)
 #' ## just leaving empty
 #' mkdCodeChunkEnd(rd)
-#'
+#' }
 setMethod(f="mkdCodeChunkSt", signature="easyreporting", 
     definition=function(object, optionList=getOptionsList(object),
                         sourceFilesList=NULL, isComplete=FALSE)
@@ -489,7 +307,16 @@ setMethod(f="mkdCodeChunkSt", signature="easyreporting",
     
         if(!is.null(sourceFilesList))
         {
-            files <- sourceFilesList
+            destination <- gsub(basename(object@filenamePath), "", object@filenamePath)
+            files <- lapply(sourceFilesList, function(file)
+            {
+                message("Copying ", file, " to ", file.path(destination, basename(file)))
+                file.copy(from=file, to=file.path(destination, basename(file)))
+                return(basename(file))
+            })
+            
+            
+            # files <- sourceFilesList
             self.message <- ""
             for(i in seq_along(files))
             {
@@ -551,11 +378,13 @@ setMethod(f="mkdSourceFiles", signature="easyreporting",
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #'  rd <- easyreporting(filenamePath="./project_report",
 #'                         title="example_report", author=c("It's me"))
 #' mkdCodeChunkSt(rd)
 #' ## just leaving empty
 #' mkdCodeChunkEnd(rd)
+#' }
 setMethod(f="mkdCodeChunkEnd", signature="easyreporting", 
           definition=function(object)
     {
@@ -568,105 +397,43 @@ setMethod(f="mkdCodeChunkEnd", signature="easyreporting",
     }
 )
 
-#' mkdCodeChunkComplete
-#' @description it creates a complete code chunk.
+
+
+#' setBibliography
+#' @description add a bibfile name to the object that will be reflected into the
+#' report as a bibliography section
 #' @param object an easyreporting class object
-#' @param message a string containing a function call or the entire code chunk
-#' to trace.
-#' @param optionList a list of options.
-#' @param sourceFilesList a list of files to source.
+#' @param bibfile a string with the name of the bib file
 #'
 #' @return none
 #' @export
 #'
 #' @examples
-#'  rd <- easyreporting(filenamePath="./project_report",
-#'                         title="example_report", author=c("It's me"))
-#' mkdCodeChunkComplete(rd, message="a <- 1\nb <- 2\nc <- a+b\n print(c)")
-setMethod(f="mkdCodeChunkComplete", signature="easyreporting", 
-    definition=function(object, message,
-                optionList=getOptionsList(object),
-                sourceFilesList=NULL)
-    {
-        mkdCodeChunkSt(object, optionList=optionList,
-                        sourceFilesList=sourceFilesList,
-                        isComplete=TRUE)
-        mkdGeneralMsg(object, message)
-        mkdCodeChunkEnd(object)
-    }
-)
+#' \dontrun{
+#' # TBD
+#' }
+setMethod(f="setBibliography", signature="easyreporting", 
+        definition=function(object, bibfile=NULL)
+{
+    if(!is.null(bibfile)) object@bibfile <- bibfile
+})
 
-#' mkdCodeChunkCommented
-#' @description it creates a complete code chunk, adding a natural language
-#' comment before of it.
+
+
+#' getBibliography
+#' @description returns the bibfile name attached to the object
 #' @param object an easyreporting class object
-#' @param commentMsg a string with the natural language comment for the chunk.
-#' @param codeMsg a string within the code.
-#' @param optionList a list of options (default is the class options).
-#' @param sourceFilesList a optional list of files to source inside the chunk.
 #'
 #' @return none
 #' @export
 #'
 #' @examples
-#' rd <- easyreporting(filenamePath="./project_report",
-#'                         title="example_report", author=c("It's me"))
-#' optList <- makeOptionsList(includeFlag=TRUE, cacheFlag=TRUE)
-#' mkdCodeChunkCommented(rd,
-#'                 commentMsg="This is the comment of the following code chunk",
-#'                 codeMsg="a <- 1\nb <- 2\n(c <- a+b)\n", optionList=optList,
-#'                 sourceFilesList=NULL)
-#'
-setMethod(f="mkdCodeChunkCommented", signature="easyreporting", 
-          definition=function(object, commentMsg=NULL, codeMsg,
-                                optionList=getOptionsList(object),
-                                sourceFilesList=NULL)
-    {
-        if(!is.null(commentMsg))
-        {
-            mkdGeneralMsg(object, commentMsg)
-        }
-        mkdCodeChunkComplete(object, message=codeMsg, optionList=optionList,
-                                sourceFilesList=sourceFilesList)
-    }
-)
-
-
-#' mkdCodeChunkTitledCommented
-#' @description it creates a complete code chunk, adding a natural language
-#' comment before of it.
-#' @param object an easyreporting class object
-#' @param title the title to assign to the code chunk section
-#' @param level the level of the title (default is 1)
-#' @param commentMsg a string with the natural language comment for the chunk.
-#' @param codeMsg a string within the code.
-#' @param optionList a list of options (default is the class options).
-#' @param sourceFilesList a optional list of files to source inside the chunk.
-#'
-#' @return none
-#' @export
-#'
-#' @examples
-#' rd <- easyreporting(filenamePath="./project_report",
-#'                         title="example_report", author=c("It's me"))
-#' optList <- makeOptionsList(includeFlag=TRUE, cacheFlag=TRUE)
-#' mkdCodeChunkTitledCommented(rd, title="Title Example", level=1,
-#'                 commentMsg="This is the comment of the following code chunk",
-#'                 codeMsg="a <- 1\nb <- 2\n(c <- a+b)\n", optionList=optList,
-#'                 sourceFilesList=NULL)
-#'
-setMethod(f="mkdCodeChunkTitledCommented", signature="easyreporting", 
-          definition=function(object, title=NULL, level=1, 
-                                commentMsg=NULL, codeMsg,
-                                optionList=getOptionsList(object),
-                                sourceFilesList=NULL)
-        {
-                mkdTitle(object, title=title, level=level)
-                mkdCodeChunkCommented(object, commentMsg=commentMsg, 
-                                    codeMsg=codeMsg,
-                                    optionList=optionList,
-                                    sourceFilesList=sourceFilesList)
-        }
-)
-
+#' \dontrun{
+#' # TBD
+#' }
+setMethod(f="getBibliography", signature="easyreporting", 
+    definition=function(object)
+{
+      return(object@bibfile)
+})
 

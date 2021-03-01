@@ -23,8 +23,10 @@ It appends a a titled section followed by a general message to
 the report. Useful for adding natural language comments.
 }
 \examples{
+\dontrun{
 rd <- easyreporting(filenamePath="./project_report",
                         title="example_report", author=c("It's me"))
 mkdGeneralTitledMsg(rd, title="Generic SubTitle for this message", level=2,
         message="Writing a paragraph to describe my code chunk")
+}
 }

@@ -20,10 +20,12 @@ none
 Inserts an rmarkdown title inside the report.
 }
 \examples{
+\dontrun{
 rd <- easyreporting(filenamePath="./project_report",
                         title="example_report", author=c("It's me"))
 
 mkdTitle(rd, "First Level Title")
 mkdTitle(rd, "Sub-Title", level=2)
+}
 
 }

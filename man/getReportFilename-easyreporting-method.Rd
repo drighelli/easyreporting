@@ -16,7 +16,9 @@ a string of report file name with path
 returns the report filename with path
 }
 \examples{
+\dontrun{
 rd <- easyreporting(filenamePath="./project_report",
                         title="example_report", author=c("It's me"))
 (rep <- getReportFilename(rd))
+}
 }

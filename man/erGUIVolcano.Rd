@@ -14,5 +14,7 @@ executes a Shiny GUI to perform a volcano plot and trace its
 executed functions.
 }
 \examples{
+\dontrun{
 erGUIVolcano()
+}
 }

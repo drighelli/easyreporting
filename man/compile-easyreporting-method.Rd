@@ -16,8 +16,9 @@ none
 prints the sessionInfo and compiles the rmarkdown file
 }
 \examples{
+\dontrun{
 rd <- easyreporting(filenamePath="./project_report", title="example_report",
                         author=c("It's me"))
 compile(rd)
-
+}
 }

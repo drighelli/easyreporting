@@ -4,7 +4,9 @@
 #' @slot filenamePath the path with the name of the rmarkdown.
 #' @slot title the title of the report section.
 #' @slot author the author(s) of the report.
-#' @slot documentType the type of the final document (fixed to "html").
+#' @slot type of report final document, if author(s) is a \code{person} 
+#' it will be \code{distill::distill_article} (\code{rmarkdown::html_document} default)
+#' @slot bibfile a bibfile for bibliography.
 #' @slot optionList a list of options for the general rmarkdown document.
 #' @exportClass easyreporting
 easyreporting <- setClass(Class="easyreporting", 
@@ -16,7 +18,6 @@ easyreporting <- setClass(Class="easyreporting",
         documentType="character",
         bibfile="character",
         optionList="list"
-        
     ),
     prototype=prototype(
         documentType="rmarkdown::html_document",
@@ -56,19 +57,26 @@ setMethod(f="initialize",
 #' Each instance describes an rmarkdown file.
 #' @importFrom  methods new
 #' @rdname easyreporting-class
+#'
 #' @param filenamePath the path with the name of the rmarkdown.
 #' @param title the title of the report section.
-#' @param author(s) the author of the report.
+#' @param author the author(s) of the report.
 #' @param optionList a list of options for the general rmarkdown document.
+#' @param documentType type of report final document, if author(s) is a \code{person} 
+#' it will be \code{distill::distill_article} (\code{rmarkdown::html_document} default)
+#' @param bibfile a bibfile for bibliography.
 #'
 #' @return an S4 easyreporting class instance
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' rd <- easyreporting(filenamePath="./project_report",
 #'                         title="example_report", author="It's me")
+#' }
 easyreporting <- function(filenamePath, title, author, optionList=NULL,
-                        documentType="rmarkdown::html_document", bibfile="")
+                        documentType="rmarkdown::html_document", bibfile=""
+                        )
 {
     new(Class="easyreporting", filenamePath=filenamePath, title=title, 
         author=author, bibfile=bibfile, optionList=optionList)

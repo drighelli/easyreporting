@@ -6,7 +6,9 @@
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' erGUIVolcano()
+#' }
 erGUIVolcano <- function()
 {
     appDir <- system.file("shiny_examples", "volcano_app", package="easyreporting")

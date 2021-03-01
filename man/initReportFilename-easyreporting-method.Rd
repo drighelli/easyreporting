@@ -10,7 +10,7 @@
   title = NULL,
   author = NULL,
   optionList = NULL,
-  bibfile = NULL,
+  bibfile = "",
   documentType = "rmarkdown::html_document"
 )
 }
@@ -30,8 +30,6 @@ In case author is a \code{character}, it will be reported as it is.}
 it will be \code{distill::distill_article} (\code{rmarkdown::html_document} default)}
 
 \item{mainTitle}{the title of the report}
-
-\item{metadataList}{}
 }
 \value{
 an easyreporting class object
