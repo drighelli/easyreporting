@@ -62,8 +62,6 @@ it will be \code{distill::distill_article} (\code{rmarkdown::html_document} defa
 }}
 
 \examples{
-\dontrun{
 rd <- easyreporting(filenamePath="./project_report",
                         title="example_report", author="It's me")
-}
 }

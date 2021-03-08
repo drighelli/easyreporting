@@ -16,7 +16,8 @@ Imports:
     rmarkdown,
     methods,
     tools,
-    shiny
+    shiny,
+    rlang
 Suggests:
     distill,
     BiocStyle,

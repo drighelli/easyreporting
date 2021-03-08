@@ -441,5 +441,29 @@ setGeneric (
 setGeneric (
     name="getBibliography",
     def=function(object){
-        standardGeneric("getBibliography")}
-)
+        standardGeneric("getBibliography")
+    })
+
+
+#' addResource
+#'
+#' @param object an easyreporting class instance
+#' @param source a string indicating the reference (i.e. "GEO")
+#' @param reference a string indicanting the reference of the source (i.e. "GSE60231)
+#' @param description a natural language description 
+#'
+#' @return an easyreporting class instance
+#' @export
+#'
+#' @examples
+#' rd <- easyreporting(filenamePath="./project_report",
+#'                         title="example_report", author=c("It's me"))
+#' rd <- addResource(rd, source="GEO", "GSE60231", "Transcriptome of BMDC to different antigen delivery systems")
+#' \dontrun{
+#' compile(rd)
+#' }
+setGeneric("addResource", function(object, source, reference, description)
+{
+    standardGeneric("addResource")
+})
+

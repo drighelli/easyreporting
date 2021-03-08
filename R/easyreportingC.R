@@ -17,7 +17,8 @@ easyreporting <- setClass(Class="easyreporting",
         author="character",
         documentType="character",
         bibfile="character",
-        optionList="list"
+        optionList="list",
+        resources="data.frame"
     ),
     prototype=prototype(
         documentType="rmarkdown::html_document",
@@ -70,10 +71,8 @@ setMethod(f="initialize",
 #' @export
 #'
 #' @examples
-#' \dontrun{
 #' rd <- easyreporting(filenamePath="./project_report",
 #'                         title="example_report", author="It's me")
-#' }
 easyreporting <- function(filenamePath, title, author, optionList=NULL,
                         documentType="rmarkdown::html_document", bibfile=""
                         )

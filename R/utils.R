@@ -32,3 +32,13 @@
     }
     return(str)
 }
+
+.parseResources <- function( df )
+{
+    str <- paste0("|Source|Reference|Description|\n|:--|:--|:--|\n",
+    paste("|",apply(X=df, MARGIN=1, function(row) 
+    {
+        paste(row, collapse="|")
+    }), collapse="|\n"),"|\n")
+    return(str)
+}

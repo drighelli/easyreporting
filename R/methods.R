@@ -17,15 +17,14 @@
 #' @importFrom tools file_ext
 #'
 #' @return an easyreporting class object 
-setMethod(f="initReportFilename", signature="easyreporting",
-        definition=function(object, 
-                filenamepath=NULL, title=NULL,
-                author=NULL, optionList=NULL,
-                bibfile="", documentType="rmarkdown::html_document")
+setMethod("initReportFilename", "easyreporting",
+    function(object, filenamepath=NULL, title=NULL, author=NULL, 
+            optionList=NULL, bibfile="", 
+            documentType="rmarkdown::html_document")
 {
     if(is.null(filenamepath)) stop("Report file name is NULL!")
     if(is.null(title)) stop("Please provide a title for the document!")
-    
+  
     if(!file.exists(filenamepath))
     {
         if(tools::file_ext(filenamepath) != "Rmd")
@@ -36,9 +35,9 @@ setMethod(f="initReportFilename", signature="easyreporting",
     } else {
         warning("File ", filenamepath, " already exists!\n Using old one...")
     }
-
+  
     object@filenamePath <- filenamepath
-
+    object@resources <- data.frame()
     if( is(author, "person") ) 
     {
         object@author <- .parseAuthors(author)
@@ -52,19 +51,15 @@ setMethod(f="initReportFilename", signature="easyreporting",
     object@title <- title
     object@bibfile <- bibfile
     ## do not indent!
-    header <- paste0(
-        "---
+    header <- paste0("---
     title: \"", object@title, "\"
     author: ", object@author, "
     date: \"`r Sys.Date()`\"")
     if(object@bibfile != "") header <- paste0(header, "bibfile: \"", object@bibfile, "\"")
     header <- paste0(header, "\n    output: ", object@documentType, "\n---\n")
-    
-    base::write(header, file=filenamepath,
-                append=TRUE, sep="\n")
+      
+    base::write(header, file=filenamepath, append=TRUE, sep="\n")
     object <- mkdSetGlobalOpts(object=object, optionList=optionList)
-
-    
     return(object)
 })
 
@@ -88,25 +83,22 @@ setMethod(f="initReportFilename", signature="easyreporting",
 #' mkdTitle(rd, "Sub-Title", level=2)
 #' }
 #'
-setMethod(f="mkdTitle", signature="easyreporting",
-        definition=function(object, title, level=1)
-    {
-        if(!is.character(title)) 
-            stop("You can enter only string values for title!")
-        if(level > 6) stop("You can use at last level 6!")
+setMethod("mkdTitle", "easyreporting",
+    function(object, title, level=1)
+{
+    if(!is.character(title)) stop("You can enter only string values for title!")
+    if(level > 6) stop("You can use at last level 6!")
     
-        message <- paste0(
-            strrep("#", times=level),
-            " ",
-            title,
-            "\n"
-        )
-        base::write(message, file=getReportFilename(object),
-                    ncolumns=if(is.character(message)) 1 else 5,
-                    append=TRUE,
-                    sep="\n")
-    }
-)
+    message <- paste0(
+        strrep("#", times=level),
+        " ",
+        title,
+        "\n"
+    )
+    base::write(message, file=getReportFilename(object),
+            ncolumns=if(is.character(message)) 1 else 5,
+            append=TRUE, sep="\n")
+})
 
 #' mkdGeneralMsg
 #' @description It appends a general message to the report.
@@ -124,15 +116,14 @@ setMethod(f="mkdTitle", signature="easyreporting",
 #'                         title="example_report", author=c("It's me"))
 #' mkdGeneralMsg(rd, "Writing a paragraph to describe my code chunk")
 #' }
-setMethod(f="mkdGeneralMsg", signature="easyreporting",
-    definition=function(object, message)
-    {
-        base::write(x=paste0("\n", message, "\n"), 
+setMethod("mkdGeneralMsg", "easyreporting",
+    function(object, message)
+{
+    base::write(x=paste0("\n", message, "\n"), 
             file=getReportFilename(object),
             ncolumns=if(is.character(message)) 1 else 5,
             append=TRUE, sep="\n")
-    }
-)
+})
 
 
 #' mkdGeneralTitledMsg
@@ -153,16 +144,15 @@ setMethod(f="mkdGeneralMsg", signature="easyreporting",
 #' mkdGeneralTitledMsg(rd, title="Generic SubTitle for this message", level=2,
 #'         message="Writing a paragraph to describe my code chunk")
 #' }
-setMethod(f="mkdGeneralTitledMsg", signature="easyreporting",
-        definition=function(object, title=NULL, level=1, message)
-        {
-            if(!is.null(title)) mkdTitle(object, title=title, level=level)
-            base::write(x=paste0("\n", message, "\n"), 
-                        file=getReportFilename(object),
-                        ncolumns=if(is.character(message)) 1 else 5,
-                        append=TRUE, sep="\n")
-        }
-)
+setMethod("mkdGeneralTitledMsg", "easyreporting",
+    function(object, title=NULL, level=1, message)
+{
+    if(!is.null(title)) mkdTitle(object, title=title, level=level)
+    base::write(x=paste0("\n", message, "\n"), 
+        file=getReportFilename(object),
+        ncolumns=if(is.character(message)) 1 else 5,
+        append=TRUE, sep="\n")
+})
 
 #' getReportFilename
 #' @description returns the report filename with path
@@ -176,12 +166,11 @@ setMethod(f="mkdGeneralTitledMsg", signature="easyreporting",
 #'                         title="example_report", author=c("It's me"))
 #' (rep <- getReportFilename(rd))
 #' }
-setMethod(f="getReportFilename", signature="easyreporting", 
-    definition=function(object)
-    {
-        return(object@filenamePath)
-    }
-)
+setMethod("getReportFilename", "easyreporting", 
+function(object)
+{
+    return(object@filenamePath)
+})
 
 #' compile
 #' @description prints the sessionInfo and compiles the rmarkdown file
@@ -190,6 +179,7 @@ setMethod(f="getReportFilename", signature="easyreporting",
 #' 
 #' @return none
 #' @importFrom rmarkdown render
+#' @importFrom rlang is_empty
 #' @export
 #' 
 #' @examples
@@ -198,11 +188,18 @@ setMethod(f="getReportFilename", signature="easyreporting",
 #'                         author=c("It's me"))
 #' compile(rd)
 #' }
-setMethod(f="compile", signature="easyreporting",
-    definition=function(object)
+setMethod("compile", "easyreporting",
+    function(object)
     {
+        if ( ! rlang::is_empty(object@resources) )
+        {
+            resources <- .parseResources(object@resources)
+            mkdGeneralTitledMsg(object=object, title="Resources Availability",
+                                message=eval(resources))
+        }
         mkdCodeChunkTitledCommented(object=object, title="Session Info", 
-            code="sessionInfo()", optionList=makeOptionsList(tidyFlag=TRUE))
+                    code="sessionInfo()", 
+                    optionList=makeOptionsList(tidyFlag=TRUE))
         rmarkdown::render(getReportFilename(object))
     }
 )
@@ -235,21 +232,18 @@ setMethod(f="compile", signature="easyreporting",
 #' mkdVariableAssignment(rd, "variable", "variable", show=TRUE)
 #' mkdCodeChunkEnd(rd)
 #' }
-setMethod(f="mkdVariableAssignment", signature="easyreporting", 
-    definition=function(object, variable.name, variable.object.name, show=FALSE)
-    {
-        self.message <- paste0(variable.name, " <- ", 
-                            variable.object.name,"\n")
-        if(show) self.message <- paste0(self.message, 
-                                    "print(", variable.name,")\n")
-        # print(self.message)
-        base::write(self.message,
-                    file=getReportFilename(object),
-                    ncolumns=if(is.character(self.message)) 1 else 5,
-                    append=TRUE,
-                    sep = "\n")
-    }
-)
+setMethod("mkdVariableAssignment", "easyreporting", 
+    function(object, variable.name, variable.object.name, show=FALSE)
+{
+    self.message <- paste0(variable.name, " <- ", variable.object.name,"\n")
+    if(show) self.message <- paste0(self.message, "print(", variable.name,")\n")
+    # print(self.message)
+    base::write(self.message,
+            file=getReportFilename(object),
+            ncolumns=if(is.character(self.message)) 1 else 5,
+            append=TRUE,
+            sep = "\n")
+})
 
 
 #' mkdCodeChunkSt
@@ -280,33 +274,33 @@ setMethod(f="mkdVariableAssignment", signature="easyreporting",
 #' ## just leaving empty
 #' mkdCodeChunkEnd(rd)
 #' }
-setMethod(f="mkdCodeChunkSt", signature="easyreporting", 
-    definition=function(object, optionList=getOptionsList(object),
-                        sourceFilesList=NULL, isComplete=FALSE)
-    {
-        self.message <- paste0("```{r eval=", optionList$eval,
-                                ", echo=", optionList$echo,
-                                ", warning=", optionList$warning,
-                                ", message=", optionList$showMessages,
-                                ", include=", optionList$include,
-                                ", cache=", optionList$cache,
-                                ", collapse=", object@optionList$collapse,
-                                ", purl=", object@optionList$purl,
-                                ", error=", object@optionList$error,
-                                ", message=", object@optionList$message,
-                                ", highlight=", object@optionList$highlight,
-                                ", prompt=", object@optionList$prompt,
-                                ", strip.white=", object@optionList$strip.white,
-                                ", tidy=", object@optionList$tidy,
-                                "}\n")
-        base::write(self.message,
+setMethod("mkdCodeChunkSt", "easyreporting", 
+    function(object, optionList=getOptionsList(object), 
+             sourceFilesList=NULL, isComplete=FALSE)
+{
+    self.message <- paste0("```{r eval=", optionList$eval,
+                            ", echo=", optionList$echo,
+                            ", warning=", optionList$warning,
+                            ", message=", optionList$showMessages,
+                            ", include=", optionList$include,
+                            ", cache=", optionList$cache,
+                            ", collapse=", object@optionList$collapse,
+                            ", purl=", object@optionList$purl,
+                            ", error=", object@optionList$error,
+                            ", message=", object@optionList$message,
+                            ", highlight=", object@optionList$highlight,
+                            ", prompt=", object@optionList$prompt,
+                            ", strip.white=", object@optionList$strip.white,
+                            ", tidy=", object@optionList$tidy,
+                            "}\n")
+    base::write(self.message,
                 file=getReportFilename(object),
                 ncolumns=if(is.character(self.message)) 1 else 5,
                 append=TRUE,
                 sep="\n")
-    
-        if(!is.null(sourceFilesList))
-        {
+  
+    if(!is.null(sourceFilesList))
+    {
             destination <- gsub(basename(object@filenamePath), "", object@filenamePath)
             files <- lapply(sourceFilesList, function(file)
             {
@@ -314,31 +308,29 @@ setMethod(f="mkdCodeChunkSt", signature="easyreporting",
                 file.copy(from=file, to=file.path(destination, basename(file)))
                 return(basename(file))
             })
-            
-            
-            # files <- sourceFilesList
-            self.message <- ""
-            for(i in seq_along(files))
-            {
-                self.message <- paste0(self.message,
-                                        "source(\"",
-                                        files[[i]],
-                                        "\")\n")
-            }
-            base::write(self.message,
-                        file=getReportFilename(object),
-                        ncolumns=if(is.character(self.message)) 1 else 5,
-                        append=TRUE,
-                        sep="\n")
-        }
-        if(!isComplete)
+        
+        
+        self.message <- ""
+        for(i in seq_along(files))
         {
-            message(paste0("Please remember to close the Code Chunk!\n",
-                    "Just invoke mkdCodeChunkEnd() once you complete your",
-                    " function calling :)"))
+            self.message <- paste0(self.message,
+                                "source(\"",
+                                files[[i]],
+                                "\")\n")
         }
+        base::write(self.message,
+                file=getReportFilename(object),
+                ncolumns=if(is.character(self.message)) 1 else 5,
+                append=TRUE,
+                sep="\n")
     }
-)
+    if(!isComplete)
+    {
+        message(paste0("Please remember to close the Code Chunk!\n",
+                "Just invoke mkdCodeChunkEnd() once you complete your",
+                " function calling :)"))
+    }
+})
 
 #' mkdSourceFiles
 #' @description includes a list of source files inside the rmarkdown
@@ -348,25 +340,24 @@ setMethod(f="mkdCodeChunkSt", signature="easyreporting",
 #' @return none
 #'
 #' @keywords internal
-setMethod(f="mkdSourceFiles", signature="easyreporting", 
-          definition=function(object, ...)
+setMethod("mkdSourceFiles", "easyreporting", 
+    function(object, ...)
+{
+    files <- list(...)
+    self.message <- ""
+    for(i in seq_along(files))
     {
-        files <- list(...)
-        self.message <- ""
-        for(i in seq_along(files))
-        {
-            self.message <- paste0(self.message,
+        self.message <- paste0(self.message,
                                 "source(\"",
                                 file.path(files[[i]]),
                                 "\")\n")
-        }
-        base::write(self.message,
+    }
+    base::write(self.message,
             file=getReportFilename(object),
             ncolumns=if(is.character(self.message)) 1 else 5,
             append=TRUE,
             sep="\n")
-    }
-)
+})
 
 
 #' mkdCodeChunkEnd
@@ -385,17 +376,16 @@ setMethod(f="mkdSourceFiles", signature="easyreporting",
 #' ## just leaving empty
 #' mkdCodeChunkEnd(rd)
 #' }
-setMethod(f="mkdCodeChunkEnd", signature="easyreporting", 
-          definition=function(object)
-    {
-        self.message <- paste0("```\n")
-        base::write(self.message,
-            file=getReportFilename(object),
-            ncolumns=if(is.character(self.message)) 1 else 5,
-            append=TRUE,
-            sep="\n")
-    }
-)
+setMethod("mkdCodeChunkEnd", "easyreporting", 
+    function(object)
+{
+    self.message <- paste0("```\n")
+    base::write(self.message,
+                file=getReportFilename(object),
+                ncolumns=if(is.character(self.message)) 1 else 5,
+                append=TRUE,
+                sep="\n")
+})
 
 
 
@@ -406,15 +396,20 @@ setMethod(f="mkdCodeChunkEnd", signature="easyreporting",
 #' @param bibfile a string with the name of the bib file
 #'
 #' @return none
-#' @export
+#' @keywords internal
 #'
 #' @examples
 #' \dontrun{
 #' # TBD
 #' }
-setMethod(f="setBibliography", signature="easyreporting", 
-        definition=function(object, bibfile=NULL)
+setMethod("setBibliography", "easyreporting", 
+    function(object, bibfile=NULL)
 {
+    ### to export this method giving the possibility to the user to change the
+    ### bibfile at any moment, it's necessary to import the report in memory
+    ### changing the header and writing it again.
+    ### otherwise, is there any way to parse the file and substitute a specific 
+    ### row?
     if(!is.null(bibfile)) object@bibfile <- bibfile
 })
 
@@ -428,12 +423,36 @@ setMethod(f="setBibliography", signature="easyreporting",
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#' # TBD
-#' }
-setMethod(f="getBibliography", signature="easyreporting", 
-    definition=function(object)
+#' example(easyreporting)
+#' getBibliography(rd)
+setMethod("getBibliography", "easyreporting", 
+    function(object)
 {
-      return(object@bibfile)
+    return(object@bibfile)
+})
+
+
+#' addResource
+#'
+#' @param object an easyreporting class instance
+#' @param source a string indicating the reference (i.e. "GEO")
+#' @param reference a string indicanting the reference of the source (i.e. "GSE60231)
+#' @param description a natural language description 
+#'
+#' @return an easyreporting class instance
+#' @export
+#'
+#' @examples
+#' rd <- easyreporting(filenamePath="./project_report",
+#'                         title="example_report", author=c("It's me"))
+#' rd <- addResource(rd, source="GEO", "GSE60231", "Transcriptome of BMDC to different antigen delivery systems")
+#' \dontrun{
+#' compile(rd)
+#' }
+setMethod("addResource", "easyreporting", 
+    function(object, source, reference, description)
+{
+    object@resources <- rbind(object@resources, cbind.data.frame(source, reference, description))
+    return(object)
 })
 
