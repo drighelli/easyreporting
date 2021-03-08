@@ -3,8 +3,10 @@
 #' @aliases easyreporting-class
 #' @slot filenamePath the path with the name of the rmarkdown.
 #' @slot title the title of the report section.
-#' @slot author the author of the report.
-#' @slot documentType the type of the final document (fixed to "html").
+#' @slot author the author(s) of the report.
+#' @slot type of report final document, if author(s) is a \code{person} 
+#' it will be \code{distill::distill_article} (\code{rmarkdown::html_document} default)
+#' @slot bibfile a bibfile for bibliography.
 #' @slot optionList a list of options for the general rmarkdown document.
 #' @exportClass easyreporting
 easyreporting <- setClass(Class="easyreporting", 
@@ -14,27 +16,39 @@ easyreporting <- setClass(Class="easyreporting",
         title="character",
         author="character",
         documentType="character",
-        optionList="list"
+        bibfile="character",
+        optionList="list",
+        resources="data.frame"
     ),
     prototype=prototype(
-        documentType="html",
+        documentType="rmarkdown::html_document",
         optionList=list(
-            cacheFlag=TRUE,
-            evalFlag=TRUE,
-            echoFlag=TRUE,
-            warningFlag=FALSE,
+            cache=TRUE,
+            eval=TRUE,
+            echo=TRUE,
+            warning=FALSE,
             showMessages=FALSE,
-            includeFlag=TRUE
+            include=TRUE,
+            collapse=FALSE,
+            purl=TRUE,
+            error=TRUE,
+            message=TRUE,
+            highlight=TRUE,
+            prompt=FALSE,
+            strip.white=TRUE,
+            tidy=FALSE
         )
     )
 )
 
 setMethod(f="initialize",
     signature="easyreporting",
-    definition=function(.Object, filenamePath, title, author, optionList=NULL)
+    definition=function(.Object, filenamePath, title, author, optionList=NULL, 
+                        documentType="rmarkdown::html_document", bibfile="")
     {
         .Object <- initReportFilename(object=.Object, filenamepath=filenamePath, 
-                        title=title, author=author, optionList=optionList)
+                        title=title, author=author, optionList=optionList, 
+                        documentType=documentType, bibfile=bibfile)
         return(.Object)
     }
 )
@@ -44,10 +58,14 @@ setMethod(f="initialize",
 #' Each instance describes an rmarkdown file.
 #' @importFrom  methods new
 #' @rdname easyreporting-class
+#'
 #' @param filenamePath the path with the name of the rmarkdown.
 #' @param title the title of the report section.
-#' @param author the author of the report.
+#' @param author the author(s) of the report.
 #' @param optionList a list of options for the general rmarkdown document.
+#' @param documentType type of report final document, if author(s) is a \code{person} 
+#' it will be \code{distill::distill_article} (\code{rmarkdown::html_document} default)
+#' @param bibfile a bibfile for bibliography.
 #'
 #' @return an S4 easyreporting class instance
 #' @export
@@ -55,10 +73,12 @@ setMethod(f="initialize",
 #' @examples
 #' rd <- easyreporting(filenamePath="./project_report",
 #'                         title="example_report", author="It's me")
-easyreporting <- function(filenamePath, title, author, optionList=NULL)
+easyreporting <- function(filenamePath, title, author, optionList=NULL,
+                        documentType="rmarkdown::html_document", bibfile=""
+                        )
 {
     new(Class="easyreporting", filenamePath=filenamePath, title=title, 
-        author=author, optionList=optionList)
+        author=author, bibfile=bibfile, optionList=optionList)
 }
 
 

@@ -5,18 +5,37 @@
 \alias{easyreporting-class}
 \title{easyreporting}
 \usage{
-easyreporting(filenamePath, title, author, optionList = NULL)
+easyreporting(
+  filenamePath,
+  title,
+  author,
+  optionList = NULL,
+  documentType = "rmarkdown::html_document",
+  bibfile = ""
+)
 
-easyreporting(filenamePath, title, author, optionList = NULL)
+easyreporting(
+  filenamePath,
+  title,
+  author,
+  optionList = NULL,
+  documentType = "rmarkdown::html_document",
+  bibfile = ""
+)
 }
 \arguments{
 \item{filenamePath}{the path with the name of the rmarkdown.}
 
 \item{title}{the title of the report section.}
 
-\item{author}{the author of the report.}
+\item{author}{the author(s) of the report.}
 
 \item{optionList}{a list of options for the general rmarkdown document.}
+
+\item{documentType}{type of report final document, if author(s) is a \code{person} 
+it will be \code{distill::distill_article} (\code{rmarkdown::html_document} default)}
+
+\item{bibfile}{a bibfile for bibliography.}
 }
 \value{
 an S4 easyreporting class instance
@@ -32,9 +51,12 @@ Each instance describes an rmarkdown file.
 
 \item{\code{title}}{the title of the report section.}
 
-\item{\code{author}}{the author of the report.}
+\item{\code{author}}{the author(s) of the report.}
 
-\item{\code{documentType}}{the type of the final document (fixed to "html").}
+\item{\code{type}}{of report final document, if author(s) is a \code{person} 
+it will be \code{distill::distill_article} (\code{rmarkdown::html_document} default)}
+
+\item{\code{bibfile}}{a bibfile for bibliography.}
 
 \item{\code{optionList}}{a list of options for the general rmarkdown document.}
 }}
