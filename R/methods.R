@@ -55,7 +55,8 @@ setMethod("initReportFilename", "easyreporting",
     title: \"", object@title, "\"
     author: ", object@author, "
     date: \"`r Sys.Date()`\"")
-    if(object@bibfile != "") header <- paste0(header, "bibfile: \"", object@bibfile, "\"")
+    if(object@bibfile != "") header <- paste0(header, "\n    bibfile: ", 
+                                              object@bibfile)
     header <- paste0(header, "\n    output: ", object@documentType, "\n---\n")
       
     base::write(header, file=filenamepath, append=TRUE, sep="\n")
