@@ -37,13 +37,11 @@ it creates a complete code chunk, adding a natural language
 comment before of it.
 }
 \examples{
-\dontrun{
-rd <- easyreporting(filenamePath="./project_report",
+rd <- easyreporting(filenamePath=tempfile("project_report"),
                         title="example_report", author=c("It's me"))
 optList <- makeOptionsList(includeFlag=TRUE, cacheFlag=TRUE)
 mkdCodeChunkCommented(rd,
                 comment="This is the comment of the following code chunk",
                 code="a <- 1\n b <- 2\n (c <- a+b)\n", optionList=optList,
                 sourceFilesList=NULL)
-}
 }

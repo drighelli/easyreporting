@@ -16,7 +16,10 @@ none
 returns the bibfile name attached to the object
 }
 \examples{
-\dontrun{
-TBD
-}
+rd <- easyreporting(filenamePath=tempfile("report"),
+                    title="Example", author="Author")
+bibfile <- tempfile(fileext=".bib")
+writeLines("", bibfile)
+setBibliography(rd, bibfile)
+getBibliography(rd)
 }

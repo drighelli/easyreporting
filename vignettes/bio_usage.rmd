@@ -6,15 +6,13 @@ output:
   BiocStyle::html_document:
     toc: true
 vignette: >
+  %\VignetteIndexEntry{Bio Pipeline Usage}
+  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 editor_options: 
   chunk_output_type: console
 ---
 
-<!--
-%\VignetteEngine{knitr::rmarkdown}
-%\VignetteIndexEntry{Bio Pipeline Usage}
--->
 
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(

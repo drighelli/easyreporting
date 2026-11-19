@@ -29,8 +29,7 @@ it creates a code chunk start. A list of options and files to
 source  for the chunk can optionally be passed to the function.
 }
 \examples{
-\dontrun{
-rd <- easyreporting(filenamePath="./project_report",
+rd <- easyreporting(filenamePath=tempfile("project_report"),
                         title="example_report", author=c("It's me"))
 ## no options
 mkdCodeChunkSt(rd)
@@ -42,5 +41,4 @@ optList <- makeOptionsList(includeFlag=TRUE)
 mkdCodeChunkSt(rd, optionList=optList)
 ## just leaving empty
 mkdCodeChunkEnd(rd)
-}
 }

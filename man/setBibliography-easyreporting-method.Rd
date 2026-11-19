@@ -19,8 +19,11 @@ add a bibfile name to the object that will be reflected into the
 report as a bibliography section
 }
 \examples{
-\dontrun{
-# TBD
-}
+rd <- easyreporting(filenamePath=tempfile("report"),
+                    title="Example", author="Author")
+bibfile <- tempfile(fileext=".bib")
+writeLines("", bibfile)
+setBibliography(rd, bibfile)
+getBibliography(rd)
 }
 \keyword{internal}

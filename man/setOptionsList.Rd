@@ -73,8 +73,7 @@ options for the rmarkdown file. Are useful for the
 interpretation/execution of the code chunks.
 }
 \examples{
-\dontrun{
-rd <- easyreporting(filenamePath="./project_report",
+rd <- easyreporting(filenamePath=tempfile("project_report"),
                         title="example_report", author=c("It's me"))
 
 ## setting default option
@@ -83,5 +82,4 @@ setOptionsList(rd)
 ## modifying only some options
 rd <- setOptionsList(rd, warningFlag=TRUE, 
         showMessages=TRUE, includeFlag=TRUE)
-}
 }

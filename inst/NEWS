@@ -1,3 +1,9 @@
+Changes in version 1.25.1 (2026-11-19)
++ fix vignette metadata and add a concise S4 show method
++ check the optional distill dependency without attaching it
++ make documentation examples runnable using temporary report files
++ replace bibliography example placeholders and guard HTML rendering on Pandoc
+
 Changes in version 1.3.3 (2021-15-03)
 + fixing bug on bibliography file in header
 

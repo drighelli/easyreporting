@@ -22,10 +22,10 @@ an easyreporting class instance
 addResource
 }
 \examples{
-rd <- easyreporting(filenamePath="./project_report",
+rd <- easyreporting(filenamePath=tempfile("project_report"),
                         title="example_report", author=c("It's me"))
 rd <- addResource(rd, source="GEO", "GSE60231", "Transcriptome of BMDC to different antigen delivery systems")
-\dontrun{
-compile(rd)
+if (rmarkdown::pandoc_available()) {
+    compile(rd)
 }
 }

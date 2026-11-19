@@ -28,11 +28,9 @@ none
 it creates a complete code chunk.
 }
 \examples{
-\dontrun{
-rd <- easyreporting(filenamePath="./project_report",
+rd <- easyreporting(filenamePath=tempfile("project_report"),
                         title="example_report", author=c("It's me"))
 mkdCodeChunkComplete(rd, code=c(quote(a <- 1), quote(b <- 2), quote(c<-  a+b), 
 quote(print(c))))
 mkdCodeChunkComplete(rd, code="a <- 1\n b <- 2\n c <- a+b\n print(c)")
-}
 }

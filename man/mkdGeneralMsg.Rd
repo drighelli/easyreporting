@@ -20,9 +20,7 @@ describing a code chunk or a part of the report.
 Useful for adding natural language comments.
 }
 \examples{
-\dontrun{
-rd <- easyreporting(filenamePath="./project_report",
+rd <- easyreporting(filenamePath=tempfile("project_report"),
                         title="example_report", author=c("It's me"))
 mkdGeneralMsg(rd, message="Writing a paragraph to describe my code chunk")
-}
 }

@@ -27,8 +27,7 @@ it includes a variable assignment in the report.
 NB: a call to the "mkdCodeChunkSt" has to be done before using it.
 }
 \examples{
-\dontrun{
-rd <- easyreporting(filenamePath="./project_report",
+rd <- easyreporting(filenamePath=tempfile("project_report"),
                         title="example_report", author=c("It's me"))
 ## leaving the default options to the code chunk
 mkdCodeChunkSt(rd)
@@ -36,5 +35,4 @@ mkdCodeChunkSt(rd)
 variable <- 1
 mkdVariableAssignment(rd, "variable", "variable", show=TRUE)
 mkdCodeChunkEnd(rd)
-}
 }

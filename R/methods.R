@@ -24,6 +24,10 @@ setMethod("initReportFilename", "easyreporting",
 {
     if(is.null(filenamepath)) stop("Report file name is NULL!")
     if(is.null(title)) stop("Please provide a title for the document!")
+    if (is(author, "person") && !requireNamespace("distill", quietly = TRUE)) {
+        stop("Package 'distill' is required when 'author' is a person object. ",
+             "Install it with install.packages('distill').", call. = FALSE)
+    }
   
     if(!file.exists(filenamepath))
     {
@@ -41,11 +45,10 @@ setMethod("initReportFilename", "easyreporting",
     if( is(author, "person") ) 
     {
         object@author <- .parseAuthors(author)
-        require(distill)
-        object@documentType="distill::distill_article"
+        object@documentType <- "distill::distill_article"
     } else {
         object@author <- paste0("\"", author, "\"")
-        object@documentType=documentType
+        object@documentType <- documentType
     }
     # object@author <- author
     object@title <- title
@@ -76,13 +79,11 @@ setMethod("initReportFilename", "easyreporting",
 #' @return none
 #' @export
 #' @examples
-#' \dontrun{
-#' rd <- easyreporting(filenamePath="./project_report",
+#' rd <- easyreporting(filenamePath=tempfile("project_report"),
 #'                         title="example_report", author=c("It's me"))
 #'
 #' mkdTitle(rd, "First Level Title")
 #' mkdTitle(rd, "Sub-Title", level=2)
-#' }
 #'
 setMethod("mkdTitle", "easyreporting",
     function(object, title, level=1)
@@ -112,11 +113,9 @@ setMethod("mkdTitle", "easyreporting",
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#' rd <- easyreporting(filenamePath="./project_report",
+#' rd <- easyreporting(filenamePath=tempfile("project_report"),
 #'                         title="example_report", author=c("It's me"))
 #' mkdGeneralMsg(rd, "Writing a paragraph to describe my code chunk")
-#' }
 setMethod("mkdGeneralMsg", "easyreporting",
     function(object, message)
 {
@@ -139,12 +138,10 @@ setMethod("mkdGeneralMsg", "easyreporting",
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#' rd <- easyreporting(filenamePath="./project_report",
+#' rd <- easyreporting(filenamePath=tempfile("project_report"),
 #'                         title="example_report", author=c("It's me"))
 #' mkdGeneralTitledMsg(rd, title="Generic SubTitle for this message", level=2,
 #'         message="Writing a paragraph to describe my code chunk")
-#' }
 setMethod("mkdGeneralTitledMsg", "easyreporting",
     function(object, title=NULL, level=1, message)
 {
@@ -162,11 +159,9 @@ setMethod("mkdGeneralTitledMsg", "easyreporting",
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#' rd <- easyreporting(filenamePath="./project_report",
+#' rd <- easyreporting(filenamePath=tempfile("project_report"),
 #'                         title="example_report", author=c("It's me"))
 #' (rep <- getReportFilename(rd))
-#' }
 setMethod("getReportFilename", "easyreporting", 
 function(object)
 {
@@ -184,10 +179,10 @@ function(object)
 #' @export
 #' 
 #' @examples
-#' \dontrun{
-#' rd <- easyreporting(filenamePath="./project_report", title="example_report",
+#' rd <- easyreporting(filenamePath=tempfile("project_report"), title="example_report",
 #'                         author=c("It's me"))
-#' compile(rd)
+#' if (rmarkdown::pandoc_available()) {
+#'     compile(rd)
 #' }
 setMethod("compile", "easyreporting",
     function(object)
@@ -223,8 +218,7 @@ setMethod("compile", "easyreporting",
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#' rd <- easyreporting(filenamePath="./project_report",
+#' rd <- easyreporting(filenamePath=tempfile("project_report"),
 #'                         title="example_report", author=c("It's me"))
 #' ## leaving the default options to the code chunk
 #' mkdCodeChunkSt(rd)
@@ -232,7 +226,6 @@ setMethod("compile", "easyreporting",
 #' variable <- 1
 #' mkdVariableAssignment(rd, "variable", "variable", show=TRUE)
 #' mkdCodeChunkEnd(rd)
-#' }
 setMethod("mkdVariableAssignment", "easyreporting", 
     function(object, variable.name, variable.object.name, show=FALSE)
 {
@@ -261,8 +254,7 @@ setMethod("mkdVariableAssignment", "easyreporting",
 #'
 #'
 #' @examples
-#' \dontrun{
-#' rd <- easyreporting(filenamePath="./project_report",
+#' rd <- easyreporting(filenamePath=tempfile("project_report"),
 #'                         title="example_report", author=c("It's me"))
 #' ## no options
 #' mkdCodeChunkSt(rd)
@@ -274,7 +266,6 @@ setMethod("mkdVariableAssignment", "easyreporting",
 #' mkdCodeChunkSt(rd, optionList=optList)
 #' ## just leaving empty
 #' mkdCodeChunkEnd(rd)
-#' }
 setMethod("mkdCodeChunkSt", "easyreporting", 
     function(object, optionList=getOptionsList(object), 
              sourceFilesList=NULL, isComplete=FALSE)
@@ -327,9 +318,9 @@ setMethod("mkdCodeChunkSt", "easyreporting",
     }
     if(!isComplete)
     {
-        message(paste0("Please remember to close the Code Chunk!\n",
+        message("Please remember to close the Code Chunk!\n",
                 "Just invoke mkdCodeChunkEnd() once you complete your",
-                " function calling :)"))
+                " function calling :)")
     }
 })
 
@@ -370,13 +361,11 @@ setMethod("mkdSourceFiles", "easyreporting",
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#'  rd <- easyreporting(filenamePath="./project_report",
+#'  rd <- easyreporting(filenamePath=tempfile("project_report"),
 #'                         title="example_report", author=c("It's me"))
 #' mkdCodeChunkSt(rd)
 #' ## just leaving empty
 #' mkdCodeChunkEnd(rd)
-#' }
 setMethod("mkdCodeChunkEnd", "easyreporting", 
     function(object)
 {
@@ -400,9 +389,12 @@ setMethod("mkdCodeChunkEnd", "easyreporting",
 #' @keywords internal
 #'
 #' @examples
-#' \dontrun{
-#' # TBD
-#' }
+#' rd <- easyreporting(filenamePath=tempfile("report"),
+#'                     title="Example", author="Author")
+#' bibfile <- tempfile(fileext=".bib")
+#' writeLines("", bibfile)
+#' setBibliography(rd, bibfile)
+#' getBibliography(rd)
 setMethod("setBibliography", "easyreporting", 
     function(object, bibfile=NULL)
 {
@@ -424,7 +416,7 @@ setMethod("setBibliography", "easyreporting",
 #' @export
 #'
 #' @examples
-#' example(easyreporting)
+#' rd <- easyreporting(tempfile("report"), "Example", "Author")
 #' getBibliography(rd)
 setMethod("getBibliography", "easyreporting", 
     function(object)
@@ -444,11 +436,11 @@ setMethod("getBibliography", "easyreporting",
 #' @export
 #'
 #' @examples
-#' rd <- easyreporting(filenamePath="./project_report",
+#' rd <- easyreporting(filenamePath=tempfile("project_report"),
 #'                         title="example_report", author=c("It's me"))
 #' rd <- addResource(rd, source="GEO", "GSE60231", "Transcriptome of BMDC to different antigen delivery systems")
-#' \dontrun{
-#' compile(rd)
+#' if (rmarkdown::pandoc_available()) {
+#'     compile(rd)
 #' }
 setMethod("addResource", "easyreporting", 
     function(object, source, reference, description)

@@ -71,8 +71,7 @@ setMethod(f="mkdSetGlobalOpts", signature="easyreporting",
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#' rd <- easyreporting(filenamePath="./project_report",
+#' rd <- easyreporting(filenamePath=tempfile("project_report"),
 #'                         title="example_report", author=c("It's me"))
 #'
 #' ## setting default option
@@ -81,7 +80,6 @@ setMethod(f="mkdSetGlobalOpts", signature="easyreporting",
 #' ## modifying only some options
 #' rd <- setOptionsList(rd, warningFlag=TRUE, 
 #'         showMessages=TRUE, includeFlag=TRUE)
-#' }
 setMethod(f="setOptionsList", signature="easyreporting", 
         definition=function(
             object, 
@@ -130,11 +128,9 @@ setMethod(f="setOptionsList", signature="easyreporting",
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#' rd <- easyreporting(filenamePath="./project_report", title="example_report",
+#' rd <- easyreporting(filenamePath=tempfile("project_report"), title="example_report",
 #'                         author=c("It's me"))
 #' optList <- getOptionsList(rd)
-#' }
 setMethod(f="getOptionsList", signature="easyreporting", 
         definition=function(object)
         {

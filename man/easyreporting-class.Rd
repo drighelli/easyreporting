@@ -53,15 +53,18 @@ Each instance describes an rmarkdown file.
 
 \item{\code{author}}{the author(s) of the report.}
 
-\item{\code{type}}{of report final document, if author(s) is a \code{person} 
+\item{\code{documentType}}{type of report final document, if author(s) is a
+\code{person}
 it will be \code{distill::distill_article} (\code{rmarkdown::html_document} default)}
 
 \item{\code{bibfile}}{a bibfile for bibliography.}
 
 \item{\code{optionList}}{a list of options for the general rmarkdown document.}
+
+\item{\code{resources}}{a data frame of data sources used in the report.}
 }}
 
 \examples{
-rd <- easyreporting(filenamePath="./project_report",
+rd <- easyreporting(filenamePath=tempfile("project_report"),
                         title="example_report", author="It's me")
 }

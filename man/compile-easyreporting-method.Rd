@@ -16,9 +16,9 @@ none
 prints the sessionInfo and compiles the rmarkdown file
 }
 \examples{
-\dontrun{
-rd <- easyreporting(filenamePath="./project_report", title="example_report",
+rd <- easyreporting(filenamePath=tempfile("project_report"), title="example_report",
                         author=c("It's me"))
-compile(rd)
+if (rmarkdown::pandoc_available()) {
+    compile(rd)
 }
 }

@@ -11,13 +11,11 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#' rd <- easyreporting(filenamePath="./project_report",
+#' rd <- easyreporting(filenamePath=tempfile("project_report"),
 #'                         title="example_report", author=c("It's me"))
 #' mkdCodeChunkComplete(rd, code=c(quote(a <- 1), quote(b <- 2), quote(c<-  a+b), 
 #' quote(print(c))))
 #' mkdCodeChunkComplete(rd, code="a <- 1\n b <- 2\n c <- a+b\n print(c)")
-#' }
 setMethod(f="mkdCodeChunkComplete", signature="easyreporting", 
     definition=function(object, code, 
                     optionList=getOptionsList(object), sourceFilesList=NULL)
@@ -43,8 +41,7 @@ setMethod(f="mkdCodeChunkComplete", signature="easyreporting",
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#' rd <- easyreporting(filenamePath="./project_report",
+#' rd <- easyreporting(filenamePath=tempfile("project_report"),
 #'                         title="example_report", author=c("It's me"))
 #' optList <- makeOptionsList(includeFlag=TRUE, cacheFlag=TRUE)
 #' mkdCodeChunkCommented(rd,
@@ -55,7 +52,6 @@ setMethod(f="mkdCodeChunkComplete", signature="easyreporting",
 #'                 comment="This is the comment of the following code chunk",
 #'                 code="a <- 1\n b <- 2\n(c <- a+b)\n", optionList=optList,
 #'                 sourceFilesList=NULL)
-#' }
 setMethod(f="mkdCodeChunkCommented", signature="easyreporting", 
           definition=function(object, comment=NULL, code,
                               optionList=getOptionsList(object),
@@ -87,15 +83,13 @@ setMethod(f="mkdCodeChunkCommented", signature="easyreporting",
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#' rd <- easyreporting(filenamePath="./project_report",
+#' rd <- easyreporting(filenamePath=tempfile("project_report"),
 #'                         title="example_report", author=c("It's me"))
 #' optList <- makeOptionsList(includeFlag=TRUE, cacheFlag=TRUE)
 #' mkdCodeChunkTitledCommented(rd, title="Title Example", level=1,
 #'                 comment="This is the comment of the following code chunk",
 #'                 code="a <- 1\n b <- 2\n(c <- a+b)\n", optionList=optList,
 #'                 sourceFilesList=NULL)
-#' }
 setMethod(f="mkdCodeChunkTitledCommented", signature="easyreporting", 
           definition=function(object, title=NULL, level=1, 
                               comment=NULL, code,

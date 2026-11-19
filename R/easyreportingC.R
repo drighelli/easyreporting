@@ -4,10 +4,12 @@
 #' @slot filenamePath the path with the name of the rmarkdown.
 #' @slot title the title of the report section.
 #' @slot author the author(s) of the report.
-#' @slot type of report final document, if author(s) is a \code{person} 
+#' @slot documentType type of report final document, if author(s) is a
+#' \code{person}
 #' it will be \code{distill::distill_article} (\code{rmarkdown::html_document} default)
 #' @slot bibfile a bibfile for bibliography.
 #' @slot optionList a list of options for the general rmarkdown document.
+#' @slot resources a data frame of data sources used in the report.
 #' @exportClass easyreporting
 easyreporting <- setClass(Class="easyreporting", 
     representation=representation(
@@ -71,7 +73,7 @@ setMethod(f="initialize",
 #' @export
 #'
 #' @examples
-#' rd <- easyreporting(filenamePath="./project_report",
+#' rd <- easyreporting(filenamePath=tempfile("project_report"),
 #'                         title="example_report", author="It's me")
 easyreporting <- function(filenamePath, title, author, optionList=NULL,
                         documentType="rmarkdown::html_document", bibfile=""
@@ -81,6 +83,22 @@ easyreporting <- function(filenamePath, title, author, optionList=NULL,
         author=author, bibfile=bibfile, optionList=optionList)
 }
 
+#' Display an easyreporting object
+#'
+#' @param object an easyreporting class object.
+#' @return The object, invisibly.
+#' @export
+#' @examples
+#' report <- easyreporting(tempfile("report"), "Example", "Author")
+#' show(report)
+setMethod("show", "easyreporting", function(object) {
+    cat("easyreporting report\n",
+        "  Title: ", object@title, "\n",
+        "  File: ", object@filenamePath, "\n",
+        "  Format: ", object@documentType, "\n",
+        "  Resources: ", nrow(object@resources), "\n", sep = "")
+    invisible(object)
+})
 
 
 

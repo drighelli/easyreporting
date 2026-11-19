@@ -1,7 +1,7 @@
 Package: easyreporting
 Type: Package
 Title: Helps creating report for improving Reproducible Computational Research
-Version: 1.25.0
+Version: 1.25.1
 Authors@R: person("Dario", "Righelli", email="dario.righelli@gmail.com", 
  role=c("cre", "aut"))
 Description: An S4 class for facilitating the automated creation of 
@@ -27,5 +27,5 @@ Suggests:
     limma, 
     EDASeq,
     statmod
-RoxygenNote: 7.1.1
 VignetteBuilder: knitr
+Config/roxygen2/version: 8.1.1

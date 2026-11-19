@@ -16,6 +16,6 @@ none
 returns the bibfile name attached to the object
 }
 \examples{
-example(easyreporting)
+rd <- easyreporting(tempfile("report"), "Example", "Author")
 getBibliography(rd)
 }

@@ -17,9 +17,9 @@ prints the sessionInfo and compiles the produced rmarkdown file
 into an HTML report.
 }
 \examples{
-\dontrun{
-rd <- easyreporting(filenamePath="./project_report", title="example_report",
+rd <- easyreporting(filenamePath=tempfile("project_report"), title="example_report",
                         author=c("It's me"))
-compile(rd)
+if (rmarkdown::pandoc_available()) {
+    compile(rd)
 }
 }

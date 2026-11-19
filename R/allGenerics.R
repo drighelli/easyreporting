@@ -38,13 +38,11 @@ setGeneric (
 #' @return none
 #' @export
 #' @examples
-#' \dontrun{
-#' rd <- easyreporting(filenamePath="./project_report",
+#' rd <- easyreporting(filenamePath=tempfile("project_report"),
 #'                         title="example_report", author=c("It's me"))
 #'
 #' mkdTitle(rd, "First Level Title")
 #' mkdTitle(rd, "Sub-Title", level=2)
-#' }
 setGeneric (
     name="mkdTitle",
     def=function(object, title, level=1){standardGeneric("mkdTitle")}
@@ -60,11 +58,9 @@ setGeneric (
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#' rd <- easyreporting(filenamePath="./project_report",
+#' rd <- easyreporting(filenamePath=tempfile("project_report"),
 #'                         title="example_report", author=c("It's me"))
 #' (rep <- getReportFilename(rd))
-#' }
 setGeneric (
     name="getReportFilename",
     def=function(object){standardGeneric("getReportFilename")}
@@ -80,11 +76,9 @@ setGeneric (
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#' rd <- easyreporting(filenamePath="./project_report",
+#' rd <- easyreporting(filenamePath=tempfile("project_report"),
 #'                         title="example_report", author=c("It's me"))
 #' mkdGeneralMsg(rd, message="Writing a paragraph to describe my code chunk")
-#' }
 setGeneric (
     name="mkdGeneralMsg",
     def=function(object, message){standardGeneric("mkdGeneralMsg")}
@@ -102,12 +96,10 @@ setGeneric (
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#' rd <- easyreporting(filenamePath="./project_report",
+#' rd <- easyreporting(filenamePath=tempfile("project_report"),
 #'                         title="example_report", author=c("It's me"))
 #' mkdGeneralTitledMsg(rd, title="Generic SubTitle for this message", level=2,
 #'             message="Writing a paragraph to describe my code chunk")
-#' }
 setGeneric (
     name="mkdGeneralTitledMsg",
     def=function(object, title=NULL, level=1, message)
@@ -152,8 +144,7 @@ setGeneric (
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#' rd <- easyreporting(filenamePath="./project_report",
+#' rd <- easyreporting(filenamePath=tempfile("project_report"),
 #'                         title="example_report", author=c("It's me"))
 #'
 #' ## setting default option
@@ -162,7 +153,6 @@ setGeneric (
 #' ## modifying only some options
 #' rd <- setOptionsList(rd, warningFlag=TRUE, 
 #'         showMessages=TRUE, includeFlag=TRUE)
-#' }
 setGeneric (
     name="setOptionsList",
     def=function(object, cacheFlag=TRUE,
@@ -191,11 +181,9 @@ setGeneric (
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#' rd <- easyreporting(filenamePath="./project_report", title="example_report",
+#' rd <- easyreporting(filenamePath=tempfile("project_report"), title="example_report",
 #'                         author=c("It's me"))
 #' optList <- getOptionsList(rd)
-#' }
 setGeneric (
     name="getOptionsList",
     def=function(object){standardGeneric("getOptionsList")}
@@ -209,10 +197,10 @@ setGeneric (
 #' @export
 #' 
 #' @examples
-#' \dontrun{
-#' rd <- easyreporting(filenamePath="./project_report", title="example_report",
+#' rd <- easyreporting(filenamePath=tempfile("project_report"), title="example_report",
 #'                         author=c("It's me"))
-#' compile(rd)
+#' if (rmarkdown::pandoc_available()) {
+#'     compile(rd)
 #' }
 setGeneric (
     name="compile",
@@ -237,8 +225,7 @@ setGeneric (
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#' rd <- easyreporting(filenamePath="./project_report",
+#' rd <- easyreporting(filenamePath=tempfile("project_report"),
 #'                         title="example_report", author=c("It's me"))
 #' ## leaving the default options to the code chunk
 #' mkdCodeChunkSt(rd)
@@ -246,7 +233,6 @@ setGeneric (
 #' variable <- 1
 #' mkdVariableAssignment(rd, "variable", "variable", show=TRUE)
 #' mkdCodeChunkEnd(rd)
-#' }
 setGeneric (
     name="mkdVariableAssignment",
     def=function(object, variable.name, variable.object.name, show)
@@ -269,8 +255,7 @@ setGeneric (
 #'
 #'
 #' @examples
-#' \dontrun{
-#' rd <- easyreporting(filenamePath="./project_report",
+#' rd <- easyreporting(filenamePath=tempfile("project_report"),
 #'                         title="example_report", author=c("It's me"))
 #' ## no options
 #' mkdCodeChunkSt(rd)
@@ -282,7 +267,6 @@ setGeneric (
 #' mkdCodeChunkSt(rd, optionList=optList)
 #' ## just leaving empty
 #' mkdCodeChunkEnd(rd)
-#' }
 setGeneric (
     name="mkdCodeChunkSt",
     def=function(object, optionList=getOptionsList(object),
@@ -311,13 +295,11 @@ setGeneric (
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#'  rd <- easyreporting(filenamePath="./project_report",
+#'  rd <- easyreporting(filenamePath=tempfile("project_report"),
 #'                         title="example_report", author=c("It's me"))
 #' mkdCodeChunkSt(rd)
 #' ## just leaving empty
 #' mkdCodeChunkEnd(rd)
-#' }
 setGeneric (
     name="mkdCodeChunkEnd",
     def=function(object){standardGeneric("mkdCodeChunkEnd")}
@@ -334,11 +316,9 @@ setGeneric (
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#'  rd <- easyreporting(filenamePath="./project_report",
+#'  rd <- easyreporting(filenamePath=tempfile("project_report"),
 #'                         title="example_report", author=c("It's me"))
 #' mkdCodeChunkComplete(rd, code="a <- 1\n b <- 2\n c <- a+b\n print(c)")
-#' }
 setGeneric (
     name="mkdCodeChunkComplete",
     def=function(object, code,
@@ -358,15 +338,13 @@ setGeneric (
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#' rd <- easyreporting(filenamePath="./project_report",
+#' rd <- easyreporting(filenamePath=tempfile("project_report"),
 #'                         title="example_report", author=c("It's me"))
 #' optList <- makeOptionsList(includeFlag=TRUE, cacheFlag=TRUE)
 #' mkdCodeChunkCommented(rd,
 #'                 comment="This is the comment of the following code chunk",
 #'                 code="a <- 1\n b <- 2\n (c <- a+b)\n", optionList=optList,
 #'                 sourceFilesList=NULL)
-#' }
 setGeneric (
     name="mkdCodeChunkCommented",
     def=function(object, comment=NULL, code,
@@ -388,15 +366,13 @@ setGeneric (
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#' rd <- easyreporting(filenamePath="./project_report",
+#' rd <- easyreporting(filenamePath=tempfile("project_report"),
 #'                         title="example_report", author=c("It's me"))
 #' optList <- makeOptionsList(includeFlag=TRUE, cacheFlag=TRUE)
 #' mkdCodeChunkCommented(rd,
 #'                 comment="This is the comment of the following code chunk",
 #'                 code="a <- 1\n b <- 2\n (c <- a+b)\n", optionList=optList,
 #'                 sourceFilesList=NULL)
-#' }
 
 setGeneric (
     name="mkdCodeChunkTitledCommented",
@@ -416,9 +392,12 @@ setGeneric (
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#' TBD
-#' }
+#' rd <- easyreporting(filenamePath=tempfile("report"),
+#'                     title="Example", author="Author")
+#' bibfile <- tempfile(fileext=".bib")
+#' writeLines("", bibfile)
+#' setBibliography(rd, bibfile)
+#' getBibliography(rd)
 setGeneric (
     name="setBibliography",
     def=function(object, bibfile=NULL){
@@ -435,9 +414,12 @@ setGeneric (
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#' TBD
-#' }
+#' rd <- easyreporting(filenamePath=tempfile("report"),
+#'                     title="Example", author="Author")
+#' bibfile <- tempfile(fileext=".bib")
+#' writeLines("", bibfile)
+#' setBibliography(rd, bibfile)
+#' getBibliography(rd)
 setGeneric (
     name="getBibliography",
     def=function(object){
@@ -456,11 +438,11 @@ setGeneric (
 #' @export
 #'
 #' @examples
-#' rd <- easyreporting(filenamePath="./project_report",
+#' rd <- easyreporting(filenamePath=tempfile("project_report"),
 #'                         title="example_report", author=c("It's me"))
 #' rd <- addResource(rd, source="GEO", "GSE60231", "Transcriptome of BMDC to different antigen delivery systems")
-#' \dontrun{
-#' compile(rd)
+#' if (rmarkdown::pandoc_available()) {
+#'     compile(rd)
 #' }
 setGeneric("addResource", function(object, source, reference, description)
 {

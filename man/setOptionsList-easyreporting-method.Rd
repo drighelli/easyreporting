@@ -71,8 +71,7 @@ none
 set an optionList to the class
 }
 \examples{
-\dontrun{
-rd <- easyreporting(filenamePath="./project_report",
+rd <- easyreporting(filenamePath=tempfile("project_report"),
                         title="example_report", author=c("It's me"))
 
 ## setting default option
@@ -81,5 +80,4 @@ setOptionsList(rd)
 ## modifying only some options
 rd <- setOptionsList(rd, warningFlag=TRUE, 
         showMessages=TRUE, includeFlag=TRUE)
-}
 }
